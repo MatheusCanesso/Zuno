@@ -295,7 +295,7 @@ function formatarDataCriacao($data) {
         <div class="nav-links">
             <a href="index.php">Início</a>
             <a href="sobre.php">Sobre</a>
-            <a href="Login-Cadastro.php" class="cta-button">Sair</a>
+            <a href="logout.php" class="cta-button">Sair</a>
         </div>
     </nav>
 

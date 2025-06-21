@@ -227,7 +227,7 @@
         <div class="nav-links">
             <a id="active" href="index.php">Início</a>
             <a href="sobre.php">Sobre</a>
-            <a href="cadastro.php" class="cta-button">Cadastre-se</a>
+            <a href="Login-Cadastro.php" class="cta-button">Cadastre-se</a>
         </div>
     </nav>
 
