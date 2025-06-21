@@ -1,0 +1,22 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" >
+  <defs>
+    <radialGradient id="gradAngry" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF7043" />
+      <stop offset="100%" stop-color="#D84315" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Rosto com degradê vermelho -->
+  <circle cx="60" cy="60" r="55" fill="url(#gradAngry)" stroke="#BF360C" stroke-width="4"/>
+  
+  <!-- Olhos -->
+  <circle cx="40" cy="45" r="7" fill="#000"/>
+  <circle cx="80" cy="45" r="7" fill="#000"/>
+  
+  <!-- Sobrancelhas cerradas -->
+  <path d="M30 35 L45 40" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+  <path d="M75 40 L90 35" stroke="#000" stroke-width="5" stroke-linecap="round"/>
+  
+  <!-- Boca virada para baixo -->
+  <path d="M40 80 Q60 65 80 80" stroke="#000" stroke-width="5" fill="none" stroke-linecap="round"/>
+</svg>

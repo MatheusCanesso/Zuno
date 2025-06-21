@@ -1,0 +1,31 @@
+<svg id="emoji-chorando-rir" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="laughCryGradient" x1="12" y1="36" x2="36" y2="12" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFEB3B"/>
+            <stop offset="1" stop-color="#FFEA00"/>
+        </linearGradient>
+        <linearGradient id="tearGradient" x1="0" y1="0" x2="0" y2="100%" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4FC3F7"/>
+            <stop offset="1" stop-color="#29B6F6"/>
+        </linearGradient>
+    </defs>
+    
+    <!-- Fundo do rosto: Círculo com gradiente amarelo -->
+    <circle cx="24" cy="24" r="20" fill="url(#laughCryGradient)" stroke="#FBC02D" stroke-width="1.5"/>
+    
+    <!-- Olho esquerdo: Caminho fechado para os olhos de riso -->
+    <path d="M14 18 C16 20, 20 20, 22 18" stroke="#212121" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Olho direito: Caminho fechado para os olhos de riso -->
+    <path d="M26 18 C28 20, 32 20, 34 18" stroke="#212121" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Boca: Boca aberta com língua -->
+    <path d="M16 30 C18 34, 30 34, 32 30 C30 30, 24 28, 18 30Z" fill="#212121" stroke="#212121" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M20 32 C21 33, 27 33, 28 32 L27 31 L21 31Z" fill="#F06292" opacity="0.8"/> <!-- Língua -->
+    
+    <!-- Lágrima esquerda -->
+    <path d="M18 20 L18 28 C18 30, 20 30, 20 28 L20 20 Z" fill="url(#tearGradient)" stroke="#29B6F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Lágrima direita -->
+    <path d="M30 20 L30 28 C30 30, 28 30, 28 28 L28 20 Z" fill="url(#tearGradient)" stroke="#29B6F6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

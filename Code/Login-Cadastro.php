@@ -102,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     $_SESSION['username'] = $user->NomeUsuario;
                     $_SESSION['email'] = $user->Email;
                     // Redirecionar para a página principal da aplicação
-                    header("Location: Home.php"); // Altere para a página principal do seu app
+                    header("Location: Profile.php"); // Altere para a página principal do seu app
                     exit();
                 } else {
                     $message = '<p style="color: red;">Credenciais inválidas. Verifique seu e-mail/usuário e senha.</p>';

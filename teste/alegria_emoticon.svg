@@ -1,0 +1,20 @@
+<svg id="emoji-feliz" width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="felizGradient" x1="12" y1="36" x2="36" y2="12" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FFD700"/>
+            <stop offset="1" stop-color="#FFC107"/>
+        </linearGradient>
+    </defs>
+    
+    <!-- Fundo do rosto: Círculo com gradiente amarelo para profundidade -->
+    <circle cx="24" cy="24" r="20" fill="url(#felizGradient)" stroke="#FBC02D" stroke-width="1.5"/>
+    
+    <!-- Olho esquerdo: Círculo preto simples -->
+    <circle cx="16" cy="18" r="2.5" fill="#212121"/>
+    
+    <!-- Olho direito: Círculo preto simples -->
+    <circle cx="32" cy="18" r="2.5" fill="#212121"/>
+    
+    <!-- Boca: Caminho curvado para um sorriso largo e amigável -->
+    <path d="M16 28C17.33 30.67 20 33.33 24 33.33C28 33.33 30.67 30.67 32 28" stroke="#212121" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

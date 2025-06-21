@@ -1,0 +1,22 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="gradSurprise" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF59D" />
+      <stop offset="100%" stop-color="#FFEB3B" />
+    </radialGradient>
+  </defs>
+
+  <!-- Rosto com degradê -->
+  <circle cx="60" cy="60" r="55" fill="url(#gradSurprise)" stroke="#FBC02D" stroke-width="4"/>
+
+  <!-- Olhos arregalados -->
+  <circle cx="40" cy="45" r="9" fill="#000"/>
+  <circle cx="80" cy="45" r="9" fill="#000"/>
+
+  <!-- Sobrancelhas arqueadas em surpresa -->
+  <path d="M30 30 Q40 20 50 30" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M70 30 Q80 20 90 30" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+
+  <!-- Boca redonda (boca de surpresa) -->
+  <circle cx="60" cy="75" r="10" fill="#000"/>
+</svg>

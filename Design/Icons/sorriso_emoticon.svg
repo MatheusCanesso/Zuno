@@ -1,0 +1,22 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="gradSmileTeeth" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFEB3B" />
+      <stop offset="100%" stop-color="#FBC02D" />
+    </radialGradient>
+  </defs>
+
+  <!-- Rosto com degradê -->
+  <circle cx="60" cy="60" r="55" fill="url(#gradSmileTeeth)" stroke="#F57F17" stroke-width="4"/>
+
+  <!-- Olhos -->
+  <circle cx="40" cy="45" r="7" fill="#000"/>
+  <circle cx="80" cy="45" r="7" fill="#000"/>
+
+  <!-- Sobrancelhas suaves -->
+  <path d="M30 35 Q40 30 50 35" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M70 35 Q80 30 90 35" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Boca sorrindo com dentes -->
+  <path d="M35 70 Q60 95 85 70 Q60 110 35 70" fill="#FFF" stroke="#000" stroke-width="4"/>
+</svg>

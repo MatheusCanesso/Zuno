@@ -1,0 +1,27 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="gradCool" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFD54F" />
+      <stop offset="100%" stop-color="#FFB300" />
+    </radialGradient>
+    <linearGradient id="gradGlass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#444" />
+      <stop offset="100%" stop-color="#000" />
+    </linearGradient>
+  </defs>
+
+  <!-- Rosto com degradê -->
+  <circle cx="60" cy="60" r="55" fill="url(#gradCool)" stroke="#F57C00" stroke-width="4"/>
+
+  <!-- Óculos escuros -->
+  <rect x="25" y="40" width="30" height="20" fill="url(#gradGlass)" rx="5" ry="5" />
+  <rect x="65" y="40" width="30" height="20" fill="url(#gradGlass)" rx="5" ry="5" />
+  <line x1="55" y1="50" x2="65" y2="50" stroke="#000" stroke-width="4" />
+
+  <!-- Sobrancelhas (leves, acima dos óculos) -->
+  <path d="M30 35 Q40 30 50 35" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M70 35 Q80 30 90 35" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Boca sorrindo discretamente -->
+  <path d="M45 80 Q60 90 75 80" stroke="#000" stroke-width="4" fill="none" stroke-linecap="round"/>
+</svg>

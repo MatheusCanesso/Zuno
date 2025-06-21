@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $message = '<p style="color: green;">Perfil atualizado com sucesso!</p>';
-            header("Refresh: 2; url=Home.php");
+            header("Refresh: 2; url=Profile.php");
         }
     } catch (PDOException $e) {
         $message = '<p style="color: red;">Erro no banco de dados: ' . $e->getMessage() . '</p>';
