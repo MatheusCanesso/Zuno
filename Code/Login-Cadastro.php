@@ -1,5 +1,7 @@
 <?php
 session_start(); // Inicia a sessão para gerenciar o estado do usuário
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 require_once 'Configs/config.php'; // Inclui o arquivo de configuração do banco de dados
 
@@ -45,13 +47,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 $stmt->bindParam(':senhaHash', $senhaHash);
 
                 if ($stmt->execute()) {
-                    $message = '<p style="color: green;">Cadastro realizado com sucesso! Você já pode fazer login.</p>';
-                    // Redireciona para a aba de login após o cadastro bem-sucedido
-                    header("Location: Login-Cadastro.php?action=login&status=registered");
-                    exit();
+                    // Método alternativo e mais confiável para SQL Server
+                    $stmtGetId = $conn->prepare("SELECT UsuarioID FROM Usuarios WHERE Email = :email");
+                    $stmtGetId->bindParam(':email', $email);
+                    $stmtGetId->execute();
+                    $newUser = $stmtGetId->fetch(PDO::FETCH_OBJ);
+
+                    if ($newUser && isset($newUser->UsuarioID)) {
+                        $_SESSION['user_id'] = $newUser->UsuarioID;
+                        $_SESSION['username'] = $nomeUsuario;
+                        $_SESSION['email'] = $email;
+                        header("Location: Setup_Profile.php");
+                        exit();
+                    } else {
+                        // Log do erro para diagnóstico
+                        error_log("Falha ao obter ID do usuário cadastrado. Email: $email");
+                        $message = '<p style="color: red;">Cadastro realizado, mas houve um problema ao redirecionar. Por favor, faça login.</p>';
+                        header("Location: Login-Cadastro.php?status=registered");
+                        exit();
+                    }
                 } else {
                     $message = '<p style="color: red;">Erro ao cadastrar usuário. Tente novamente.</p>';
                 }
+
             }
         } catch (PDOException $e) {
             $message = '<p style="color: red;">Erro no banco de dados: ' . $e->getMessage() . '</p>';
@@ -83,8 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     $_SESSION['user_id'] = $user->UsuarioID;
                     $_SESSION['username'] = $user->NomeUsuario;
                     $_SESSION['email'] = $user->Email;
-                    // Redirecionar para a página inicial da aplicação
-                    header("Location: home.php"); // Altere para a página principal do seu app
+                    // Redirecionar para a página principal da aplicação
+                    header("Location: Home.php"); // Altere para a página principal do seu app
                     exit();
                 } else {
                     $message = '<p style="color: red;">Credenciais inválidas. Verifique seu e-mail/usuário e senha.</p>';
@@ -117,6 +135,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'registered') {
         ::-webkit-scrollbar {
             display: none;
         }
+
         html {
             -ms-overflow-style: none;
             scrollbar-width: none;
@@ -133,6 +152,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'registered') {
             --text-dark: #000000;
             --text-light: #FFFFFF;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-light);
@@ -271,6 +291,7 @@ if (isset($_GET['status']) && $_GET['status'] === 'registered') {
             width: 100%;
             background-color: var(--primary);
             color: white;
+            /* Texto já está branco por padrão */
             border: none;
             padding: 14px;
             font-size: 16px;
@@ -378,9 +399,17 @@ if (isset($_GET['status']) && $_GET['status'] === 'registered') {
                 <div class="auth-logo">Zuno</div>
 
                 <div class="auth-tabs">
-                    <div class="auth-tab <?php echo (!isset($_POST['action']) || $_POST['action'] === 'login' || (isset($_GET['status']) && $_GET['status'] === 'registered')) ? 'active' : ''; ?>" onclick="switchTab('login')">Entrar</div>
-                    <div class="auth-tab <?php echo (isset($_POST['action']) && $_POST['action'] === 'register') ? 'active' : ''; ?>" onclick="switchTab('register')">Cadastrar</div>
+                    <div class="auth-tab <?php echo (!isset($_POST['action']) || $_POST['action'] === 'login' || (isset($_GET['status']) && $_GET['status'] === 'registered')) ? 'active' : ''; ?>"
+                        onclick="switchTab('login')">Entrar</div>
+                    <div class="auth-tab <?php echo (isset($_POST['action']) && $_POST['action'] === 'register') ? 'active' : ''; ?>"
+                        onclick="switchTab('register')">Cadastrar</div>
                 </div>
+
+                <?php if (!empty($message)): ?>
+                    <div class="message">
+                        <?php echo $message; ?>
+                    </div>
+                <?php endif; ?>
 
                 <form id="login-form" method="POST" action="Login-Cadastro.php">
                     <input type="hidden" name="action" value="login">
@@ -437,7 +466,8 @@ if (isset($_GET['status']) && $_GET['status'] === 'registered') {
 
                     <div class="form-group">
                         <label for="reg-confirm-password">Confirmar senha</label>
-                        <input type="password" id="reg-confirm-password" name="reg_confirm_password" placeholder="••••••••" required>
+                        <input type="password" id="reg-confirm-password" name="reg_confirm_password"
+                            placeholder="••••••••" required>
                     </div>
 
                     <button type="submit" class="auth-button">Criar conta</button>
@@ -485,9 +515,9 @@ if (isset($_GET['status']) && $_GET['status'] === 'registered') {
 
             // Verifica se houve uma submissão POST de registro
             const isPostRegister = '<?php echo (isset($_POST["action"]) && $_POST["action"] === "register") ? "true" : "false"; ?>';
-            
+
             if (isPostRegister === 'true') {
-                 switchTab('register');
+                switchTab('register');
             } else if (status === 'registered' || actionParam === 'login') {
                 switchTab('login');
             } else if (actionParam === 'register') {
