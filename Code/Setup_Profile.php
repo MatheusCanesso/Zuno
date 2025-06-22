@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $dataNascimento = $_POST['data_nascimento'] ?? null;
 
     // Processar imagens como binários
-    $processarUpload = function($fileKey) {
+    $processarUpload = function ($fileKey) {
         if (isset($_FILES[$fileKey]) && $_FILES[$fileKey]['error'] === UPLOAD_ERR_OK) {
             $fileTmpPath = $_FILES[$fileKey]['tmp_name'];
             return file_exists($fileTmpPath) ? file_get_contents($fileTmpPath) : null;
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 Localizacao = :localizacao,
                 SiteWeb = :siteWeb,
                 DataNascimento = :dataNascimento";
-        
+
         $params = [
             ':biografia' => $biografia,
             ':localizacao' => $localizacao,
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql .= " WHERE UsuarioID = :userId";
 
         $stmt = $conn->prepare($sql);
-        
+
         foreach ($params as $key => &$val) {
             if (strpos($key, 'foto') !== false) {
                 $stmt->bindParam($key, $val, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY);
@@ -95,22 +95,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Completar Perfil - Zuno</title>
+    <link rel="stylesheet" href="src/output.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* CSS da página de login/cadastro, reutilizado para consistência */
-        :root {
-            --primary: #21FA90;
-            --bg-light: #F9FAFB;
-            --bg-dark: #121212;
-            --border: #E5E7EB;
-            --text-dark: #000000;
-            --text-light: #FFFFFF;
-            --branco-zunno: #FFFFFF; /* Adicionado */
-        }
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-light);
@@ -123,122 +115,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 20px;
             box-sizing: border-box;
         }
-
-        .profile-setup-container {
-            background-color: var(--branco-zunno);
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 600px;
-            text-align: center;
-        }
-
-        .profile-setup-container h2 {
-            font-size: 2rem;
-            color: var(--text-dark);
-            margin-bottom: 1.5rem;
-        }
-
-        .profile-setup-container p {
-            margin-bottom: 2rem;
-            color: #555;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-            text-align: left;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--text-dark);
-        }
-
-        .form-group input[type="text"],
-        .form-group input[type="date"],
-        .form-group input[type="url"],
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 1rem;
-            color: var(--text-dark);
-            background-color: var(--bg-light);
-            transition: border-color 0.3s ease;
-            box-sizing: border-box;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(33, 250, 144, 0.1);
-        }
-
-        .file-upload-preview {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-top: 10px;
-        }
-
-        .file-upload-preview img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid var(--border);
-        }
-
-        .file-upload-preview .cover-preview {
-            width: 100%;
-            height: 120px;
-            border-radius: 8px;
-            object-fit: cover;
-            border: 2px solid var(--border);
-        }
-        
-        .btn-submit {
-            width: 100%;
-            background-color: var(--primary);
-            color: var(--text-light);
-            border: none;
-            padding: 14px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            margin-top: 20px;
-        }
-
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(33, 250, 144, 0.3);
-        }
-
-        .message {
-            text-align: center;
-            margin-bottom: 20px;
-            padding: 10px;
-            border-radius: 8px;
-            font-weight: 500;
-        }
-
-        .message p {
-            margin: 0;
-        }
     </style>
 </head>
+
 <body>
     <div class="profile-setup-container">
         <h2>Complete seu Perfil Zuno!</h2>
@@ -253,22 +132,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form action="Setup_Profile.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="biografia">Biografia (máx. 160 caracteres)</label>
-                <textarea id="biografia" name="biografia" maxlength="160"><?php echo htmlspecialchars($userData->Biografia ?? ''); ?></textarea>
+                <textarea id="biografia" name="biografia"
+                    maxlength="160"><?php echo htmlspecialchars($userData->Biografia ?? ''); ?></textarea>
             </div>
 
             <div class="form-group">
                 <label for="localizacao">Localização</label>
-                <input type="text" id="localizacao" name="localizacao" value="<?php echo htmlspecialchars($userData->Localizacao ?? ''); ?>">
+                <input type="text" id="localizacao" name="localizacao"
+                    value="<?php echo htmlspecialchars($userData->Localizacao ?? ''); ?>">
             </div>
 
             <div class="form-group">
                 <label for="site_web">Site/Portfólio</label>
-                <input type="url" id="site_web" name="site_web" placeholder="https://seusite.com" value="<?php echo htmlspecialchars($userData->SiteWeb ?? ''); ?>">
+                <input type="url" id="site_web" name="site_web" placeholder="https://seusite.com"
+                    value="<?php echo htmlspecialchars($userData->SiteWeb ?? ''); ?>">
             </div>
 
             <div class="form-group">
                 <label for="data_nascimento">Data de Nascimento</label>
-                <input type="date" id="data_nascimento" name="data_nascimento" value="<?php echo htmlspecialchars($userData->DataNascimento ? date('Y-m-d', strtotime($userData->DataNascimento)) : ''); ?>">
+                <input type="date" id="data_nascimento" name="data_nascimento"
+                    value="<?php echo htmlspecialchars($userData->DataNascimento ? date('Y-m-d', strtotime($userData->DataNascimento)) : ''); ?>">
             </div>
 
             <div class="form-group">
@@ -276,7 +159,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="file" id="foto_perfil" name="foto_perfil" accept="image/jpeg, image/png, image/gif">
                 <?php if (isset($userData->FotoPerfil) && !empty($userData->FotoPerfil)): ?>
                     <div class="file-upload-preview">
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($userData->FotoPerfil); ?>" alt="Foto de Perfil Atual">
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($userData->FotoPerfil); ?>"
+                            alt="Foto de Perfil Atual">
                         <span>Foto atual</span>
                     </div>
                 <?php endif; ?>
@@ -287,7 +171,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type="file" id="foto_capa" name="foto_capa" accept="image/jpeg, image/png, image/gif">
                 <?php if (isset($userData->FotoCapa) && !empty($userData->FotoCapa)): ?>
                     <div class="file-upload-preview">
-                        <img src="data:image/jpeg;base64,<?php echo base64_encode($userData->FotoCapa); ?>" alt="Foto de Capa Atual" class="cover-preview">
+                        <img src="data:image/jpeg;base64,<?php echo base64_encode($userData->FotoCapa); ?>"
+                            alt="Foto de Capa Atual" class="cover-preview">
                         <span>Capa atual</span>
                     </div>
                 <?php endif; ?>
@@ -297,4 +182,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 </body>
+
 </html>

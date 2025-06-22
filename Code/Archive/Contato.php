@@ -328,7 +328,7 @@
             <p>Domingos e feriados: não há atendimento</p>
         </div>
 
-        <a href="index.php" class="back-button">Voltar para o início</a>
+        <a href="../Index.php" class="back-button">Voltar para o início</a>
     </div>
 
     <footer>
