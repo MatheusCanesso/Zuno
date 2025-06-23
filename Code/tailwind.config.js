@@ -7,7 +7,11 @@ module.exports = {
     "./public/index.html"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'green-primary': '#21fa90', // Hexadecimal
+      },
+    },
   },
   plugins: [],
 }
