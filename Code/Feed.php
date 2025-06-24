@@ -54,6 +54,29 @@ function formatarDataCriacao($data)
     return ucfirst($formatter->format($d));
 }
 
+// Lógica para buscar Zuns para a timeline
+$zuns = [];
+try {
+    // Parâmetros para a stored procedure
+    $pagina = 1; // Para rolagem infinita, este valor seria alterado via AJAX
+    $zunsPorPagina = 20; // Quantidade de zuns a serem carregados por vez
+
+    // Preparar e executar a stored procedure
+    // Note: A sintaxe para chamar stored procedures pode variar dependendo do driver PDO (ex: odbc, sqlsrv) e do banco de dados (SQL Server, MySQL, etc.).
+    // Para SQL Server com PDO_SQLSRV, a sintaxe {CALL procedureName(?,?)} é comum.
+    $stmt = $conn->prepare("{CALL ObterTimeline(?, ?, ?)}");
+    $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+    $stmt->bindParam(2, $pagina, PDO::PARAM_INT);
+    $stmt->bindParam(3, $zunsPorPagina, PDO::PARAM_INT);
+
+    $stmt->execute();
+    $zuns = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+} catch (PDOException $e) {
+    $message .= '<p style="color: red;">Erro ao carregar Zuns: ' . $e->getMessage() . '</p>';
+    // Em produção, você logaria o erro e mostraria uma mensagem genérica ao usuário.
+}
+
 // Buscar usuários para a seção "Quem seguir"
 $suggestedUsers = [];
 try {
@@ -86,7 +109,7 @@ try {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Perfil - Zuno</title>
+    <title>Radar - Zuno</title>
     <script src="https://kit.fontawesome.com/17dd42404d.js" crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap"
@@ -156,6 +179,58 @@ try {
         .modal-close-button:hover {
             color: #ccc;
         }
+
+        /* Ícones */
+        .icon-wrapper {
+            position: relative;
+            width: 24px;
+            height: 24px;
+        }
+
+        .zune-icon {
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: zune-pulse 1.5s infinite;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .normal-icon {
+            opacity: 1;
+        }
+
+        .hover-icon {
+            opacity: 0;
+        }
+
+        .zune-btn:hover .normal-icon {
+            opacity: 0;
+        }
+
+        .zune-btn:hover .hover-icon {
+            opacity: 1;
+        }
+
+        .zune-text {
+            margin-left: 0.5rem;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        /* Animação pulsante */
+        @keyframes zune-pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 
@@ -170,19 +245,19 @@ try {
 
             <div class="flex flex-col space-y-2">
                 <a href="Feed.php"
-                    class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                    class="flex items-center p-2 text-lg font-semibold text-[#16ac63] rounded-lg hover:bg-gray-200 transition-colors duration-200">
                     <!-- <i class="fas fa-home mr-3"></i> Radar -->
                     <span class="icon mr-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <!-- Círculo externo -->
-                            <circle cx="12" cy="12" r="10" stroke="oklch(37.3% 0.034 259.733)" stroke-width="2" />
+                            <circle cx="12" cy="12" r="10" stroke="#16ac63" stroke-width="2" />
 
                             <!-- Linha girando -->
-                            <path d="M12 12L20 7" stroke="oklch(37.3% 0.034 259.733)" stroke-width="2" stroke-linecap="round" />
+                            <path d="M12 12L20 7" stroke="#16ac63" stroke-width="2" stroke-linecap="round" />
 
                             <!-- Pulsos concêntricos -->
-                            <circle cx="12" cy="12" r="4" stroke="oklch(37.3% 0.034 259.733)" stroke-width="1" stroke-dasharray="4 2" />
-                            <circle cx="12" cy="12" r="2" fill="oklch(37.3% 0.034 259.733)" />
+                            <circle cx="12" cy="12" r="4" stroke="#16ac63" stroke-width="1" stroke-dasharray="4 2" />
+                            <circle cx="12" cy="12" r="2" fill="#16ac63" />
                         </svg>
                     </span> Radar
                 </a>
@@ -258,25 +333,47 @@ try {
                     <i class="fas fa-list mr-3"></i> Listas
                 </a>
 
-                <!-- <a href="Profile.php"
-                    class="flex items-center p-2 text-lg font-semibold text-[#21fa90] rounded-lg hover:bg-blue-100 transition-colors duration-200">
-                    <i class="fas fa-user mr-3"></i> Perfil
-                </a> -->
-
                 <a href="#"
                     class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                     <i class="fas fa-ellipsis-h mr-3"></i> Mais
                 </a>
             </div>
 
-            <button
-                class="w-full mt-4 py-3 px-4 bg-[#21fa90] text-white font-bold rounded-lg hover:bg-[#83ecb9] transition-colors duration-200">
+            <button class="w-full mt-4 py-3 px-4 bg-[#21fa90] text-white font-bold rounded-lg hover:bg-[#83ecb9] transition-colors duration-200">
                 Zunear
+                <div class="icon-wrapper">
+                    <!-- Ícone padrão -->
+                    <svg class="zune-icon normal-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="11" fill="url(#zuneGradient)" stroke="currentColor"
+                            stroke-width="1.5" />
+                        <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"
+                            stroke-dasharray="2,2" />
+                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"
+                            stroke-dasharray="1,2" />
+                        <defs>
+                            <linearGradient id="zuneGradient" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="currentColor" stop-opacity="0.1" />
+                                <stop offset="100%" stop-color="currentColor" stop-opacity="0.3" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+    
+                    <!-- Ícone hover -->
+                    <svg class="zune-icon hover-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <circle cx="12" cy="12" r="11" fill="currentColor" fill-opacity="0.2" stroke="currentColor"
+                            stroke-width="1.5" />
+                        <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+                        <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.5"
+                            stroke-dasharray="3,1" />
+                    </svg>
+                </div>
             </button>
         </div>
 
-        <div
-            class="mt-auto flex items-center bg-gray-200 justify-between p-3 rounded-lg hover:bg-gray-300 transition-colors duration-200 cursor-pointer">
+        <a href="Profile.php"
+            class="mt-auto flex items-center justify-between p-3 rounded-lg hover:bg-gray-300 transition-colors duration-200 cursor-pointer">
             <div class="flex items-center space-x-2">
                 <?php if ($userData): ?>
                     <img src="<?php echo ($userData->FotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($userData->FotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
@@ -289,76 +386,125 @@ try {
                 <?php endif; ?>
             </div>
             <i class="fas fa-ellipsis-h text-gray-500"></i>
-        </div>
+        </a>
     </nav>
 
     <div class="flex flex-1 pl-64">
-        <main class="flex-1 mx-auto border-x border-gray-200">
-            <div class="relative p-4 border-b border-gray-200"> <input type="text" placeholder="Pesquisar no Zuno"
-                    class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#21fa90] focus:bg-white">
-                <div class="absolute inset-y-0 left-0 pl-7 flex items-center pointer-events-none">
-                    <i class="fas fa-search text-gray-500"></i>
-                </div>
-            </div>
-
-            <?php if (!empty($message)): ?>
-                <div class="message-box p-4 bg-red-100 text-red-700 rounded-lg mb-4">
-                    <?php echo $message; ?>
-                </div>
-            <?php endif; ?>
-
-            <?php if ($userData): ?>
-                <div class="relative">
-                    <div class="cover-photo-container h-48 w-full bg-gray-200 relative bg-cover bg-center"
-                        style="background-image: url('<?php echo ($userData->FotoCapa ? 'data:image/jpeg;base64,' . base64_encode($userData->FotoCapa) : '../Design/Assets/default_cover.png'); ?>');">
-                        <a href="Editar-Perfil.php"
-                            class="absolute top-4 right-4 bg-black bg-opacity-50 text-white px-4 py-2 rounded-full border border-gray-600 hover:bg-opacity-70 flex items-center space-x-2 text-sm">
-                            <i class="fas fa-edit"></i> <span>Editar Perfil</span>
-                        </a>
+        <div class="flex w-[1000px] max-w-[calc(100%-16rem)] ml-auto mr-auto">
+            <main class="flex-1 mx-auto border-x border-gray-200">
+                <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-200">
+                    <input type="text" placeholder="Pesquisar no Zuno"
+                        class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+                    <div class="absolute inset-y-0 left-0 pl-7 flex items-center pointer-events-none">
+                        <span class="icon mr-2">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M14 11C14 12.6569 12.6569 14 11 14C9.34315 14 8 12.6569 8 11C8 9.34315 9.34315 8 11 8C12.6569 8 14 9.34315 14 11Z"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </span>
                     </div>
+                </div>
 
-                    <div class="profile-header px-4 pb-4">
-                        <div class="absolute top-28 left-4 border-4 border-white rounded-full shadow-md cursor-pointer z-10"
-                            id="profilePicContainer">
-                            <img src="<?php echo ($userData->FotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($userData->FotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
-                                alt="Foto de Perfil" class="w-32 h-32 rounded-full object-cover" id="profilePic">
-                        </div>
+                <?php if (!empty($message)): ?>
+                    <div class="message-box p-4 bg-red-100 text-red-700 rounded-lg mb-4">
+                        <?php echo $message; ?>
+                    </div>
+                <?php endif; ?>
 
-                        <div class="pt-20">
-                            <h1 class="text-2xl font-bold"><?php echo htmlspecialchars($userData->NomeExibicao); ?></h1>
-                            <p class="text-gray-500">@<?php echo htmlspecialchars($userData->NomeUsuario); ?></p>
-                            <p class="my-3 text-gray-700">
-                                <?php echo htmlspecialchars($userData->Biografia ?? 'Nenhuma biografia adicionada.'); ?>
-                            </p>
+                <div class="bg-white p-4 border-b border-gray-200">
+                    <div class="flex items-start space-x-3">
+                        <img src="<?php echo ($userData->FotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($userData->FotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
+                            alt="Sua Foto de Perfil" class="w-12 h-12 rounded-full object-cover">
+                        <form action="process_zun.php" method="POST" class="flex-1">
+                            <textarea name="conteudo_zun" rows="3"
+                                placeholder="O que está acontecendo, <?php echo htmlspecialchars($userData->NomeExibicao); ?>?"
+                                class="w-full text-lg p-2 border-none focus:ring-0 focus:outline-none resize-none"></textarea>
+                            <div class="flex justify-between items-center mt-2">
+                                <div class="text-blue-500 text-xl space-x-3">
+                                    <i class="fas fa-image cursor-pointer hover:text-blue-600"></i>
+                                    <i class="fas fa-gif cursor-pointer hover:text-blue-600"></i>
+                                    <i class="fas fa-poll-h cursor-pointer hover:text-blue-600"></i>
+                                    <i class="fas fa-smile cursor-pointer hover:text-blue-600"></i>
+                                    <i class="fas fa-calendar-alt cursor-pointer hover:text-blue-600"></i>
+                                </div>
+                                <button type="submit"
+                                    class="bg-lime-500 text-white font-bold py-2 px-5 rounded-full hover:bg-lime-600 transition-colors duration-200">
+                                    Zunear
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-                            <div class="profile-details text-gray-600 text-sm space-y-1">
-                                <?php if (!empty($userData->Localizacao)): ?>
-                                    <div class="flex items-center space-x-2"><i class="fas fa-map-marker-alt"></i>
-                                        <span><?php echo htmlspecialchars($userData->Localizacao); ?></span>
+                <div class="h-3 bg-gray-100 border-b border-t border-gray-200"></div>
+
+                <?php if (!empty($zuns)): ?>
+                    <?php foreach ($zuns as $zun): ?>
+                        <div class="border-b border-gray-200 p-4">
+                            <?php if ($zun->EhRepost): // Se for um repost, mostrar quem repostou ?>
+                                <div class="flex items-center text-gray-500 text-sm mb-1 ml-9">
+                                    <i class="fas fa-retweet mr-2"></i>
+                                    <span><?php echo htmlspecialchars($zun->RepostPorNomeExibicao); ?> Zunou novamente</span>
+                                </div>
+                            <?php endif; ?>
+                            <div class="flex items-start space-x-3">
+                                <img src="<?php echo ($zun->AutorFotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($zun->AutorFotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
+                                    alt="Foto de Perfil" class="w-10 h-10 rounded-full object-cover mt-1">
+                                <div class="flex-1">
+                                    <div class="flex items-center space-x-1">
+                                        <span class="font-bold"><?php echo htmlspecialchars($zun->AutorNomeExibicao); ?></span>
+                                        <span
+                                            class="text-gray-500 text-sm">@<?php echo htmlspecialchars($zun->AutorNomeUsuario); ?></span>
+                                        <span class="text-gray-500 text-sm">&middot;
+                                            <?php echo formatarDataZun($zun->DataCriacao); ?></span>
                                     </div>
-                                <?php endif; ?>
-                                <?php if (!empty($userData->SiteWeb)): ?>
-                                    <div class="flex items-center space-x-2"><i class="fas fa-link"></i> <a
-                                            href="<?php echo htmlspecialchars($userData->SiteWeb); ?>" target="_blank"
-                                            class="text-blue-500 hover:underline"><?php echo htmlspecialchars($userData->SiteWeb); ?></a>
+                                    <p class="text-gray-800 mt-1"><?php echo htmlspecialchars($zun->Conteudo); ?></p>
+
+                                    <?php
+                                    // Adicione aqui a lógica para exibir imagens/mídia do Zun se a sua stored procedure ou outra lógica PHP
+                                    // retornar a URL ou os dados binários da mídia. A tabela 'Midias' já existe.
+                                    // Exemplo:
+                                    // if (!empty($zun->URLMidia)): 
+                                    //    <img src="<?php echo htmlspecialchars($zun->URLMidia); ?>" alt="Conteúdo do
+                                    Zun" class="mt-2 rounded-lg max-h-80 w-full object-cover">
+                                    // endif;
+                                    ?>
+
+                                    <div class="flex justify-around items-center mt-3 text-gray-500 text-sm">
+                                        <button class="flex items-center space-x-1 hover:text-blue-500">
+                                            <i class="far fa-comment"></i> <span><?php echo $zun->Respostas; ?></span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 hover:text-lime-500">
+                                            <i class="fas fa-sync-alt"></i> <span><?php echo $zun->Reposts; ?></span>
+                                        </button>
+                                        <button
+                                            class="flex items-center space-x-1 <?php echo ($zun->ZunLikadoPorMim ? 'text-red-500' : 'hover:text-red-500'); ?>">
+                                            <i
+                                                class="<?php echo ($zun->ZunLikadoPorMim ? 'fas fa-heart' : 'far fa-heart'); ?>"></i>
+                                            <span><?php echo $zun->ZunLikes; ?></span>
+                                        </button>
+                                        <button class="flex items-center space-x-1 hover:text-blue-500">
+                                            <i class="fas fa-share-alt"></i>
+                                        </button>
                                     </div>
-                                <?php endif; ?>
-                                <?php if (!empty($userData->DataNascimento)): ?>
-                                    <div class="flex items-center space-x-2"><i class="fas fa-cake-candles"></i>
-                                        <span>Nascido(a) em
-                                            <?php echo formatarDataNascimento($userData->DataNascimento); ?></span>
-                                    </div>
-                                <?php endif; ?>
-                                <div class="flex items-center space-x-2"><i class="fas fa-calendar-alt"></i> <span>Zunando
-                                        desde <?php echo formatarDataCriacao($userData->DataCriacao); ?></span></div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            <?php else: ?>
-                <p class="text-center p-5 text-gray-600">Não foi possível carregar as informações do perfil.</p>
-            <?php endif; ?>
-        </main>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <p class="text-center p-8 text-gray-600">Nenhum Zun para exibir. Siga algumas pessoas ou faça sua
+                        primeira publicação!</p>
+                <?php endif; ?>
+            </main>
+        </div>
+
 
         <aside class="w-80 p-6 space-y-6 border border-gray-200 rounded-lg">
             <div class="bg-white rounded-lg shadow-md">
@@ -421,31 +567,7 @@ try {
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const profilePicContainer = document.getElementById('profilePicContainer');
-            const profilePic = document.getElementById('profilePic');
-            const imageModal = document.getElementById('imageModal');
-            const expandedProfilePic = document.getElementById('expandedProfilePic');
-            const closeModalButton = document.getElementById('closeModal');
 
-            if (profilePicContainer && profilePic && imageModal && expandedProfilePic && closeModalButton) {
-                profilePicContainer.addEventListener('click', function () {
-                    expandedProfilePic.src = profilePic.src; // Define a imagem do popup com a src da foto de perfil
-                    imageModal.classList.add('active'); // Ativa a visibilidade do modal
-                });
-
-                closeModalButton.addEventListener('click', function () {
-                    imageModal.classList.remove('active'); // Desativa a visibilidade do modal
-                });
-
-                // Fechar o modal ao clicar no overlay (fora da imagem)
-                imageModal.addEventListener('click', function (event) {
-                    if (event.target === imageModal) { // Verifica se o clique foi diretamente no overlay
-                        imageModal.classList.remove('active');
-                    }
-                });
-            }
-        });
     </script>
 </body>
 
