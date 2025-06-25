@@ -179,58 +179,6 @@ try {
         .modal-close-button:hover {
             color: #ccc;
         }
-
-        /* Ícones */
-        .icon-wrapper {
-            position: relative;
-            width: 24px;
-            height: 24px;
-        }
-
-        .zune-icon {
-            position: absolute;
-            top: 0;
-            left: 0;
-            animation: zune-pulse 1.5s infinite;
-            transition: opacity 0.3s ease-in-out;
-        }
-
-        .normal-icon {
-            opacity: 1;
-        }
-
-        .hover-icon {
-            opacity: 0;
-        }
-
-        .zune-btn:hover .normal-icon {
-            opacity: 0;
-        }
-
-        .zune-btn:hover .hover-icon {
-            opacity: 1;
-        }
-
-        .zune-text {
-            margin-left: 0.5rem;
-            font-weight: bold;
-            font-size: 1rem;
-        }
-
-        /* Animação pulsante */
-        @keyframes zune-pulse {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.05);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
     </style>
 </head>
 
@@ -339,36 +287,32 @@ try {
                 </a>
             </div>
 
-            <button class="w-full mt-4 py-3 px-4 bg-[#21fa90] text-white font-bold rounded-lg hover:bg-[#83ecb9] transition-colors duration-200">
-                Zunear
-                <div class="icon-wrapper">
-                    <!-- Ícone padrão -->
-                    <svg class="zune-icon normal-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="11" fill="url(#zuneGradient)" stroke="currentColor"
-                            stroke-width="1.5" />
-                        <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"
-                            stroke-dasharray="2,2" />
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"
-                            stroke-dasharray="1,2" />
-                        <defs>
-                            <linearGradient id="zuneGradient" x1="0" y1="0" x2="1" y2="1">
-                                <stop offset="0%" stop-color="currentColor" stop-opacity="0.1" />
-                                <stop offset="100%" stop-color="currentColor" stop-opacity="0.3" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-    
-                    <!-- Ícone hover -->
-                    <svg class="zune-icon hover-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="11" fill="currentColor" fill-opacity="0.2" stroke="currentColor"
-                            stroke-width="1.5" />
-                        <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                        <circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.5"
-                            stroke-dasharray="3,1" />
-                    </svg>
-                </div>
+            <button
+                class="w-full mt-4 py-3 px-4 bg-[#21fa90] text-white font-bold rounded-lg hover:bg-[#83ecb9] transition-colors duration-200 flex items-center justify-center group">
+                <span class="mr-2">Zunear</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    class="group-hover:animate-pulse">
+                    <!-- Círculo de fundo com gradiente sutil -->
+                    <circle cx="12" cy="12" r="11" fill="url(#zuneGradient)" stroke="currentColor" stroke-width="1.5" />
+
+                    <!-- Símbolo "+" estilizado -->
+                    <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+
+                    <!-- Efeito de ondas circulares -->
+                    <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"
+                        stroke-dasharray="2,2" />
+                    <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"
+                        stroke-dasharray="1,2" />
+
+                    <!-- Gradiente -->
+                    <defs>
+                        <linearGradient id="zuneGradient" x1="0" y1="0" x2="1" y2="1">
+                            <stop offset="0%" stop-color="currentColor" stop-opacity="0.1" />
+                            <stop offset="100%" stop-color="currentColor" stop-opacity="0.3" />
+                        </linearGradient>
+                    </defs>
+                </svg>
             </button>
         </div>
 
@@ -505,10 +449,18 @@ try {
             </main>
         </div>
 
-
         <aside class="w-80 p-6 space-y-6 border border-gray-200 rounded-lg">
             <div class="bg-white rounded-lg shadow-md">
-                <h2 class="text-xl font-bold p-4 border-b border-gray-200">Quem seguir</h2>
+                <h2 class="text-xl font-bold flex items-center p-4 border-b border-gray-200 gap-x-2">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 11C13.6569 11 15 9.65685 15 8C15 6.34315 13.6569 5 12 5C10.3431 5 9 6.34315 9 8C9 9.65685 10.3431 11 12 11Z"
+                            stroke="currentColor" stroke-width="1.8" />
+                        <path d="M6 19C6 16.7909 7.79086 15 10 15H14C16.2091 15 18 16.7909 18 19" stroke="currentColor"
+                            stroke-width="1.8" />
+                        <path d="M18 8H22M20 6V10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg> Quem seguir
+                </h2>
                 <div class="p-4">
                     <?php if (!empty($suggestedUsers)): ?>
                         <?php foreach ($suggestedUsers as $sUser): ?>
@@ -536,7 +488,19 @@ try {
             </div>
 
             <div class="bg-white rounded-lg shadow-md">
-                <h2 class="text-xl font-bold p-4 border-b border-gray-200">Suas Comunidades</h2>
+                <h2 class="text-xl font-bold flex items-center p-4 border-b border-gray-200 gap-x-2" >
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 19C16 16.7909 14.2091 15 12 15C9.79086 15 8 16.7909 8 19" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" />
+                        <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        <path d="M5 17C5 14.7909 6.79086 13 9 13" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" />
+                        <circle cx="9" cy="7" r="2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        <path d="M19 17C19 14.7909 17.2091 13 15 13" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" />
+                        <circle cx="15" cy="7" r="2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg> Suas Comunidades
+                </h2>
                 <div class="p-4">
                     <?php if (!empty($userCommunities)): ?>
                         <ul>
