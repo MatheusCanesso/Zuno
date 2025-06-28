@@ -24,7 +24,7 @@ try {
     }
 
 } catch (PDOException $e) {
-    $message = '<p style="color: red;">Erro ao carregar dados do perfil: ' . $e->getMessage() . '</p>';
+    $message .= '<p style="color: red;">Erro ao carregar dados do perfil: ' . $e->getMessage() . '</p>';
 }
 
 // Funções auxiliares para formatação
@@ -62,8 +62,6 @@ try {
     $zunsPorPagina = 20; // Quantidade de zuns a serem carregados por vez
 
     // Preparar e executar a stored procedure
-    // Note: A sintaxe para chamar stored procedures pode variar dependendo do driver PDO (ex: odbc, sqlsrv) e do banco de dados (SQL Server, MySQL, etc.).
-    // Para SQL Server com PDO_SQLSRV, a sintaxe {CALL procedureName(?,?)} é comum.
     $stmt = $conn->prepare("{CALL ObterTimeline(?, ?, ?)}");
     $stmt->bindParam(1, $userId, PDO::PARAM_INT);
     $stmt->bindParam(2, $pagina, PDO::PARAM_INT);
@@ -80,7 +78,11 @@ try {
 // Buscar usuários para a seção "Quem seguir"
 $suggestedUsers = [];
 try {
-    $stmt = $conn->prepare("SELECT UsuarioID, NomeExibicao, NomeUsuario, FotoPerfil FROM Usuarios WHERE UsuarioID != :currentUserId ORDER BY RANDOM() LIMIT 5"); // ORDER BY RANDOM() para sugestões variadas
+    // Note: ORDER BY RANDOM() e LIMIT 5 são específicos do SQLite/MySQL.
+    // Para SQL Server, você usaria NEWID() e TOP 5:
+    // "SELECT TOP 5 UsuarioID, NomeExibicao, NomeUsuario, FotoPerfil FROM Usuarios WHERE UsuarioID != :currentUserId ORDER BY NEWID()"
+    // Se o banco for SQLite/MySQL, manter o RANDOM(). Ajuste conforme seu banco.
+    $stmt = $conn->prepare("SELECT UsuarioID, NomeExibicao, NomeUsuario, FotoPerfil FROM Usuarios WHERE UsuarioID != :currentUserId ORDER BY NEWID()"); // Alterado para NEWID() para SQL Server
     $stmt->bindParam(':currentUserId', $userId, PDO::PARAM_INT);
     $stmt->execute();
     $suggestedUsers = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -92,6 +94,8 @@ try {
 // Buscar comunidades que o usuário faz parte
 $userCommunities = [];
 try {
+    // Atenção: A tabela 'Comunidades' e 'MembrosComunidade' não foram fornecidas no schema inicial.
+    // Esta query pode falhar se as tabelas não existirem.
     $stmt = $conn->prepare("SELECT c.NomeComunidade FROM Comunidades c JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID WHERE mc.UsuarioID = :userId");
     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
     $stmt->execute();
@@ -99,6 +103,31 @@ try {
 } catch (PDOException $e) {
     // Em um ambiente de produção, você pode logar o erro em vez de exibi-lo ao usuário.
     // $message .= '<p style="color: red;">Erro ao carregar comunidades: ' . $e->getMessage() . '</p>';
+}
+
+// Função auxiliar para formatar a data dos Zuns (se necessário, pode ser mais detalhada)
+function formatarDataZun($data)
+{
+    if (empty($data)) {
+        return '';
+    }
+    $d = new DateTime($data);
+    $now = new DateTime();
+    $interval = $now->diff($d);
+
+    if ($interval->y > 0) {
+        return $interval->y . 'a';
+    } elseif ($interval->m > 0) {
+        return $interval->m . 'm';
+    } elseif ($interval->d > 0) {
+        return $interval->d . 'd';
+    } elseif ($interval->h > 0) {
+        return $interval->h . 'h';
+    } elseif ($interval->i > 0) {
+        return $interval->i . 'm';
+    } else {
+        return 'agora';
+    }
 }
 
 ?>
@@ -192,27 +221,22 @@ try {
             </div>
 
             <div class="flex flex-col space-y-2">
-                <a href="Feed.php"
+                <a href="Radar.php"
                     class="flex items-center p-2 text-lg font-semibold text-[#16ac63] rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <!-- <i class="fas fa-home mr-3"></i> Radar -->
                     <span class="icon mr-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Círculo externo -->
                             <circle cx="12" cy="12" r="10" stroke="#16ac63" stroke-width="2" />
 
-                            <!-- Linha girando -->
                             <path d="M12 12L20 7" stroke="#16ac63" stroke-width="2" stroke-linecap="round" />
 
-                            <!-- Pulsos concêntricos -->
                             <circle cx="12" cy="12" r="4" stroke="#16ac63" stroke-width="1" stroke-dasharray="4 2" />
                             <circle cx="12" cy="12" r="2" fill="#16ac63" />
                         </svg>
                     </span> Radar
                 </a>
 
-                <a href="#"
+                <a href="Explorar.php"
                     class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <!-- <i class="fas fa-search mr-3"></i> -->
                     <span class="icon mr-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -230,7 +254,6 @@ try {
                 <a href="#"
                     class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                     <span class="icon mr-2">
-                        <!-- <i class="fas fa-bell mr-3"></i> -->
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M18 8C18 6.4087 17.3679 4.88258 16.2426 3.75736C15.1174 2.63214 13.5913 2 12 2C10.4087 2 8.88258 2.63214 7.75736 3.75736C6.63214 4.88258 6 6.4087 6 8C6 15 3 17 3 17H21C21 17 18 15 18 8Z"
@@ -246,7 +269,6 @@ try {
 
                 <a href="#"
                     class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <!-- <i class="fas fa-envelope mr-3"></i>  -->
                     <span class="icon mr-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -262,7 +284,6 @@ try {
 
                 <a href="#"
                     class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <!-- <i class="fas fa-bookmark mr-3"></i>  -->
                     <span class="icon mr-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -292,20 +313,16 @@ try {
                 <span class="mr-2">Zunear</span>
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="group-hover:animate-pulse">
-                    <!-- Círculo de fundo com gradiente sutil -->
                     <circle cx="12" cy="12" r="11" fill="url(#zuneGradient)" stroke="currentColor" stroke-width="1.5" />
 
-                    <!-- Símbolo "+" estilizado -->
                     <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
 
-                    <!-- Efeito de ondas circulares -->
                     <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"
                         stroke-dasharray="2,2" />
                     <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"
                         stroke-dasharray="1,2" />
 
-                    <!-- Gradiente -->
                     <defs>
                         <linearGradient id="zuneGradient" x1="0" y1="0" x2="1" y2="1">
                             <stop offset="0%" stop-color="currentColor" stop-opacity="0.1" />
@@ -314,6 +331,40 @@ try {
                     </defs>
                 </svg>
             </button>
+
+            <div class="bg-white rounded-lg shadow-md mt-4">
+                <h2 class="text-xl font-bold flex items-center p-4 border-b border-gray-200 gap-x-2">
+                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M16 19C16 16.7909 14.2091 15 12 15C9.79086 15 8 16.7909 8 19" stroke="currentColor"
+                            stroke-width="1.8" stroke-linecap="round" />
+                        <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        <path d="M5 17C5 14.7909 6.79086 13 9 13" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" />
+                        <circle cx="9" cy="7" r="2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                        <path d="M19 17C19 14.7909 17.2091 13 15 13" stroke="currentColor" stroke-width="1.8"
+                            stroke-linecap="round" />
+                        <circle cx="15" cy="7" r="2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+                    </svg> Suas Comunidades
+                </h2>
+                <div class="p-4">
+                    <?php if (!empty($userCommunities)): ?>
+                        <ul>
+                            <?php foreach ($userCommunities as $community): ?>
+                                <li class="mb-2 last:mb-0">
+                                    <a href="#"
+                                        class="flex items-center p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                                        <i class="fas fa-users mr-3 text-gray-700"></i>
+                                        <span
+                                            class="text-gray-700"><?php echo htmlspecialchars($community->NomeComunidade); ?></span>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php else: ?>
+                        <p class="text-gray-500 text-sm">Você ainda não faz parte de nenhuma comunidade.</p>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
 
         <a href="Profile.php"
@@ -334,11 +385,11 @@ try {
     </nav>
 
     <div class="flex flex-1 pl-64">
-        <div class="flex w-[1000px] max-w-[calc(100%-16rem)] ml-auto mr-auto">
+        <div class="flex-1 mx-auto">
             <main class="flex-1 mx-auto border-x border-gray-200">
                 <div class="sticky top-0 bg-white z-10 p-4 border-b border-gray-200">
                     <input type="text" placeholder="Pesquisar no Zuno"
-                        class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white">
+                        class="w-full pl-10 pr-4 py-2 rounded-full bg-gray-200 text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#21fa90] focus:bg-white">
                     <div class="absolute inset-y-0 left-0 pl-7 flex items-center pointer-events-none">
                         <span class="icon mr-2">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -362,30 +413,96 @@ try {
                     </div>
                 <?php endif; ?>
 
+                <!-- Criação de Zun -->
                 <div class="bg-white p-4 border-b border-gray-200">
                     <div class="flex items-start space-x-3">
                         <img src="<?php echo ($userData->FotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($userData->FotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
                             alt="Sua Foto de Perfil" class="w-12 h-12 rounded-full object-cover">
                         <form action="process_zun.php" method="POST" class="flex-1">
-                            <textarea name="conteudo_zun" rows="3"
+                            <textarea name="conteudo_zun" id="zunTextarea" rows="4" colums="2   "
                                 placeholder="O que está acontecendo, <?php echo htmlspecialchars($userData->NomeExibicao); ?>?"
-                                class="w-full text-lg p-2 border-none focus:ring-0 focus:outline-none resize-none"></textarea>
+                                class="w-full text-lg p-2 border-none focus:ring-0 focus:outline-none resize-none"
+                                maxlength="260"></textarea>
+
                             <div class="flex justify-between items-center mt-2">
-                                <div class="text-blue-500 text-xl space-x-3">
-                                    <i class="fas fa-image cursor-pointer hover:text-blue-600"></i>
-                                    <i class="fas fa-gif cursor-pointer hover:text-blue-600"></i>
-                                    <i class="fas fa-poll-h cursor-pointer hover:text-blue-600"></i>
-                                    <i class="fas fa-smile cursor-pointer hover:text-blue-600"></i>
-                                    <i class="fas fa-calendar-alt cursor-pointer hover:text-blue-600"></i>
+                                <div class="flex items-center text-blue-500 text-xl gap-x-2">
+                                    <span
+                                        class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
+                                        <i class="">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor"
+                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                                <path d="M4 16L8 12L12 16L16 10L20 14" stroke="currentColor"
+                                                    stroke-width="1.5" stroke-linecap="round" />
+                                                <circle cx="16" cy="9" r="1.5" fill="currentColor" />
+                                            </svg>
+                                        </i>
+                                    </span>
+                                    <span
+                                        class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
+                                        <i class="">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor"
+                                                    stroke-width="1.5" />
+                                                <text x="12" y="16" font-family="Arial, sans-serif" font-size="10"
+                                                    font-weight="bold" text-anchor="middle"
+                                                    fill="currentColor">GIF</text>
+                                            </svg>
+                                        </i>
+                                    </span>
+                                    <span
+                                        class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
+                                        <i class="">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor"
+                                                    stroke-width="1.5" />
+                                                <rect x="7" y="7" width="10" height="2" rx="1" fill="currentColor" />
+                                                <rect x="7" y="15" width="10" height="2" rx="1" fill="currentColor" />
+                                                <circle cx="9" cy="8" r="1.5" fill="currentColor" />
+                                                <circle cx="9" cy="16" r="1.5" fill="currentColor" />
+                                            </svg>
+                                        </i>
+                                    </span>
+                                    <span
+                                        class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
+                                        <i class="">
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <circle cx="12" cy="12" r="9" stroke="currentColor"
+                                                    stroke-width="1.5" />
+                                                <circle cx="9" cy="10" r="1" fill="currentColor" />
+                                                <circle cx="15" cy="10" r="1" fill="currentColor" />
+                                                <path d="M8 15C8 15 9.5 17 12 17C14.5 17 16 15 16 15"
+                                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                                            </svg>
+                                        </i>
+                                    </span>
                                 </div>
-                                <button type="submit"
-                                    class="bg-lime-500 text-white font-bold py-2 px-5 rounded-full hover:bg-lime-600 transition-colors duration-200">
-                                    Zunear
-                                </button>
+
+                                <!-- Contador e botão agrupados -->
+                                <div class="flex items-center gap-2">
+                                    <!-- Contador de caracteres -->
+                                    <div id="charCounter" class="text-sm text-gray-400 transition-all duration-200">
+                                        <span id="charCount">0</span>/260
+                                    </div>
+
+                                    <!-- Botão Zunear -->
+                                    <button type="submit" id="zunButton"
+                                        class="bg-[#21fa90] text-white font-bold py-2 px-5 rounded-full hover:bg-[#83ecb9] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                        disabled>
+                                        Zunear
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
                 </div>
+
+                <!-- Criação de Zun -->
+
 
                 <div class="h-3 bg-gray-100 border-b border-t border-gray-200"></div>
 
@@ -417,7 +534,7 @@ try {
                                     // Exemplo:
                                     // if (!empty($zun->URLMidia)): 
                                     //    <img src="<?php echo htmlspecialchars($zun->URLMidia); ?>" alt="Conteúdo do
-                                    Zun" class="mt-2 rounded-lg max-h-80 w-full object-cover">
+                                    // Zun" class="mt-2 rounded-lg max-h-80 w-full object-cover">
                                     // endif;
                                     ?>
 
@@ -486,40 +603,6 @@ try {
                     <?php endif; ?>
                 </div>
             </div>
-
-            <div class="bg-white rounded-lg shadow-md">
-                <h2 class="text-xl font-bold flex items-center p-4 border-b border-gray-200 gap-x-2" >
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M16 19C16 16.7909 14.2091 15 12 15C9.79086 15 8 16.7909 8 19" stroke="currentColor"
-                            stroke-width="1.8" stroke-linecap="round" />
-                        <circle cx="12" cy="9" r="3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                        <path d="M5 17C5 14.7909 6.79086 13 9 13" stroke="currentColor" stroke-width="1.8"
-                            stroke-linecap="round" />
-                        <circle cx="9" cy="7" r="2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                        <path d="M19 17C19 14.7909 17.2091 13 15 13" stroke="currentColor" stroke-width="1.8"
-                            stroke-linecap="round" />
-                        <circle cx="15" cy="7" r="2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
-                    </svg> Suas Comunidades
-                </h2>
-                <div class="p-4">
-                    <?php if (!empty($userCommunities)): ?>
-                        <ul>
-                            <?php foreach ($userCommunities as $community): ?>
-                                <li class="mb-2 last:mb-0">
-                                    <a href="#"
-                                        class="flex items-center p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                                        <i class="fas fa-users mr-3 text-gray-700"></i>
-                                        <span
-                                            class="text-gray-700"><?php echo htmlspecialchars($community->NomeComunidade); ?></span>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php else: ?>
-                        <p class="text-gray-500 text-sm">Você ainda não faz parte de nenhuma comunidade.</p>
-                    <?php endif; ?>
-                </div>
-            </div>
         </aside>
     </div>
 
@@ -531,7 +614,47 @@ try {
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const textarea = document.getElementById('zunTextarea');
+            const charCounter = document.getElementById('charCounter');
+            const charCount = document.getElementById('charCount');
+            const zunButton = document.getElementById('zunButton');
+            const maxLength = 260;
+            const warningThreshold = 20; // Quando começar a ficar vermelho
 
+            textarea.addEventListener('input', function () {
+                const currentLength = this.value.length;
+                charCount.textContent = currentLength;
+
+                // Atualizar botão
+                zunButton.disabled = currentLength === 0;
+
+                // Animação e cores do contador
+                if (currentLength > maxLength - warningThreshold) {
+                    charCounter.classList.remove('text-gray-400');
+                    charCounter.classList.add('text-red-500');
+
+                    // Efeito de pulsação quando estiver perto do limite
+                    if (currentLength > maxLength - 5) {
+                        charCounter.classList.add('animate-pulse');
+                    } else {
+                        charCounter.classList.remove('animate-pulse');
+                    }
+                } else {
+                    charCounter.classList.remove('text-red-500', 'animate-pulse');
+                    charCounter.classList.add('text-gray-400');
+                }
+
+                // Limitar o texto se exceder o máximo
+                if (currentLength > maxLength) {
+                    this.value = this.value.substring(0, maxLength);
+                    charCount.textContent = maxLength;
+                }
+            });
+
+            // Disparar o evento input inicialmente para configurar o estado inicial
+            textarea.dispatchEvent(new Event('input'));
+        });
     </script>
 </body>
 
