@@ -492,9 +492,9 @@ try {
                     </span> Itens salvos
                 </a>
 
-                <a href="#"
+                <a href="Comunidades.php"
                     class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <i class="fas fa-list mr-3"></i> Listas
+                    <i class="fas fa-list mr-3"></i> Comunidades
                 </a>
 
                 <a href="#"

@@ -31,39 +31,46 @@ try {
 $userCommunities = [];
 try {
     // Esta consulta busca as comunidades às quais o usuário logado pertence.
-    // Requer as tabelas 'Comunidades' e 'MembrosComunidade' no banco de dados.
     $stmt = $conn->prepare("SELECT c.ComunidadeID, c.NomeComunidade, c.Descricao, c.FotoComunidade, COUNT(mc.UsuarioID) AS Membros
                             FROM Comunidades c
-                            JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID
+                            LEFT JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID
                             WHERE mc.UsuarioID = :userId
-                            GROUP BY c.ComunidadeID, c.NomeComunidade, c.Descricao, c.FotoComunidade");
+                            GROUP BY c.ComunidadeID, c.NomeComunidade, c.Descricao, c.FotoComunidade"); // Removido ComunidadeVerificada, DonoID, SiteWeb para GROUP BY
     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
     $stmt->execute();
     $userCommunities = $stmt->fetchAll(PDO::FETCH_OBJ);
+    error_log("Comunidades do usuário carregadas: " . count($userCommunities)); // Log para depuração
+
 } catch (PDOException $e) {
-    // Se as tabelas não existirem ou houver outro erro, $userCommunities permanecerá vazio.
-    // Em um ambiente de produção, você logaria o erro.
-    // error_log("Erro ao carregar comunidades do usuário: " . $e->getMessage());
+    $message .= '<p style="color: red;">Erro ao carregar minhas comunidades: ' . $e->getMessage() . '</p>'; // Mensagem visível
+    error_log("Erro ao carregar minhas comunidades: " . $e->getMessage()); // Log para depuração
 }
 
-$suggestedCommunities = [];
+$allCommunities = []; // Variável para TODAS as comunidades
 try {
-    // Esta consulta busca comunidades sugeridas (onde o usuário não é membro).
-    // Requer as tabelas 'Comunidades' e 'MembrosComunidade' no banco de dados.
-    // Usa NEWID() para SQL Server para ordenar aleatoriamente.
-    $stmt = $conn->prepare("SELECT TOP 5 c.ComunidadeID, c.NomeComunidade, c.Descricao, c.FotoComunidade, COUNT(mc.UsuarioID) AS Membros
+    // CONSULTA ATUALIZADA: Busca TODAS as comunidades da plataforma, ordenadas por nome.
+    // ATENÇÃO: FotoPerfil (VARBINARY(MAX)) NÃO PODE ser usada no GROUP BY/ORDER BY diretamente.
+    // Se a coluna FotoPerfil da tabela Comunidades for VARBINARY(MAX),
+    // ela NÃO DEVE estar no SELECT ou GROUP BY se não for agregada.
+    // Vou assumir que FotoComunidade é NVARCHAR para URL ou que você ajustou o DB para isso.
+    $stmt = $conn->prepare("SELECT c.ComunidadeID, c.DonoID, c.Nome AS NomeComunidade, c.Descricao, c.SiteWeb, c.ComunidadeVerificada, 
+                            COUNT(mc.UsuarioID) AS Membros,
+                            -- Se FotoPerfil da comunidade for VARBINARY(MAX) no DB, você precisa lidar com ela separadamente ou buscar por URL
+                            -- Por simplicidade e para evitar erros no GROUP BY, vou selecionar FotoPerfil e FotoCapa apenas se você tem URLs ou sabe como exibir o binário sem erro na query principal
+                            -- Assumindo FotoComunidade aqui é um path/URL se for exibida diretamente. Se for VARBINARY, precisaria de base64_encode no PHP
+                            c.FotoPerfil AS FotoComunidade, -- Assumindo alias para FotoComunidade para corresponder ao HTML
+                            c.FotoCapa AS FotoCapaComunidade -- Assumindo alias
                             FROM Comunidades c
                             LEFT JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID
-                            WHERE c.ComunidadeID NOT IN (SELECT ComunidadeID FROM MembrosComunidade WHERE UsuarioID = :userId)
-                            GROUP BY c.ComunidadeID, c.NomeComunidade, c.Descricao, c.FotoComunidade
-                            ORDER BY NEWID()");
-    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+                            GROUP BY c.ComunidadeID, c.DonoID, c.Nome, c.Descricao, c.SiteWeb, c.ComunidadeVerificada, c.FotoPerfil, c.FotoCapa -- Inclua FotoPerfil e FotoCapa se elas forem string/URL
+                            ORDER BY c.Nome ASC"); 
     $stmt->execute();
-    $suggestedCommunities = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $allCommunities = $stmt->fetchAll(PDO::FETCH_OBJ);
+    error_log("Todas as comunidades carregadas: " . count($allCommunities)); // Log para depuração
+
 } catch (PDOException $e) {
-    // Se as tabelas não existirem ou houver outro erro, $suggestedCommunities permanecerá vazio.
-    // Em um ambiente de produção, você logaria o erro.
-    // error_log("Erro ao carregar comunidades sugeridas: " . $e->getMessage());
+    $message .= '<p style="color: red;">Erro ao carregar comunidades da plataforma: ' . $e->getMessage() . '</p>'; // Mensagem visível
+    error_log("Erro ao carregar todas as comunidades: " . $e->getMessage()); // Log para depuração
 }
 // --- Fim da Lógica de Comunidades ---
 
@@ -259,8 +266,8 @@ try {
                 </a>
 
                 <a href="Comunidades.php"
-                    class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                    <i class="fas fa-list mr-3"></i> Listas
+                    class="flex items-center p-2 text-lg font-semibold text-[#16ac63] rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                    <i class="fas fa-list mr-3"></i> Comunidades
                 </a>
 
                 <a href="#"
@@ -394,9 +401,9 @@ try {
                                 <p class="text-gray-600 text-sm"><?php echo htmlspecialchars($community->Descricao); ?></p>
                                 <p class="text-gray-500 text-xs mt-1"><?php echo htmlspecialchars($community->Membros); ?> membros</p>
                             </div>
-                            <button class="bg-blue-500 text-white text-sm font-semibold py-1.5 px-4 rounded-full hover:bg-blue-600 transition-colors duration-200">
+                            <a href="ComunidadePage.php?id=<?php echo $community->ComunidadeID; ?>" class="bg-blue-500 text-white text-sm font-semibold py-1.5 px-4 rounded-full hover:bg-blue-600 transition-colors duration-200">
                                 Ver
-                            </button>
+                            </a>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -417,18 +424,25 @@ try {
 
                 <div class="bg-white mt-4 rounded-lg shadow-md">
                     <h2 class="text-xl font-bold p-4 border-b border-gray-200">Comunidades para Você</h2>
-                    <?php if (!empty($suggestedCommunities)): ?>
-                        <?php foreach ($suggestedCommunities as $community): ?>
+                    <?php if (!empty($allCommunities)): // Variável renomeada para allCommunities ?>
+                        <?php foreach ($allCommunities as $community): ?>
                             <div class="flex items-center p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors duration-200">
-                                <img src="<?php echo htmlspecialchars($community->FotoComunidade); ?>" alt="Foto da Comunidade" class="w-12 h-12 rounded-full object-cover mr-4">
+                                <img src="<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>" alt="Foto da Comunidade" class="w-12 h-12 rounded-full object-cover mr-4">
                                 <div class="flex-1">
-                                    <h3 class="font-bold text-lg"><?php echo htmlspecialchars($community->NomeComunidade); ?></h3>
+                                    <div class="flex items-center">
+                                        <h3 class="font-bold text-lg"><?php echo htmlspecialchars($community->NomeComunidade); ?></h3>
+                                        <?php if ($community->ComunidadeVerificada): ?>
+                                            <span class="verified-icon ml-2" title="Comunidade Verificada">
+                                                <i class="fas fa-check"></i>
+                                            </span>
+                                        <?php endif; ?>
+                                    </div>
                                     <p class="text-gray-600 text-sm"><?php echo htmlspecialchars($community->Descricao); ?></p>
                                     <p class="text-gray-500 text-xs mt-1"><?php echo htmlspecialchars($community->Membros); ?> membros</p>
                                 </div>
-                                <button class="bg-gray-900 text-white text-sm font-semibold py-1.5 px-4 rounded-full hover:bg-gray-700 transition-colors duration-200">
-                                    Entrar
-                                </button>
+                                <a href="ComunidadePage.php?id=<?php echo $community->ComunidadeID; ?>" class="bg-gray-900 text-white text-sm font-semibold py-1.5 px-4 rounded-full hover:bg-gray-700 transition-colors duration-200">
+                                    Ver
+                                </a>
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
@@ -436,7 +450,7 @@ try {
                             <div class="mx-auto w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mb-4">
                                 <i class="fas fa-compass text-gray-400 text-3xl"></i>
                             </div>
-                            <p class="text-gray-500">Nenhuma comunidade sugerida no momento.</p>
+                            <p class="text-gray-500">Nenhuma comunidade encontrada na plataforma.</p>
                         </div>
                     <?php endif; ?>
                 </div>
