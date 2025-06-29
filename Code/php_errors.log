@@ -1,0 +1,303 @@
+[28-Jun-2025 23:12:24 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:12:24 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:12:25 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:12:25 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:12:25 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:12:27 Europe/Berlin] Tentativa de postar Zun. UserID: 11, Conteúdo: 'teste'
+[28-Jun-2025 23:12:27 Europe/Berlin] Preparando chamada para PostarZun...
+[28-Jun-2025 23:12:27 Europe/Berlin] Executando PostarZun...
+[28-Jun-2025 23:12:27 Europe/Berlin] Erro PDO ao postar Zun: SQLSTATE[42000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Não foi possível encontrar o procedimento armazenado 'PostarZun'.
+[28-Jun-2025 23:12:27 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:12:45 Europe/Berlin] Tentativa de postar Zun. UserID: 11, Conteúdo: 'teste'
+[28-Jun-2025 23:12:45 Europe/Berlin] Preparando chamada para PostarZun...
+[28-Jun-2025 23:12:45 Europe/Berlin] Executando PostarZun...
+[28-Jun-2025 23:12:45 Europe/Berlin] Erro PDO ao postar Zun: SQLSTATE[42000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Não foi possível encontrar o procedimento armazenado 'PostarZun'.
+[28-Jun-2025 23:12:45 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:56:47 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:56:52 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:56:56 Europe/Berlin] Tentativa de postar Zun. UserID: 11, Conteúdo: 'teste'
+[28-Jun-2025 23:56:56 Europe/Berlin] Preparando chamada para PostarZun...
+[28-Jun-2025 23:56:56 Europe/Berlin] Executando PostarZun...
+[28-Jun-2025 23:56:56 Europe/Berlin] PostarZun executado. ZunID retornado: 2
+[28-Jun-2025 23:56:56 Europe/Berlin] ZunID válido retornado: 2. Processando mídias...
+[28-Jun-2025 23:56:56 Europe/Berlin] Erro no upload do arquivo 0: 4
+[28-Jun-2025 23:56:56 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:56:59 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 23:56:59 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 00:53:42 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Warning:  Undefined property: stdClass::$NomeExibicao in C:\xampp\htdocs\Zuno\Code\Radar.php on line 706
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\Zuno\Code\Radar.php on line 706
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Warning:  Undefined property: stdClass::$NomeUsuario in C:\xampp\htdocs\Zuno\Code\Radar.php on line 708
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\Zuno\Code\Radar.php on line 708
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Warning:  Undefined property: stdClass::$NomeExibicao in C:\xampp\htdocs\Zuno\Code\Radar.php on line 706
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\Zuno\Code\Radar.php on line 706
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Warning:  Undefined property: stdClass::$NomeUsuario in C:\xampp\htdocs\Zuno\Code\Radar.php on line 708
+[29-Jun-2025 00:53:42 Europe/Berlin] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in C:\xampp\htdocs\Zuno\Code\Radar.php on line 708
+[29-Jun-2025 00:56:32 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 00:56:45 Europe/Berlin] Tentativa de postar Zun. UserID: 11, Conteúdo: 'teste3'
+[29-Jun-2025 00:56:45 Europe/Berlin] Preparando chamada para PostarZun...
+[29-Jun-2025 00:56:45 Europe/Berlin] Executando PostarZun...
+[29-Jun-2025 00:56:45 Europe/Berlin] PostarZun executado. ZunID retornado: 3
+[29-Jun-2025 00:56:45 Europe/Berlin] ZunID válido retornado: 3. Processando mídias...
+[29-Jun-2025 00:56:45 Europe/Berlin] Erro no upload do arquivo 0: 4
+[29-Jun-2025 00:56:45 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:40 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:42 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:42 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:42 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:43 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:43 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:43 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:43 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:43 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:43 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:44 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[29-Jun-2025 01:00:44 Europe/Berlin] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:04 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:08 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:12 America/Sao_Paulo] Tentativa de postar Zun. UserID: 11, Conteúdo: 'testeeeeee'
+[28-Jun-2025 20:08:12 America/Sao_Paulo] Preparando chamada para PostarZun...
+[28-Jun-2025 20:08:12 America/Sao_Paulo] Executando PostarZun...
+[28-Jun-2025 20:08:12 America/Sao_Paulo] PostarZun executado. ZunID retornado: 4
+[28-Jun-2025 20:08:12 America/Sao_Paulo] ZunID válido retornado: 4. Processando mídias...
+[28-Jun-2025 20:08:12 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[28-Jun-2025 20:08:12 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:14 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:15 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:15 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:15 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:15 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:16 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:16 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:16 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:08:16 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:10:01 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:10:02 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:11:11 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:18:43 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:18:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:18:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:18:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:18:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:25:22 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:25:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:27:26 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:27:41 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:27:47 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:27:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:32:14 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:32:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:32:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:32:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:32:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:32:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:04 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:05 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:56 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:58 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:34:58 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:35:39 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:35:40 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:35:40 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:35:40 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:35:41 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:36:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:37:12 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:37:13 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:37:13 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:37:13 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:37:13 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:37:13 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:38:02 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:38:03 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:38:03 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:38:03 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:38:03 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:38:03 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:23 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:23 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:25 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:25 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:25 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:25 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:25 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:25 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:41:26 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:54:31 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:54:50 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:55:49 America/Sao_Paulo] Tentativa de postar Zun. UserID: 11, Conteúdo: 'Lorem ipsum dolor sit amet consectetur. Quis quam nibh lorem sit. Duis laoreet scelerisque euismod aliquet tempor faucibus. Feugiat vel morbi elementum orci sit dictum aliquam. Sit posuere in felis pellentesque sed praesent tristique sit. Risus nulla vitae nisi risus laoreet vulp'
+[28-Jun-2025 20:55:49 America/Sao_Paulo] Preparando chamada para PostarZun...
+[28-Jun-2025 20:55:49 America/Sao_Paulo] Executando PostarZun...
+[28-Jun-2025 20:55:49 America/Sao_Paulo] PostarZun executado. ZunID retornado: 5
+[28-Jun-2025 20:55:49 America/Sao_Paulo] ZunID válido retornado: 5. Processando mídias...
+[28-Jun-2025 20:55:49 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[28-Jun-2025 20:55:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:58:29 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:58:30 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:59:17 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 20:59:35 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:00:01 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:00:02 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:00:02 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:06:47 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:06:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:06:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:06:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:06:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:06:50 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:07:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:07:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:07:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:07:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:07:47 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:09:04 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:09:04 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:09:04 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:09:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:10:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:30 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:31 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:39 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:39 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:40 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:52 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:53 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:53 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:53 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:54 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:58 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:11:58 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:13:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:13:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:13:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:13:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:13:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:13:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:13:50 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:22 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:23 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:23 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:14:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:20:31 America/Sao_Paulo] Tentativa de postar Zun. UserID: 11, Conteúdo: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'
+[28-Jun-2025 21:20:31 America/Sao_Paulo] Preparando chamada para PostarZun...
+[28-Jun-2025 21:20:31 America/Sao_Paulo] Executando PostarZun...
+[28-Jun-2025 21:20:31 America/Sao_Paulo] PostarZun executado. ZunID retornado: 6
+[28-Jun-2025 21:20:31 America/Sao_Paulo] ZunID válido retornado: 6. Processando mídias...
+[28-Jun-2025 21:20:31 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[28-Jun-2025 21:20:31 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:20:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:20:47 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:20:47 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:20:47 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:20:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:20:48 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:30:53 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:30:59 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:34:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:35:18 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:37:58 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:55:10 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:55:10 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:55:10 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:55:11 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 21:55:11 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:02:29 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:06:29 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:06:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:43 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:44 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:07:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:08:39 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:09:33 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:09:34 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:14:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:15:04 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:21:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:21:45 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:21:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:21:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:21:59 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:22:00 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:27:18 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:27:20 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:32:55 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:33:08 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:33:49 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:33:57 America/Sao_Paulo] Tentativa de postar Zun. UserID: 11, Conteúdo: 'teste'
+[28-Jun-2025 22:33:57 America/Sao_Paulo] Preparando chamada para PostarZun...
+[28-Jun-2025 22:33:57 America/Sao_Paulo] Executando PostarZun...
+[28-Jun-2025 22:33:57 America/Sao_Paulo] PostarZun executado. ZunID retornado: 7
+[28-Jun-2025 22:33:57 America/Sao_Paulo] ZunID válido retornado: 7. Processando mídias...
+[28-Jun-2025 22:33:57 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[28-Jun-2025 22:33:57 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:46:00 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:46:01 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:46:01 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:46:11 America/Sao_Paulo] Tentativa de postar Zun. UserID: 11, Conteúdo: 'teste de notificação!'
+[28-Jun-2025 22:46:11 America/Sao_Paulo] Preparando chamada para PostarZun...
+[28-Jun-2025 22:46:11 America/Sao_Paulo] Executando PostarZun...
+[28-Jun-2025 22:46:11 America/Sao_Paulo] PostarZun executado. ZunID retornado: 8
+[28-Jun-2025 22:46:11 America/Sao_Paulo] ZunID válido retornado: 8. Processando mídias...
+[28-Jun-2025 22:46:11 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[28-Jun-2025 22:46:11 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:53:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:53:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:53:06 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:53:16 America/Sao_Paulo] Tentativa de postar Zun. UserID: 11, Conteúdo: 'Novo teste de notificação!'
+[28-Jun-2025 22:53:16 America/Sao_Paulo] Preparando chamada para PostarZun...
+[28-Jun-2025 22:53:16 America/Sao_Paulo] Executando PostarZun...
+[28-Jun-2025 22:53:16 America/Sao_Paulo] PostarZun executado. ZunID retornado: 9
+[28-Jun-2025 22:53:16 America/Sao_Paulo] ZunID válido retornado: 9. Processando mídias...
+[28-Jun-2025 22:53:16 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[28-Jun-2025 22:53:16 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:53:36 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
+[28-Jun-2025 22:53:54 America/Sao_Paulo] Tentativa de postar Zun. UserID: 11, Conteúdo: 'Ultimo teste de notificação'
+[28-Jun-2025 22:53:54 America/Sao_Paulo] Preparando chamada para PostarZun...
+[28-Jun-2025 22:53:54 America/Sao_Paulo] Executando PostarZun...
+[28-Jun-2025 22:53:54 America/Sao_Paulo] PostarZun executado. ZunID retornado: 10
+[28-Jun-2025 22:53:54 America/Sao_Paulo] ZunID válido retornado: 10. Processando mídias...
+[28-Jun-2025 22:53:54 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[28-Jun-2025 22:53:54 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S02]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de objeto 'Comunidades' inválido.
