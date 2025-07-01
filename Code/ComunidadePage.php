@@ -287,7 +287,7 @@ function formatarDataZun($data)
     </style>
 </head>
 
-<body class="bg-gray-100 text-gray-900 flex min-h-screen">
+<body class=" bg-white flex min-h-screen ml-96 mr-96 bg-gray-100 text-gray-900">
     <!-- Barra de Navegação Lateral -->
     <nav class="w-64 fixed h-full bg-white border-r border-gray-200 p-4 flex flex-col justify-between">
         <div>
@@ -452,12 +452,13 @@ function formatarDataZun($data)
                                     <img id="communityProfilePic"
                                         src="<?php echo ($community->FotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($community->FotoPerfil) : '../Design/Assets/default_community.png'); ?>"
                                         alt="Foto da Comunidade"
-                                        class="w-32 h-32 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer">
+                                        class="w-64 h-32 rounded-full border-4 border-white object-cover shadow-lg cursor-pointer">
                                 </div>
                                 <div class="flex-col items-left ml-4">
                                     <div class="flex items-center mb-2">
                                         <h1 class="text-3xl font-bold text-gray-900 mr-2">
-                                            <?php echo htmlspecialchars($community->Nome ?? 'Comunidade'); ?></h1>
+                                            <?php echo htmlspecialchars($community->Nome ?? 'Comunidade'); ?>
+                                        </h1>
                                         <?php if ($community->ComunidadeVerificada): ?>
                                             <span class="verified-icon" title="Comunidade Verificada">
                                                 <i class="fas fa-check"></i>
@@ -486,6 +487,9 @@ function formatarDataZun($data)
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <!-- Botões de Entrar/Sair da Comunidade - AGORA CENTRALIZADOS -->
+                        <div class="flex justify-center mt-4"> <!-- Nova div para centralizar o botão -->
                             <?php if ($isMember): ?>
                                 <button
                                     class="bg-red-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-600 transition-colors duration-200">
@@ -545,7 +549,8 @@ function formatarDataZun($data)
                                         </div>
 
                                         <p class="text-gray-800 mt-2 mb-4" style="word-break: break-all;">
-                                            <?php echo htmlspecialchars($zun->Conteudo ?? ''); ?></p>
+                                            <?php echo htmlspecialchars($zun->Conteudo ?? ''); ?>
+                                        </p>
 
                                         <?php if ($zun->MidiaCount > 0):
                                             $mediaUrls = [];

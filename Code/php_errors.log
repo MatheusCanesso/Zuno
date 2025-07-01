@@ -398,3 +398,48 @@
 [29-Jun-2025 01:28:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
 [29-Jun-2025 01:28:37 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
 [29-Jun-2025 01:29:06 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:31:01 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 10:31:06 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:31:22 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 10:31:33 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:31:46 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 10:31:58 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:43:15 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 10:44:59 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:00 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:00 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:00 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:00 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:00 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:01 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:01 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:45:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 10:45:25 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 10:45:29 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:46:07 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 610
+[30-Jun-2025 10:46:30 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:30 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:31 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:39 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:39 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:39 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:51 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:56 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 10:46:57 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 13:03:56 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 468
+[30-Jun-2025 13:04:12 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 612
+[30-Jun-2025 13:05:37 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 615
+[30-Jun-2025 13:06:07 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 14:05:24 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 14:06:10 America/Sao_Paulo] Tentativa de postar Zun. UserID: 1, Conteúdo: 'Post funcionando 👀'
+[30-Jun-2025 14:06:10 America/Sao_Paulo] Preparando chamada para PostarZun...
+[30-Jun-2025 14:06:10 America/Sao_Paulo] Executando PostarZun...
+[30-Jun-2025 14:06:10 America/Sao_Paulo] PostarZun executado. ZunID retornado: 2
+[30-Jun-2025 14:06:10 America/Sao_Paulo] ZunID válido retornado: 2. Processando mídias...
+[30-Jun-2025 14:06:10 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[30-Jun-2025 14:06:10 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 23:06:42 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 23:55:28 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
+[30-Jun-2025 23:55:36 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 615
+[30-Jun-2025 23:55:36 America/Sao_Paulo] PHP Warning:  Undefined property: stdClass::$ZunLikadoPorMim in C:\xampp\htdocs\Zuno\Code\ComunidadePage.php on line 615
+[30-Jun-2025 23:55:50 America/Sao_Paulo] Erro ao carregar comunidades do usuário: SQLSTATE[42S22]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Nome de coluna 'NomeComunidade' inválido.
