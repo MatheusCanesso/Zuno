@@ -99,6 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $zunId = null; // Output parameter for stored procedure
     $postSuccessful = false;
 
+    // Retrieve community ID from form
+    $comunidadeId = isset($_POST['comunidade_id']) && $_POST['comunidade_id'] !== '' ? (int) $_POST['comunidade_id'] : null;
+
     // Default values for new zun (can be adapted for replies/reposts later)
     $zunPaiId = null;
     $zunOriginalId = null;
@@ -107,40 +110,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $localizacao = null; // GEOGRAPHY type in DB
     $idioma = null; // NVARCHAR(10)
 
-    error_log("Tentativa de postar Zun. UserID: " . $userId . ", Conteúdo: '" . $conteudo . "'");
+    error_log("Tentativa de postar Zun. UserID: " . $userId . ", Conteúdo: '" . $conteudo . "', ComunidadeID: " . var_export($comunidadeId, true));
 
     // Check if there's content (text or at least one file)
     if (!empty($conteudo) || (isset($_FILES['midia_zun']) && !empty($_FILES['midia_zun']['name'][0]) && $_FILES['midia_zun']['error'][0] === UPLOAD_ERR_OK)) {
         try {
             error_log("Preparando chamada para PostarZun...");
             // Call PostarZun stored procedure
-            $stmt = $conn->prepare("{CALL PostarZun(?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            // The PostarZun stored procedure now has 9 parameters, including @ComunidadeID
+            $stmt = $conn->prepare("{CALL PostarZun(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
 
             $stmt->bindParam(1, $userId, PDO::PARAM_INT);
             $stmt->bindParam(2, $conteudo, PDO::PARAM_STR);
+            $stmt->bindParam(3, $comunidadeId, PDO::PARAM_INT); // Bind ComunidadeID
 
             // Binding parameters that can be NULL
-            $stmt->bindParam(3, $zunPaiId, PDO::PARAM_INT);
+            $stmt->bindParam(4, $zunPaiId, PDO::PARAM_INT);
             if ($zunPaiId === null)
-                $stmt->bindValue(3, null, PDO::PARAM_NULL);
-
-            $stmt->bindParam(4, $zunOriginalId, PDO::PARAM_INT);
-            if ($zunOriginalId === null)
                 $stmt->bindValue(4, null, PDO::PARAM_NULL);
 
-            $stmt->bindParam(5, $tipoZun, PDO::PARAM_STR);
-            $stmt->bindParam(6, $visibilidade, PDO::PARAM_STR);
+            $stmt->bindParam(5, $zunOriginalId, PDO::PARAM_INT);
+            if ($zunOriginalId === null)
+                $stmt->bindValue(5, null, PDO::PARAM_NULL);
 
-            $stmt->bindParam(7, $localizacao, PDO::PARAM_STR);
+            $stmt->bindParam(6, $tipoZun, PDO::PARAM_STR);
+            $stmt->bindParam(7, $visibilidade, PDO::PARAM_STR);
+
+            $stmt->bindParam(8, $localizacao, PDO::PARAM_STR);
             if ($localizacao === null)
-                $stmt->bindValue(7, null, PDO::PARAM_NULL);
-
-            $stmt->bindParam(8, $idioma, PDO::PARAM_STR);
-            if ($idioma === null)
                 $stmt->bindValue(8, null, PDO::PARAM_NULL);
 
+            $stmt->bindParam(9, $idioma, PDO::PARAM_STR);
+            if ($idioma === null)
+                $stmt->bindValue(9, null, PDO::PARAM_NULL);
+
             // Binding output parameter for SQLSRV
-            $stmt->bindParam(9, $zunId, PDO::PARAM_INT | PDO::PARAM_INPUT_OUTPUT, 8);
+            $stmt->bindParam(10, $zunId, PDO::PARAM_INT | PDO::PARAM_INPUT_OUTPUT, 8);
 
             error_log("Executando PostarZun...");
             $stmt->execute();
@@ -248,10 +253,10 @@ try {
     error_log("Erro ao carregar sugestões de usuários: " . $e->getMessage());
 }
 
-// Buscar comunidades que o usuário faz parte
+// Buscar comunidades que o usuário faz parte (para o menu lateral e para a seleção de postagem)
 $userCommunities = [];
 try {
-    $stmt = $conn->prepare("SELECT c.NomeComunidade FROM Comunidades c JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID WHERE mc.UsuarioID = :userId");
+    $stmt = $conn->prepare("SELECT c.ComunidadeID, c.Nome AS NomeComunidade, c.FotoPerfil AS FotoComunidade FROM Comunidades c JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID WHERE mc.UsuarioID = :userId ORDER BY c.Nome");
     $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
     $stmt->execute();
     $userCommunities = $stmt->fetchAll(PDO::FETCH_OBJ);
@@ -403,6 +408,66 @@ try {
             border: none;
             /* No internal borders for single image */
         }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            min-width: 200px;
+        }
+
+        .custom-select select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 100%;
+            padding: 8px 32px 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 20px;
+            background-color: white;
+            color: #374151;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .custom-select select:focus {
+            outline: none;
+            border-color: #21fa90;
+            box-shadow: 0 0 0 2px rgba(33, 250, 144, 0.2);
+        }
+
+        .custom-select::after {
+            content: "▼";
+            font-size: 10px;
+            color: #6b7280;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .custom-select:hover::after {
+            color: #21fa90;
+        }
+
+        /* Estilo para as opções do select */
+        .custom-select option {
+            padding: 8px;
+        }
+
+        /* Container do select com ícone */
+        .select-with-icon {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .select-icon {
+            width: 20px;
+            height: 20px;
+            color: #21fa90;
+        }
     </style>
 </head>
 
@@ -514,9 +579,9 @@ try {
                         stroke-linejoin="round" />
 
                     <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"
-                        stroke-dasharray="2,2" />
+                        stroke-dasharray="2 2" />
                     <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"
-                        stroke-dasharray="1,2" />
+                        stroke-dasharray="1 2" />
 
                     <defs>
                         <linearGradient id="zuneGradient" x1="0" y1="0" x2="1" y2="1">
@@ -546,9 +611,10 @@ try {
                         <ul>
                             <?php foreach ($userCommunities as $community): ?>
                                 <li class="mb-2 last:mb-0">
-                                    <a href="#"
+                                    <a href="ComunidadePage.php?id=<?php echo htmlspecialchars($community->ComunidadeID); ?>"
                                         class="flex items-center p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                                        <i class="fas fa-users mr-3 text-gray-700"></i>
+                                        <img src="<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>"
+                                            alt="Foto da Comunidade" class="w-8 h-8 rounded-full object-cover mr-3">
                                         <span
                                             class="text-gray-700"><?php echo htmlspecialchars($community->NomeComunidade); ?></span>
                                     </a>
@@ -602,7 +668,43 @@ try {
                     </div>
                 </div>
 
-                <div class="bg-white p-4 border-b border-gray-200">
+                <div class="bg-white p-4 pt-0 border-b border-gray-200">
+                    <div class="flex justify-center">
+                        <div class="mt-3 flex items-center">
+                            <div class="select-with-icon">
+                                <!-- Container para a foto da comunidade (inicialmente vazio) -->
+                                <div id="community-icon-container"
+                                    class="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center bg-gray-200">
+                                    <!-- Ícone padrão (mostrado quando nenhuma comunidade está selecionada) -->
+                                    <svg id="default-community-icon" class="select-icon w-4 h-4 text-gray-500" width="24"
+                                        height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="currentColor"
+                                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M15 9H15.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M9 9H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+                                </div>
+    
+                                <div class="custom-select">
+                                    <select name="comunidade_id" id="comunidade_id">
+                                        <option value="">Meu Feed (Público)</option>
+                                        <?php foreach ($userCommunities as $community): ?>
+                                            <option value="<?php echo htmlspecialchars($community->ComunidadeID); ?>"
+                                                data-photo="<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>">
+                                                <?php echo htmlspecialchars($community->NomeComunidade); ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="flex items-start space-x-3">
                         <img src="<?php echo ($userData->FotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($userData->FotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
                             alt="Sua Foto de Perfil" class="w-12 h-12 rounded-full object-cover">
@@ -618,64 +720,52 @@ try {
                             <input type="file" name="midia_zun[]" id="midia_zun_input"
                                 accept="image/jpeg,image/png,image/gif" multiple class="hidden">
 
-
                             <div class="flex justify-between items-center mt-2">
                                 <div class="flex items-center text-blue-500 text-xl gap-x-2">
-                                    <span
-                                        class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center"
-                                        onclick="document.getElementById('midia_zun_input').click();">
-                                        <i class="">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor"
-                                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                                <path d="M4 16L8 12L12 16L16 10L20 14" stroke="currentColor"
-                                                    stroke-width="1.5" stroke-linecap="round" />
-                                                <circle cx="16" cy="9" r="1.5" fill="currentColor" />
-                                            </svg>
-                                        </i>
-                                    </span>
-                                    <span
+                                    <label for="midia_zun_input"
                                         class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
-                                        <i class="">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor"
-                                                    stroke-width="1.5" />
-                                                <text x="12" y="16" font-family="Arial, sans-serif" font-size="10"
-                                                    font-weight="bold" text-anchor="middle"
-                                                    fill="currentColor">GIF</text>
-                                            </svg>
-                                        </i>
-                                    </span>
-                                    <span
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="4" y="4" width="16" height="16" rx="2" stroke="currentColor"
+                                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                            <path d="M4 16L8 12L12 16L16 10L20 14" stroke="currentColor"
+                                                stroke-width="1.5" stroke-linecap="round" />
+                                            <circle cx="16" cy="9" r="1.5" fill="currentColor" />
+                                        </svg>
+                                    </label>
+                                    <button type="button"
                                         class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
-                                        <i class="">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor"
-                                                    stroke-width="1.5" />
-                                                <rect x="7" y="7" width="10" height="2" rx="1" fill="currentColor" />
-                                                <rect x="7" y="15" width="10" height="2" rx="1" fill="currentColor" />
-                                                <circle cx="9" cy="8" r="1.5" fill="currentColor" />
-                                                <circle cx="9" cy="16" r="1.5" fill="currentColor" />
-                                            </svg>
-                                        </i>
-                                    </span>
-                                    <span
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor"
+                                                stroke-width="1.5" />
+                                            <text x="12" y="16" font-family="Arial, sans-serif" font-size="10"
+                                                font-weight="bold" text-anchor="middle" fill="currentColor">GIF</text>
+                                        </svg>
+                                    </button>
+                                    <button type="button"
                                         class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
-                                        <i class="">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                                xmlns="http://www.w3.org/2000/svg">
-                                                <circle cx="12" cy="12" r="9" stroke="currentColor"
-                                                    stroke-width="1.5" />
-                                                <circle cx="9" cy="10" r="1" fill="currentColor" />
-                                                <circle cx="15" cy="10" r="1" fill="currentColor" />
-                                                <path d="M8 15C8 15 9.5 17 12 17C14.5 17 16 15 16 15"
-                                                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
-                                            </svg>
-                                        </i>
-                                    </span>
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <rect x="3" y="3" width="18" height="18" rx="3" stroke="currentColor"
+                                                stroke-width="1.5" />
+                                            <rect x="7" y="7" width="10" height="2" rx="1" fill="currentColor" />
+                                            <rect x="7" y="15" width="10" height="2" rx="1" fill="currentColor" />
+                                            <circle cx="9" cy="8" r="1.5" fill="currentColor" />
+                                            <circle cx="9" cy="16" r="1.5" fill="currentColor" />
+                                        </svg>
+                                    </button>
+                                    <button type="button"
+                                        class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5" />
+                                            <circle cx="9" cy="10" r="1" fill="currentColor" />
+                                            <circle cx="15" cy="10" r="1" fill="currentColor" />
+                                            <path d="M8 15C8 15 9.5 17 12 17C14.5 17 16 15 16 15" stroke="currentColor"
+                                                stroke-width="1.5" stroke-linecap="round" />
+                                        </svg>
+                                    </button>
                                 </div>
 
                                 <div class="flex items-center gap-2">
@@ -993,6 +1083,51 @@ try {
                 unset($_SESSION['toast_type']);
                 ?>
             }
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            const communitySelect = document.getElementById('comunidade_id');
+            const communityIconContainer = document.getElementById('community-icon-container');
+            const defaultCommunityIcon = document.getElementById('default-community-icon');
+
+            // Armazena as fotos das comunidades em um objeto para acesso rápido
+            const communityPhotos = {};
+            <?php foreach ($userCommunities as $community): ?>
+                communityPhotos['<?php echo $community->ComunidadeID; ?>'] = '<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>';
+            <?php endforeach; ?>
+
+            // Função para atualizar o ícone da comunidade
+            function updateCommunityIcon() {
+                const selectedCommunityId = communitySelect.value;
+
+                // Limpa o container
+                communityIconContainer.innerHTML = '';
+
+                if (selectedCommunityId && communityPhotos[selectedCommunityId]) {
+                    // Mostra a foto da comunidade selecionada
+                    const img = document.createElement('img');
+                    img.src = communityPhotos[selectedCommunityId];
+                    img.alt = 'Foto da Comunidade';
+                    img.className = 'w-full h-full object-cover';
+                    communityIconContainer.appendChild(img);
+
+                    // Aumenta o tamanho do container para a foto
+                    communityIconContainer.classList.add('w-6', 'h-6');
+                    communityIconContainer.classList.remove('w-4', 'h-4');
+                } else {
+                    // Mostra o ícone padrão
+                    communityIconContainer.appendChild(defaultCommunityIcon.cloneNode(true));
+
+                    // Reduz o tamanho do container para o ícone
+                    communityIconContainer.classList.add('w-4', 'h-4');
+                    communityIconContainer.classList.remove('w-6', 'h-6');
+                }
+            }
+
+            // Atualiza o ícone quando a seleção muda
+            communitySelect.addEventListener('change', updateCommunityIcon);
+
+            // Atualiza o ícone no carregamento inicial
+            updateCommunityIcon();
         });
     </script>
 </body>

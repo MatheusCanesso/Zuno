@@ -20,6 +20,8 @@ $community = null;
 $communityOwner = null;
 $communityMembers = [];
 $isMember = false;
+$isPending = false;
+$isOwner = false;
 $message = ''; // Para mensagens de erro/sucesso na página
 
 // Obtém o CommunityID da URL
@@ -30,6 +32,59 @@ if ($communityId <= 0) {
     header("Location: Comunidades.php?status=invalid_id");
     exit();
 }
+
+// --- Lógica para processar a ação de Entrar na Comunidade ---
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'join_community') {
+    try {
+        $stmt = $conn->prepare("{CALL EntrarComunidade(?, ?, ?)}");
+        $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+        $stmt->bindParam(2, $communityId, PDO::PARAM_INT);
+        $stmt->bindParam(3, $joinResult, PDO::PARAM_STR | PDO::PARAM_INPUT_OUTPUT, 50); // Output parameter
+
+        $stmt->execute();
+
+        switch ($joinResult) {
+            case 'membro_adicionado':
+                $_SESSION['toast_message'] = 'Você entrou na comunidade com sucesso!';
+                $_SESSION['toast_type'] = 'success';
+                break;
+            case 'solicitacao_enviada':
+                $_SESSION['toast_message'] = 'Sua solicitação para entrar na comunidade foi enviada!';
+                $_SESSION['toast_type'] = 'info';
+                break;
+            case 'ja_membro':
+                $_SESSION['toast_message'] = 'Você já é membro desta comunidade.';
+                $_SESSION['toast_type'] = 'info';
+                break;
+            case 'ja_solicitou':
+                $_SESSION['toast_message'] = 'Você já tem uma solicitação pendente para esta comunidade.';
+                $_SESSION['toast_type'] = 'info';
+                break;
+            case 'comunidade_nao_encontrada':
+                $_SESSION['toast_message'] = 'Erro: Comunidade não encontrada.';
+                $_SESSION['toast_type'] = 'error';
+                break;
+            case 'erro_adicionar_membro':
+            case 'erro_enviar_solicitacao':
+            case 'erro':
+            default:
+                $_SESSION['toast_message'] = 'Ocorreu um erro ao tentar entrar na comunidade. Tente novamente.';
+                $_SESSION['toast_type'] = 'error';
+                break;
+        }
+        // Redireciona para evitar reenvio do formulário e atualizar a página
+        header("Location: ComunidadePage.php?id=" . $communityId);
+        exit();
+
+    } catch (PDOException $e) {
+        $_SESSION['toast_message'] = 'Erro no banco de dados: ' . $e->getMessage();
+        $_SESSION['toast_type'] = 'error';
+        error_log("Erro PDO ao entrar/solicitar comunidade: " . $e->getMessage());
+        header("Location: ComunidadePage.php?id=" . $communityId); // Redireciona mesmo com erro
+        exit();
+    }
+}
+
 
 try {
     // Buscar informações do usuário logado para a barra lateral
@@ -56,46 +111,44 @@ try {
     $stmt->execute();
     $communityOwner = $stmt->fetch(PDO::FETCH_OBJ);
 
-    // Buscar membros da comunidade e verificar se o usuário logado é membro
-    $stmt = $conn->prepare("SELECT mc.UsuarioID, u.NomeExibicao, u.NomeUsuario, u.FotoPerfil 
-                            FROM MembrosComunidade mc 
-                            JOIN Usuarios u ON mc.UsuarioID = u.UsuarioID 
-                            WHERE mc.ComunidadeID = :communityId");
-    $stmt->bindParam(':communityId', $communityId, PDO::PARAM_INT);
+    // Verificar status de membro/solicitação/dono
+    $stmt = $conn->prepare("{CALL VerificarMembroComunidade(?, ?, ?, ?, ?)}");
+    $stmt->bindParam(1, $userId, PDO::PARAM_INT);
+    $stmt->bindParam(2, $communityId, PDO::PARAM_INT);
+    $stmt->bindParam(3, $isMember, PDO::PARAM_BOOL | PDO::PARAM_INPUT_OUTPUT, 1);
+    $stmt->bindParam(4, $isPending, PDO::PARAM_BOOL | PDO::PARAM_INPUT_OUTPUT, 1);
+    $stmt->bindParam(5, $isOwner, PDO::PARAM_BOOL | PDO::PARAM_INPUT_OUTPUT, 1);
     $stmt->execute();
-    $communityMembers = $stmt->fetchAll(PDO::FETCH_OBJ);
 
-    foreach ($communityMembers as $member) {
-        if ($member->UsuarioID === $userId) {
-            $isMember = true;
-            break;
-        }
+    // Buscar membros da comunidade (apenas se for membro ou a comunidade for pública)
+    if ($isMember || !$community->Privada) {
+        $stmt = $conn->prepare("SELECT mc.UsuarioID, u.NomeExibicao, u.NomeUsuario, u.FotoPerfil 
+                                FROM MembrosComunidade mc 
+                                JOIN Usuarios u ON mc.UsuarioID = u.UsuarioID 
+                                WHERE mc.ComunidadeID = :communityId");
+        $stmt->bindParam(':communityId', $communityId, PDO::PARAM_INT);
+        $stmt->execute();
+        $communityMembers = $stmt->fetchAll(PDO::FETCH_OBJ);
+    } else {
+        $communityMembers = []; // Não mostrar membros se não tiver acesso
     }
 
+
     // --- Lógica para buscar Zuns da Comunidade ---
-    // ATENÇÃO: A tabela Zuns no seu esquema atual NÃO TEM ComunidadeID.
-    // Para exibir Zuns feitos *dentro* desta comunidade, você precisaria adicionar uma coluna ComunidadeID à tabela Zuns.
-    // Por enquanto, esta query buscará Zuns postados pelo DONO da comunidade.
-    $stmt = $conn->prepare("SELECT z.ZunID, z.Conteudo, z.DataCriacao, u.UsuarioID AS AutorID, u.NomeUsuario AS AutorNomeUsuario, u.NomeExibicao AS AutorNomeExibicao, 
-                            CASE WHEN u.FotoPerfil IS NOT NULL THEN CAST(u.FotoPerfil AS VARBINARY(MAX)) ELSE NULL END AS AutorFotoPerfil,
-                            (SELECT COUNT(*) FROM ZunLikes WHERE ZunID = z.ZunID) AS ZunLikes,
-                            (SELECT COUNT(*) FROM Reposts WHERE ZunOriginalID = z.ZunID) AS Reposts,
-                            (SELECT COUNT(*) FROM Zuns WHERE ZunPaiID = z.ZunID) AS Respostas,
-                            (SELECT COUNT(*) FROM Midias WHERE ZunID = z.ZunID) AS MidiaCount,
-                            (SELECT TOP 1 CAST(URL AS VARBINARY(MAX)) FROM Midias WHERE ZunID = z.ZunID AND Ordem = 0) AS MidiaURL_0,
-                            (SELECT TOP 1 TipoMidia FROM Midias WHERE ZunID = z.ZunID AND Ordem = 0) AS MidiaTipo_0,
-                            (SELECT TOP 1 CAST(URL AS VARBINARY(MAX)) FROM Midias WHERE ZunID = z.ZunID AND Ordem = 1) AS MidiaURL_1,
-                            (SELECT TOP 1 TipoMidia FROM Midias WHERE ZunID = z.ZunID AND Ordem = 1) AS MidiaTipo_1,
-                            (SELECT TOP 1 CAST(URL AS VARBINARY(MAX)) FROM Midias WHERE ZunID = z.ZunID AND Ordem = 2) AS MidiaURL_2,
-                            (SELECT TOP 1 TipoMidia FROM Midias WHERE ZunID = z.ZunID AND Ordem = 2) AS MidiaTipo_2,
-                            (SELECT TOP 1 CAST(URL AS VARBINARY(MAX)) FROM Midias WHERE ZunID = z.ZunID AND Ordem = 3) AS MidiaURL_3,
-                            (SELECT TOP 1 TipoMidia FROM Midias WHERE ZunID = z.ZunID AND Ordem = 3) AS MidiaTipo_3
-                            FROM Zuns z JOIN Usuarios u ON z.UsuarioID = u.UsuarioID 
-                            WHERE z.UsuarioID = :ownerId -- Exibindo Zuns do Dono da Comunidade
-                            ORDER BY z.DataCriacao DESC OFFSET 0 ROWS FETCH NEXT 20 ROWS ONLY");
-    $stmt->bindParam(':ownerId', $community->DonoID, PDO::PARAM_INT);
-    $stmt->execute();
-    $communityZuns = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $communityZuns = [];
+    // Apenas busca Zuns se o usuário for membro ou a comunidade for pública
+    if ($isMember || !$community->Privada) {
+        $pagina = 1;
+        $zunsPorPagina = 20;
+        $stmt = $conn->prepare("{CALL ObterZunsComunidade(?, ?, ?, ?)}");
+        $stmt->bindParam(1, $communityId, PDO::PARAM_INT);
+        $stmt->bindParam(2, $userId, PDO::PARAM_INT); // Passa o UsuarioLogadoID
+        $stmt->bindParam(3, $pagina, PDO::PARAM_INT);
+        $stmt->bindParam(4, $zunsPorPagina, PDO::PARAM_INT);
+        $stmt->execute();
+        $communityZuns = $stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
 
 } catch (PDOException $e) {
     $message .= '<p style="color: red;">Erro ao carregar dados da comunidade: ' . $e->getMessage() . '</p>';
@@ -124,6 +177,17 @@ function formatarDataZun($data)
     } else {
         return 'agora';
     }
+}
+
+// Buscar comunidades que o usuário faz parte (para o menu lateral)
+$userCommunities = [];
+try {
+    $stmt = $conn->prepare("SELECT c.ComunidadeID, c.Nome AS NomeComunidade, c.FotoPerfil AS FotoComunidade FROM Comunidades c JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID WHERE mc.UsuarioID = :userId ORDER BY c.Nome");
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+    $userCommunities = $stmt->fetchAll(PDO::FETCH_OBJ);
+} catch (PDOException $e) {
+    error_log("Erro ao carregar comunidades do usuário: " . $e->getMessage());
 }
 
 ?>
@@ -288,7 +352,6 @@ function formatarDataZun($data)
 </head>
 
 <body class=" bg-white flex min-h-screen ml-96 mr-96 bg-gray-100 text-gray-900">
-    <!-- Barra de Navegação Lateral -->
     <nav class="w-64 fixed h-full bg-white border-r border-gray-200 p-4 flex flex-col justify-between">
         <div>
             <div class="mb-8 pl-2">
@@ -383,9 +446,9 @@ function formatarDataZun($data)
                     <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
                     <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"
-                        stroke-dasharray="2,2" />
+                        stroke-dasharray="2 2" />
                     <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"
-                        stroke-dasharray="1,2" />
+                        stroke-dasharray="1 2" />
                     <defs>
                         <linearGradient id="zuneGradient" x1="0" y1="0" x2="1" y2="1">
                             <stop offset="0%" stop-color="currentColor" stop-opacity="0.1" />
@@ -411,14 +474,14 @@ function formatarDataZun($data)
                 <div class="p-4">
                     <?php if (!empty($userCommunities)): ?>
                         <ul>
-                            <?php foreach ($userCommunities as $community): ?>
+                            <?php foreach ($userCommunities as $communityItem): ?>
                                 <li class="mb-2 last:mb-0">
-                                    <a href="ComunidadePage.php?id=<?php echo $community->ComunidadeID; ?>"
+                                    <a href="ComunidadePage.php?id=<?php echo $communityItem->ComunidadeID; ?>"
                                         class="flex items-center p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                                        <img src="<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>"
+                                        <img src="<?php echo ($communityItem->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($communityItem->FotoComunidade) : '../Design/Assets/default_community.png'); ?>"
                                             alt="Foto da Comunidade" class="w-8 h-8 rounded-full object-cover mr-3">
                                         <span
-                                            class="text-gray-700"><?php echo htmlspecialchars($community->NomeComunidade); ?></span>
+                                            class="text-gray-700"><?php echo htmlspecialchars($communityItem->NomeComunidade); ?></span>
                                     </a>
                                 </li>
                             <?php endforeach; ?>
@@ -431,22 +494,15 @@ function formatarDataZun($data)
             </a>
     </nav>
 
-    <!-- Conteúdo Principal da Página da Comunidade -->
     <div class="flex flex-1 ml-64">
         <div class="flex-1 mx-auto">
             <main class="flex-1 mx-auto border-x border-gray-200">
-                <!-- Cabeçalho da Comunidade -->
                 <div class="relative bg-white border-b border-gray-200 pb-4">
-                    <!-- Adicionado pb-4 para espaço abaixo do conteúdo -->
-                    <!-- Foto de Capa da Comunidade -->
                     <div class="w-full h-48 bg-gray-300 overflow-hidden relative">
                         <img src="<?php echo ($community->FotoCapa ? 'data:image/jpeg;base64,' . base64_encode($community->FotoCapa) : '../Design/Assets/default_cover.png'); ?>"
                             alt="Capa da Comunidade" class="w-full h-full object-cover">
                     </div>
-                    <!-- Foto de Perfil da Comunidade -->
-
-                    <div class="p-4 pt-4 pb-2"> <!-- Padding top ajustado para a foto de perfil -->
-                        <div class="flex items-center justify-between mb-2">
+                    <div class="p-4 pt-4 pb-2"> <div class="flex items-center justify-between mb-2">
                             <div class="flex items-center">
                                 <div class="flex">
                                     <img id="communityProfilePic"
@@ -488,33 +544,30 @@ function formatarDataZun($data)
                                 </div>
                             </div>
                         </div>
-                        <!-- Botões de Entrar/Sair da Comunidade - AGORA CENTRALIZADOS -->
-                        <div class="flex justify-center mt-4"> <!-- Nova div para centralizar o botão -->
-                            <?php if ($isMember): ?>
+                        <div class="flex justify-center mt-4">
+                            <?php if ($isOwner): ?>
+                                <span class="bg-gray-700 text-white font-semibold py-2 px-4 rounded-full">
+                                    Você é o dono
+                                </span>
+                            <?php elseif ($isMember): ?>
                                 <button
                                     class="bg-red-500 text-white font-semibold py-2 px-4 rounded-full hover:bg-red-600 transition-colors duration-200">
                                     Sair da Comunidade
                                 </button>
+                            <?php elseif ($isPending): ?>
+                                <span class="bg-yellow-500 text-white font-semibold py-2 px-4 rounded-full">
+                                    Solicitação Pendente
+                                </span>
                             <?php else: ?>
-                                <button
-                                    class="bg-[#21fa90] text-white font-semibold py-2 px-4 rounded-full hover:bg-[#83ecb9] transition-colors duration-200">
-                                    Entrar na Comunidade
-                                </button>
+                                <form action="ComunidadePage.php?id=<?php echo $communityId; ?>" method="POST">
+                                    <input type="hidden" name="action" value="join_community">
+                                    <button type="submit"
+                                        class="bg-[#21fa90] text-white font-semibold py-2 px-4 rounded-full hover:bg-[#83ecb9] transition-colors duration-200">
+                                        Entrar na Comunidade
+                                    </button>
+                                </form>
                             <?php endif; ?>
                         </div>
-                        <!-- <p class="text-gray-600 text-md mb-2"><?php echo htmlspecialchars($community->Descricao ?? 'Nenhuma descrição.'); ?></p>
-                        <?php if (!empty($community->SiteWeb)): ?>
-                            <p class="text-blue-500 text-sm mb-2"><i class="fas fa-link mr-1"></i> <a href="<?php echo htmlspecialchars($community->SiteWeb); ?>" target="_blank"><?php echo htmlspecialchars($community->SiteWeb); ?></a></p>
-                        <?php endif; ?>
-                        <div class="flex items-center text-gray-500 text-sm">
-                            <i class="fas fa-users mr-1"></i> <span><?php echo count($communityMembers); ?> membros</span>
-                            <span class="mx-2">&middot;</span>
-                            <span>Criada em <?php echo (new DateTime($community->DataCriacao))->format('d/m/Y'); ?></span>
-                            <?php if ($communityOwner): ?>
-                                <span class="mx-2">&middot;</span>
-                                <span>Por <span class="font-semibold"><?php echo htmlspecialchars($communityOwner->NomeExibicao ?? 'Desconhecido'); ?></span></span>
-                            <?php endif; ?>
-                        </div> -->
                     </div>
                 </div>
 
@@ -524,108 +577,122 @@ function formatarDataZun($data)
                     </div>
                 <?php endif; ?>
 
-                <!-- Seção de Zuns da Comunidade -->
                 <div class="bg-white mt-4 rounded-lg shadow-md">
                     <h2 class="text-xl font-bold p-4 border-b border-gray-200">Zuns da Comunidade</h2>
-                    <?php if (!empty($communityZuns)): ?>
-                        <?php foreach ($communityZuns as $zun): ?>
-                            <div class="p-4 border-b border-gray-200 relative">
-                                <div class="flex items-start space-x-3">
-                                    <img src="<?php echo ($zun->AutorFotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($zun->AutorFotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
-                                        alt="Foto de Perfil" class="w-10 h-10 rounded-full object-cover mt-1">
+                    <?php if ($isMember || !$community->Privada): ?>
+                        <?php if (!empty($communityZuns)): ?>
+                            <?php foreach ($communityZuns as $zun): ?>
+                                <div class="p-4 border-b border-gray-200 relative">
+                                    <div class="flex items-start space-x-3">
+                                        <img src="<?php echo ($zun->AutorFotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($zun->AutorFotoPerfil) : '../Design/Assets/default_profile.png'); ?>"
+                                            alt="Foto de Perfil" class="w-10 h-10 rounded-full object-cover mt-1">
 
-                                    <div class="flex-1">
-                                        <div class="flex items-center justify-between">
-                                            <div class="flex items-baseline space-x-1">
-                                                <span
-                                                    class="font-bold text-gray-900"><?php echo htmlspecialchars($zun->AutorNomeExibicao ?? 'Usuário Desconhecido'); ?></span>
-                                                <span
-                                                    class="text-gray-500 text-sm">@<?php echo htmlspecialchars($zun->AutorNomeUsuario ?? 'desconhecido'); ?>
-                                                    &middot; <?php echo formatarDataZun($zun->DataCriacao); ?></span>
+                                        <div class="flex-1">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-baseline space-x-1">
+                                                    <span
+                                                        class="font-bold text-gray-900"><?php echo htmlspecialchars($zun->AutorNomeExibicao ?? 'Usuário Desconhecido'); ?></span>
+                                                    <span
+                                                        class="text-gray-500 text-sm">@<?php echo htmlspecialchars($zun->AutorNomeUsuario ?? 'desconhecido'); ?>
+                                                        &middot; <?php echo formatarDataZun($zun->DataCriacao); ?></span>
+                                                </div>
+                                                <button
+                                                    class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
+                                                    <i class="fas fa-ellipsis-h"></i>
+                                                </button>
                                             </div>
-                                            <button class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
-                                                <i class="fas fa-ellipsis-h"></i>
-                                            </button>
-                                        </div>
 
-                                        <p class="text-gray-800 mt-2 mb-4" style="word-break: break-all;">
-                                            <?php echo htmlspecialchars($zun->Conteudo ?? ''); ?>
-                                        </p>
+                                            <p class="text-gray-800 mt-2 mb-4" style="word-break: break-all;">
+                                                <?php echo htmlspecialchars($zun->Conteudo ?? ''); ?>
+                                            </p>
 
-                                        <?php if ($zun->MidiaCount > 0):
-                                            $mediaUrls = [];
-                                            for ($i = 0; $i < $zun->MidiaCount; $i++) {
-                                                if (isset($zun->{"MidiaURL_" . $i}) && !empty($zun->{"MidiaURL_" . $i})) {
-                                                    $mediaUrls[] = 'data:image/jpeg;base64,' . base64_encode($zun->{"MidiaURL_" . $i});
+                                            <?php if ($zun->MidiaCount > 0):
+                                                $mediaUrls = [];
+                                                for ($i = 0; $i < $zun->MidiaCount; $i++) {
+                                                    if (isset($zun->{"MidiaURL_" . $i}) && !empty($zun->{"MidiaURL_" . $i})) {
+                                                        $mediaUrls[] = 'data:image/jpeg;base64,' . base64_encode($zun->{"MidiaURL_" . $i});
+                                                    }
                                                 }
-                                            }
-                                            $mediaCount = count($mediaUrls);
-                                            ?>
-                                            <div class="media-grid mt-2 mb-4 rounded-lg overflow-hidden border border-gray-200
-                                                <?php if ($mediaCount === 1)
-                                                    echo 'grid-1-image';
-                                                else if ($mediaCount === 2)
-                                                    echo 'grid-2-images';
-                                                else if ($mediaCount === 3)
-                                                    echo 'grid-3-images';
-                                                else if ($mediaCount >= 4)
-                                                    echo 'grid-4-images'; ?>">
-                                                <?php foreach ($mediaUrls as $index => $url): ?>
-                                                    <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun" class="<?php
-                                                       if ($mediaCount === 1)
-                                                           echo 'w-full h-auto max-h-96';
-                                                       else if ($mediaCount === 3 && $index === 0)
-                                                           echo 'col-span-2 h-64';
-                                                       else
-                                                           echo 'w-full h-40';
-                                                       ?> object-cover <?php
-                                                        if ($mediaCount > 1 && $index % 2 === 0 && $index < $mediaCount - 1 && ($mediaCount !== 3 || $index !== 0))
-                                                            echo 'border-r border-gray-200';
-                                                        if ($mediaCount > 2 && $index < $mediaCount - 2)
-                                                            echo 'border-b border-gray-200';
-                                                        ?>">
-                                                <?php endforeach; ?>
-                                            </div>
-                                        <?php endif; ?>
+                                                $mediaCount = count($mediaUrls);
+                                                ?>
+                                                <div class="media-grid mt-2 mb-4 rounded-lg overflow-hidden border border-gray-200
+                                                    <?php if ($mediaCount === 1)
+                                                        echo 'grid-1-image';
+                                                    else if ($mediaCount === 2)
+                                                        echo 'grid-2-images';
+                                                    else if ($mediaCount === 3)
+                                                        echo 'grid-3-images';
+                                                    else if ($mediaCount >= 4)
+                                                        echo 'grid-4-images'; ?>">
+                                                    <?php foreach ($mediaUrls as $index => $url): ?>
+                                                        <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun" class="<?php
+                                                           if ($mediaCount === 1)
+                                                               echo 'w-full h-auto max-h-96';
+                                                           else if ($mediaCount === 3 && $index === 0)
+                                                               echo 'col-span-2 h-64';
+                                                           else
+                                                               echo 'w-full h-40';
+                                                           ?> object-cover <?php
+                                                            if ($mediaCount > 1 && $index % 2 === 0 && $index < $mediaCount - 1 && ($mediaCount !== 3 || $index !== 0))
+                                                                echo 'border-r border-gray-200';
+                                                            if ($mediaCount > 2 && $index < $mediaCount - 2)
+                                                                echo 'border-b border-gray-200';
+                                                            ?>">
+                                                    <?php endforeach; ?>
+                                                </div>
+                                            <?php endif; ?>
 
-                                        <div class="flex justify-between items-center text-gray-500 text-sm mt-4 px-4">
-                                            <div class="flex items-center space-x-12">
-                                                <button class="flex items-center space-x-1 hover:text-blue-500">
-                                                    <i class="fas fa-reply"></i> <span><?php echo $zun->Respostas; ?></span>
-                                                </button>
-                                                <button class="flex items-center space-x-1 hover:text-lime-500">
-                                                    <i class="fas fa-sync-alt"></i> <span><?php echo $zun->Reposts; ?></span>
-                                                </button>
-                                            </div>
+                                            <div class="flex justify-between items-center text-gray-500 text-sm mt-4 px-4">
+                                                <div class="flex items-center space-x-12">
+                                                    <button class="flex items-center space-x-1 hover:text-blue-500">
+                                                        <i class="fas fa-reply"></i> <span><?php echo $zun->Respostas; ?></span>
+                                                    </button>
+                                                    <button class="flex items-center space-x-1 hover:text-lime-500">
+                                                        <i class="fas fa-sync-alt"></i> <span><?php echo $zun->Reposts; ?></span>
+                                                    </button>
+                                                </div>
 
-                                            <div class="flex items-center space-x-12">
-                                                <button class="flex items-center space-x-1 hover:text-gray-700">
-                                                    <i class="fas fa-chart-bar"></i> <span><?php echo '0'; ?></span>
-                                                </button>
+                                                <div class="flex items-center space-x-12">
+                                                    <button class="flex items-center space-x-1 hover:text-gray-700">
+                                                        <i class="fas fa-chart-bar"></i> <span><?php echo '0'; ?></span>
+                                                    </button>
 
-                                                <button class="hover:text-gray-700 transition-colors duration-200">
-                                                    <i class="far fa-bookmark"></i>
-                                                </button>
+                                                    <button class="hover:text-gray-700 transition-colors duration-200">
+                                                        <i class="far fa-bookmark"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
+                                        <button
+                                            class="absolute right-4 text-gray-500 hover:text-red-500 flex flex-col items-center top-1/2 -translate-y-1/2">
+                                            <i
+                                                class="<?php echo ($zun->ZunLikadoPorMim ? 'fas fa-heart text-red-500' : 'far fa-heart'); ?> text-xl"></i>
+                                            <span class="text-sm"><?php echo $zun->ZunLikes; ?></span>
+                                        </button>
                                     </div>
-                                    <button
-                                        class="absolute right-4 text-gray-500 hover:text-red-500 flex flex-col items-center top-1/2 -translate-y-1/2">
-                                        <i
-                                            class="<?php echo ($zun->ZunLikadoPorMim ? 'fas fa-heart text-red-500' : 'far fa-heart'); ?> text-xl"></i>
-                                        <span class="text-sm"><?php echo $zun->ZunLikes; ?></span>
-                                    </button>
                                 </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="bg-white mt-4 rounded-lg shadow-md p-8 text-center text-gray-600">
+                                <div
+                                    class="mx-auto w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+                                    <i class="fas fa-comment-slash text-gray-400 text-3xl"></i>
+                                </div>
+                                <p class="text-gray-500">Nenhum Zun encontrado nesta comunidade.</p>
+                                <?php if ($isMember): ?>
+                                    <p class="text-gray-500 text-sm mt-2">Seja o primeiro a Zunar aqui!</p>
+                                <?php endif; ?>
                             </div>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
                     <?php else: ?>
                         <div class="bg-white mt-4 rounded-lg shadow-md p-8 text-center text-gray-600">
                             <div class="mx-auto w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                                <i class="fas fa-comment-slash text-gray-400 text-3xl"></i>
+                                <i class="fas fa-lock text-gray-400 text-3xl"></i>
                             </div>
-                            <p class="text-gray-500">Nenhum Zun encontrado nesta comunidade.</p>
-                            <?php if ($isMember): ?>
-                                <p class="text-gray-500 text-sm mt-2">Seja o primeiro a Zunar aqui!</p>
+                            <p class="text-gray-500 font-semibold">Esta comunidade é privada.</p>
+                            <p class="text-gray-500 text-sm mt-2">Você precisa ser um membro para ver os Zuns e participar.</p>
+                            <?php if ($isPending): ?>
+                                <p class="text-gray-500 text-sm mt-2">Sua solicitação está pendente de aprovação.</p>
                             <?php endif; ?>
                         </div>
                     <?php endif; ?>
@@ -634,9 +701,7 @@ function formatarDataZun($data)
             </main>
         </div>
 
-        <!-- Sidebar Direita (Quem seguir e Membros da Comunidade) -->
         <aside class="w-80 p-6 space-y-6 border border-gray-200 rounded-lg">
-            <!-- Card de Membros da Comunidade -->
             <div class="bg-white rounded-lg shadow-md">
                 <h2 class="text-xl font-bold flex items-center p-4 border-b border-gray-200 gap-x-2">
                     <i class="fas fa-users text-gray-700"></i> Membros da Comunidade
@@ -671,7 +736,6 @@ function formatarDataZun($data)
                 </div>
             </div>
 
-            <!-- Card Quem Seguir (mantido do Radar.php) -->
             <div class="bg-white rounded-lg shadow-md">
                 <h2 class="text-xl font-bold flex items-center p-4 border-b border-gray-200 gap-x-2">
                     <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -723,7 +787,6 @@ function formatarDataZun($data)
         </aside>
     </div>
 
-    <!-- Modal de Imagem (reaproveitado do Radar.php) -->
     <div id="imageModal" class="modal-overlay">
         <div class="modal-content">
             <button id="closeModal" class="modal-close-button"><i class="fas fa-times"></i></button>
@@ -758,6 +821,40 @@ function formatarDataZun($data)
                         imageModal.classList.remove('active');
                     }
                 });
+            }
+
+            // Toastify integration
+            const toastMessage = "<?php echo isset($_SESSION['toast_message']) ? htmlspecialchars($_SESSION['toast_message']) : ''; ?>";
+            const toastType = "<?php echo isset($_SESSION['toast_type']) ? htmlspecialchars($_SESSION['toast_type']) : ''; ?>";
+
+            if (toastMessage) {
+                let backgroundColor = 'rgb(26, 189, 110)'; // Zuno Green for success
+                if (toastType === 'error') {
+                    backgroundColor = '#ef4444'; // Tailwind red-500 for error
+                } else if (toastType === 'info') {
+                    backgroundColor = '#3b82f6'; // Tailwind blue-500 for info
+                }
+
+                Toastify({
+                    text: toastMessage,
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "center",
+                    stopOnFocus: true,
+                    style: {
+                        background: backgroundColor,
+                        borderRadius: "8px",
+                        fontFamily: "'Urbanist', sans-serif"
+                    },
+                    onClick: function () { }
+                }).showToast();
+
+                <?php
+                unset($_SESSION['toast_message']);
+                unset($_SESSION['toast_type']);
+                ?>
             }
         });
     </script>
