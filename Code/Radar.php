@@ -7,7 +7,7 @@ ini_set('display_errors', 1);
 ini_set('log_errors', 1);
 ini_set('error_log', __DIR__ . '/php_errors.log');
 
-require_once 'Configs/config.php';
+require_once 'Configs/config.php'; // Inclui as funções de criptografia/descriptografia
 
 // Redireciona se o usuário não estiver logado
 if (!isset($_SESSION['user_id'])) {
@@ -162,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     for ($i = 0; $i < $totalFiles && $filesProcessed < 4; $i++) { // Limit to 4 files as per design
                         if ($_FILES['midia_zun']['error'][$i] === UPLOAD_ERR_OK) {
                             $fileTmpPath = $_FILES['midia_zun']['tmp_name'][$i];
-                            $fileType = $_FILES['midia_zun']['type'][$i]; // e.g., image/jpeg, image/gif, video/mp4
+                            $fileType = $_FILES['midia_zun']['type'][$i]; // e.g., image/jpeg, image/png, video/mp4
 
                             $mimeGroup = explode('/', $fileType)[0]; // 'image' or 'video'
                             $mediaType = 'imagem'; // Default
@@ -180,12 +180,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 continue; // Skip unsupported file types
                             }
 
-                            $mediaContent = file_get_contents($fileTmpPath);
+                            $rawMediaContent = file_get_contents($fileTmpPath);
+                            // Criptografa o conteúdo da mídia antes de armazenar
+                            $encryptedMediaContent = encryptData($rawMediaContent);
 
                             error_log("Inserindo mídia para ZunID: " . $zunId . ", Tipo: " . $mediaType . ", Ordem: " . $filesProcessed);
                             $stmtMedia = $conn->prepare("INSERT INTO Midias (ZunID, URL, TipoMidia, Ordem, AltText) VALUES (:zunId, :url, :tipoMidia, :ordem, :altText)");
                             $stmtMedia->bindParam(':zunId', $zunId, PDO::PARAM_INT);
-                            $stmtMedia->bindParam(':url', $mediaContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY); // Use PARAM_LOB for VARBINARY(MAX)
+                            // Usa o conteúdo criptografado
+                            $stmtMedia->bindParam(':url', $encryptedMediaContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY); // Use PARAM_LOB for VARBINARY(MAX)
                             $stmtMedia->bindParam(':tipoMidia', $mediaType, PDO::PARAM_STR);
                             $stmtMedia->bindParam(':ordem', $filesProcessed, PDO::PARAM_INT); // Use $filesProcessed for sequential order
                             $altText = 'Mídia anexada ao Zun'; // Placeholder alt text
@@ -236,6 +239,22 @@ try {
 
     $stmt->execute();
     $zuns = $stmt->fetchAll(PDO::FETCH_OBJ);
+
+    // Descriptografar as URLs das mídias após a busca
+    foreach ($zuns as $zun) {
+        for ($i = 0; $i < $zun->MidiaCount; $i++) {
+            if (isset($zun->{"MidiaURL_" . $i}) && !empty($zun->{"MidiaURL_" . $i})) {
+                $decryptedContent = decryptData($zun->{"MidiaURL_" . $i});
+                // Verifica se a descriptografia foi bem-sucedida antes de atribuir
+                if ($decryptedContent !== false) {
+                    $zun->{"MidiaURL_" . $i} = $decryptedContent;
+                } else {
+                    error_log("Falha ao descriptografar mídia para ZunID: " . $zun->ZunID . ", Ordem: " . $i);
+                    $zun->{"MidiaURL_" . $i} = null; // Define como nulo para não exibir conteúdo inválido
+                }
+            }
+        }
+    }
 
 } catch (PDOException $e) {
     $message .= '<p style="color: red;">Erro ao carregar Zuns: ' . $e->getMessage() . '</p>';
@@ -326,6 +345,7 @@ try {
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
+            border-radius: 10px;
         }
 
         .modal-close-button {
@@ -348,7 +368,7 @@ try {
         /* Classes para layout de imagens no Zun */
         .media-grid {
             display: grid;
-            gap: 8px;
+            gap: 4px;
             /* gap-2 */
             border-radius: 8px;
             /* rounded-lg */
@@ -672,25 +692,24 @@ try {
                     <div class="flex justify-center">
                         <div class="mt-3 flex items-center">
                             <div class="select-with-icon">
-                                <!-- Container para a foto da comunidade (inicialmente vazio) -->
                                 <div id="community-icon-container"
                                     class="w-6 h-6 rounded-full overflow-hidden flex items-center justify-center bg-gray-200">
-                                    <!-- Ícone padrão (mostrado quando nenhuma comunidade está selecionada) -->
-                                    <svg id="default-community-icon" class="select-icon w-4 h-4 text-gray-500" width="24"
-                                        height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg id="default-community-icon" class="select-icon w-4 h-4 text-gray-500"
+                                        width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
                                         <path
                                             d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
                                             stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
                                             stroke-linejoin="round" />
                                         <path d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14" stroke="currentColor"
                                             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                        <path d="M15 9H15.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" />
-                                        <path d="M9 9H9.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round" />
+                                        <path d="M15 9H15.01" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9 9H9.01" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
                                     </svg>
                                 </div>
-    
+
                                 <div class="custom-select">
                                     <select name="comunidade_id" id="comunidade_id">
                                         <option value="">Meu Feed (Público)</option>
@@ -821,37 +840,42 @@ try {
                                     <?php if ($zun->MidiaCount > 0):
                                         $mediaUrls = [];
                                         for ($i = 0; $i < $zun->MidiaCount; $i++) {
-                                            if (isset($zun->{"MidiaURL_" . $i}) && !empty($zun->{"MidiaURL_" . $i})) {
+                                            if (isset($zun->{"MidiaURL_" . $i}) && $zun->{"MidiaURL_" . $i} !== null) {
                                                 $mediaUrls[] = 'data:image/jpeg;base64,' . base64_encode($zun->{"MidiaURL_" . $i});
                                             }
                                         }
                                         $mediaCount = count($mediaUrls);
                                         ?>
-                                        <div class="media-grid mt-2 rounded-lg overflow-hidden border border-gray-200
-                                            <?php if ($mediaCount === 1)
-                                                echo 'grid-1-image';
-                                            else if ($mediaCount === 2)
-                                                echo 'grid-2-images';
-                                            else if ($mediaCount === 3)
-                                                echo 'grid-3-images';
-                                            else if ($mediaCount >= 4)
-                                                echo 'grid-4-images'; ?>">
-                                            <?php foreach ($mediaUrls as $index => $url): ?>
-                                                <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun" class="<?php
-                                                   if ($mediaCount === 1)
-                                                       echo 'w-full h-auto max-h-96';
-                                                   else if ($mediaCount === 3 && $index === 0)
-                                                       echo 'col-span-2 h-64';
-                                                   else
-                                                       echo 'w-full h-40';
-                                                   ?> object-cover <?php
-                                                    if ($mediaCount > 1 && $index % 2 === 0 && $index < $mediaCount - 1 && ($mediaCount !== 3 || $index !== 0))
-                                                        echo 'border-r border-gray-200';
-                                                    if ($mediaCount > 2 && $index < $mediaCount - 2)
-                                                        echo 'border-b border-gray-200';
-                                                    ?>">
-                                            <?php endforeach; ?>
-                                        </div>
+
+                                        <?php if ($mediaCount === 1): ?>
+                                            <div class="w-full max-w-[590px] rounded-xl overflow-hidden border border-gray-200 mt-3 mb-4">
+                                                <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
+                                                    class="w-full h-auto max-h-[600px] object-contain" style="cursor: pointer;"
+                                                    onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                            </div>
+                                        <?php else: ?>
+                                            <div class="media-grid mt-2 mb-4 mr-24 rounded-lg overflow-hidden border border-gray-200
+                                        <?php if ($mediaCount === 2)
+                                                    echo 'grid-2-images';
+                                                else if ($mediaCount === 3)
+                                                    echo 'grid-3-images';
+                                                else if ($mediaCount >= 4)
+                                                    echo 'grid-4-images'; ?>">
+                                                <?php foreach ($mediaUrls as $index => $url): ?>
+                                                    <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun" class="<?php
+                                                       if ($mediaCount === 3 && $index === 0)
+                                                           echo 'col-span-2 h-64';
+                                                       else
+                                                           echo 'w-full h-40';
+                                                       ?> object-cover <?php
+                                                        if ($mediaCount > 1 && $index % 2 === 0 && $index < $mediaCount - 1 && ($mediaCount !== 3 || $index !== 0))
+                                                            echo 'border-r border-gray-200';
+                                                        if ($mediaCount > 2 && $index < $mediaCount - 2)
+                                                            echo 'border-b border-gray-200';
+                                                        ?>" onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
                                     <?php endif; ?>
 
                                     <div class="flex justify-between mr-1 items-center text-gray-500 text-sm">
@@ -928,7 +952,7 @@ try {
     <div id="imageModal" class="modal-overlay">
         <div class="modal-content">
             <button id="closeModal" class="modal-close-button"><i class="fas fa-times"></i></button>
-            <img src="" alt="Foto de Perfil Expandida" class="modal-image" id="expandedProfilePic">
+            <img src="" alt="Foto de Perfil Expandida" class="modal-image" id="expandedImage">
         </div>
     </div>
 
@@ -1018,20 +1042,16 @@ try {
                         const img = document.createElement('img');
                         img.src = e.target.result;
                         img.alt = 'Preview';
-                        img.className = 'w-full object-cover';
+                        img.classList.add('w-full', 'object-cover'); // Always apply w-full and object-cover
 
-                        // Apply specific heights/widths for 3-image layout
-                        if (selectedFiles.length === 3) {
-                            if (index === 0) {
-                                img.classList.add('col-span-2', 'h-64'); // First image takes full width, taller
-                            } else {
-                                img.classList.add('h-40'); // Remaining two are shorter
-                            }
+                        // Apply specific heights/widths based on selectedFiles.length
+                        if (selectedFiles.length === 1) {
+                            img.classList.add('h-auto', 'max-h-96');
+                        } else if (selectedFiles.length === 3 && index === 0) {
+                            img.classList.add('col-span-2', 'h-64'); // First image takes full width, taller
                         } else {
-                            img.classList.add('h-40'); // Default height for 1, 2, 4 images
-                            if (selectedFiles.length === 1) {
-                                img.classList.add('h-auto', 'max-h-96'); // Adjust single image height
-                            }
+                            // For 2, 4 images, and remaining 2 in 3-image layout
+                            img.classList.add('h-40');
                         }
 
                         imgDiv.appendChild(img);
@@ -1043,8 +1063,16 @@ try {
 
             textarea.addEventListener('input', updateCharCounter);
             midiaInput.addEventListener('change', function () {
-                // Limit to 4 files
-                selectedFiles = Array.from(midiaInput.files).slice(0, 4);
+                const newFiles = Array.from(midiaInput.files);
+                const combinedFiles = [...selectedFiles, ...newFiles].slice(0, 4); // Accumulate and limit to 4
+
+                // Create a new FileList from the combined files
+                const dataTransfer = new DataTransfer();
+                combinedFiles.forEach(file => dataTransfer.items.add(file));
+                midiaInput.files = dataTransfer.files; // Update the input's files
+
+                selectedFiles = combinedFiles; // Update the internal tracking array
+
                 updateImagePreviews();
                 updateCharCounter(); // Update button state based on files
             });
@@ -1088,12 +1116,36 @@ try {
             const communitySelect = document.getElementById('comunidade_id');
             const communityIconContainer = document.getElementById('community-icon-container');
             const defaultCommunityIcon = document.getElementById('default-community-icon');
+            const imageModal = document.getElementById('imageModal');
+            const expandedImage = document.getElementById('expandedImage');
+            const closeModalBtn = document.getElementById('closeModal');
 
             // Armazena as fotos das comunidades em um objeto para acesso rápido
             const communityPhotos = {};
             <?php foreach ($userCommunities as $community): ?>
                 communityPhotos['<?php echo $community->ComunidadeID; ?>'] = '<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>';
             <?php endforeach; ?>
+
+            // Função para abrir o modal com a imagem expandida
+            window.openModal = function (imageSrc) {
+                expandedImage.src = imageSrc;
+                imageModal.classList.add('active');
+            };
+
+            // Função para fechar o modal
+            closeModalBtn.addEventListener('click', function () {
+                imageModal.classList.remove('active');
+                expandedImage.src = ''; // Limpa a imagem para otimizar memória
+            });
+
+            // Fechar modal clicando fora da imagem
+            imageModal.addEventListener('click', function (event) {
+                if (event.target === imageModal) {
+                    imageModal.classList.remove('active');
+                    expandedImage.src = '';
+                }
+            });
+
 
             // Função para atualizar o ícone da comunidade
             function updateCommunityIcon() {
