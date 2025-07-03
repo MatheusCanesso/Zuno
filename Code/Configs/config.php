@@ -18,6 +18,7 @@ try {
 // ATENÇÃO: Em um ambiente de produção, esta chave DEVE ser gerada de forma segura
 // e carregada de um local seguro (e.g., variável de ambiente, sistema de gerenciamento de segredos).
 // NÃO a mantenha codificada diretamente em um arquivo público.
+// --- Configurações de Criptografia ---
 define('ENCRYPTION_KEY', 'sua_chave_secreta_de_32_bytes_aqui_123'); // Chave de 32 bytes para AES-256
 define('CIPHER_METHOD', 'aes-256-cbc'); // Método de cifra
 
@@ -26,10 +27,8 @@ function encryptData($data) {
     $key = ENCRYPTION_KEY;
     $cipher = CIPHER_METHOD;
     $ivlen = openssl_cipher_iv_length($cipher);
-    $iv = openssl_random_pseudo_bytes($ivlen); // IV deve ser único para cada criptografia
-
+    $iv = openssl_random_pseudo_bytes($ivlen);
     $encrypted = openssl_encrypt($data, $cipher, $key, 0, $iv);
-    // Retorna o IV concatenado com os dados criptografados (para descriptografia posterior)
     return $iv . $encrypted;
 }
 
@@ -38,10 +37,14 @@ function decryptData($encryptedDataWithIv) {
     $key = ENCRYPTION_KEY;
     $cipher = CIPHER_METHOD;
     $ivlen = openssl_cipher_iv_length($cipher);
-
-    $iv = substr($encryptedDataWithIv, 0, $ivlen); // Extrai o IV
-    $encryptedData = substr($encryptedDataWithIv, $ivlen); // Extrai os dados criptografados
-
+    $iv = substr($encryptedDataWithIv, 0, $ivlen);
+    $encryptedData = substr($encryptedDataWithIv, $ivlen);
     return openssl_decrypt($encryptedData, $cipher, $key, 0, $iv);
 }
+
+// --- Configurações de API de GIFs ---
+// Obtenha suas chaves de API em Giphy Developers (https://developers.giphy.com/)
+// e Tenor Developers (https://developers.tenor.com/dashboard/)
+define('GIPHY_API_KEY', 'bN4Sepd2jEzO4MJ8XxSp7fGwhbn3QCvW');
+define('TENOR_API_KEY', 'AIzaSyBinPiZ0nNdUgbReFZlCCLGnpQOaGQd9_Y');
 ?>

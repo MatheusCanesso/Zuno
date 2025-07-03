@@ -96,7 +96,7 @@ function formatarDataZun($data)
 // --- Lógica para Postar um Novo Zun ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'post_zun') {
     $conteudo = trim($_POST['conteudo_zun']);
-    $zunId = null; // Output parameter for stored procedure
+    $zunId = 0; // CORREÇÃO: Inicializado com 0 em vez de null para PDO::PARAM_INPUT_OUTPUT
     $postSuccessful = false;
 
     // Retrieve community ID from form
@@ -112,60 +112,101 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
     error_log("Tentativa de postar Zun. UserID: " . $userId . ", Conteúdo: '" . $conteudo . "', ComunidadeID: " . var_export($comunidadeId, true));
 
-    // Check if there's content (text or at least one file)
-    if (!empty($conteudo) || (isset($_FILES['midia_zun']) && !empty($_FILES['midia_zun']['name'][0]) && $_FILES['midia_zun']['error'][0] === UPLOAD_ERR_OK)) {
+    $selectedGifUrls = [];
+    // Antes de processar os GIFs, verifique se é um array válido
+    if (isset($_POST['selected_gif_urls'])) {
+        $jsonString = '';
+        if (is_array($_POST['selected_gif_urls'])) {
+            // Se for um array, assume que a string JSON é o primeiro elemento
+            // Isso acontece se o input HTML for name="selected_gif_urls[]"
+            $jsonString = $_POST['selected_gif_urls'][0] ?? '';
+        } else {
+            // Se for uma string, usa-a diretamente
+            // Isso acontece se o input HTML for name="selected_gif_urls"
+            $jsonString = $_POST['selected_gif_urls'];
+        }
+
+        $decodedGifs = json_decode($jsonString, true); 
+
+        // Verifique explicitamente por erros de decodificação JSON
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            error_log("ERRO FATAL DE JSON: Falha ao decodificar selected_gif_urls. Motivo: " . json_last_error_msg() . " - JSON recebido: " . var_export($jsonString, true));
+            $_SESSION['toast_message'] = 'Erro ao processar seleção de GIFs (formato inválido). Tente novamente.';
+            $_SESSION['toast_type'] = 'error';
+            header("Location: Radar.php?status=zun_posted");
+            exit();
+        }
+
+        if (is_array($decodedGifs)) {
+            $selectedGifUrls = $decodedGifs;
+        } else {
+            // Este caso deve ser raro se json_last_error() já pegou o erro, mas é um fallback
+            error_log("ERRO LÓGICO: json_decode retornou algo que não é um array. Valor: " . var_export($decodedGifs, true));
+            $_SESSION['toast_message'] = 'Erro interno ao processar GIFs. Tente novamente.';
+            $_SESSION['toast_type'] = 'error';
+            header("Location: Radar.php?status=zun_posted");
+            exit();
+        }
+    }
+    // Debugging: Check what GIF URLs are received
+    error_log("DEBUG: GIF URLs recebidas no backend: " . var_export($selectedGifUrls, true));
+
+
+    // Check if there's content (text or at least one file or at least one GIF)
+    if (!empty($conteudo) || (isset($_FILES['midia_zun']) && !empty($_FILES['midia_zun']['name'][0]) && $_FILES['midia_zun']['error'][0] === UPLOAD_ERR_OK) || !empty($selectedGifUrls)) {
         try {
             error_log("Preparando chamada para PostarZun...");
-            // Call PostarZun stored procedure
-            // The PostarZun stored procedure now has 9 parameters, including @ComunidadeID
-            $stmt = $conn->prepare("{CALL PostarZun(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+            $sql = "DECLARE @output_zun_id BIGINT;
+            EXEC PostarZun 
+                @UsuarioID = ?, 
+                @Conteudo = ?, 
+                @ComunidadeID = ?, 
+                @ZunPaiID = ?, 
+                @ZunOriginalID = ?, 
+                @TipoZun = ?, 
+                @Visibilidade = ?, 
+                @Localizacao = ?, 
+                @Idioma = ?, 
+                @ZunID = @output_zun_id OUTPUT;
+            SELECT @output_zun_id AS zun_id;";
 
-            $stmt->bindParam(1, $userId, PDO::PARAM_INT);
-            $stmt->bindParam(2, $conteudo, PDO::PARAM_STR);
-            $stmt->bindParam(3, $comunidadeId, PDO::PARAM_INT); // Bind ComunidadeID
+            $stmt = $conn->prepare($sql);
 
-            // Binding parameters that can be NULL
-            $stmt->bindParam(4, $zunPaiId, PDO::PARAM_INT);
-            if ($zunPaiId === null)
-                $stmt->bindValue(4, null, PDO::PARAM_NULL);
+            // Use bindValue em vez de bindParam para todos os parâmetros de entrada
+            $stmt->bindValue(1, $userId, PDO::PARAM_INT);
+            $stmt->bindValue(2, $conteudo, PDO::PARAM_STR);
+            $stmt->bindValue(3, $comunidadeId, $comunidadeId === null ? PDO::PARAM_NULL : PDO::PARAM_INT);
+            $stmt->bindValue(4, $zunPaiId, $zunPaiId === null ? PDO::PARAM_NULL : PDO::PARAM_INT);
+            $stmt->bindValue(5, $zunOriginalId, $zunOriginalId === null ? PDO::PARAM_NULL : PDO::PARAM_INT);
+            $stmt->bindValue(6, $tipoZun, PDO::PARAM_STR);
+            $stmt->bindValue(7, $visibilidade, PDO::PARAM_STR);
+            $stmt->bindValue(8, $localizacao, $localizacao === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
+            $stmt->bindValue(9, $idioma, $idioma === null ? PDO::PARAM_NULL : PDO::PARAM_STR);
 
-            $stmt->bindParam(5, $zunOriginalId, PDO::PARAM_INT);
-            if ($zunOriginalId === null)
-                $stmt->bindValue(5, null, PDO::PARAM_NULL);
-
-            $stmt->bindParam(6, $tipoZun, PDO::PARAM_STR);
-            $stmt->bindParam(7, $visibilidade, PDO::PARAM_STR);
-
-            $stmt->bindParam(8, $localizacao, PDO::PARAM_STR);
-            if ($localizacao === null)
-                $stmt->bindValue(8, null, PDO::PARAM_NULL);
-
-            $stmt->bindParam(9, $idioma, PDO::PARAM_STR);
-            if ($idioma === null)
-                $stmt->bindValue(9, null, PDO::PARAM_NULL);
-
-            // Binding output parameter for SQLSRV
-            $stmt->bindParam(10, $zunId, PDO::PARAM_INT | PDO::PARAM_INPUT_OUTPUT, 8);
-
-            error_log("Executando PostarZun...");
             $stmt->execute();
+
+            // Obtenha o ID do Zun criado
+            $result = $stmt->fetch(PDO::FETCH_OBJ);
+            $zunId = $result->zun_id;
+
             error_log("PostarZun executado. ZunID retornado: " . var_export($zunId, true));
 
-            // After execution, $zunId will contain the new ZunID
             if ($zunId > 0) {
                 $postSuccessful = true;
                 error_log("ZunID válido retornado: " . $zunId . ". Processando mídias...");
-                // --- Handle Media Uploads ---
+                
+                $filesProcessed = 0; // Para controlar a ordem das mídias
+                
+                // --- Handle Local Media Uploads ---
                 if (isset($_FILES['midia_zun']) && is_array($_FILES['midia_zun']['name'])) {
                     $totalFiles = count($_FILES['midia_zun']['name']);
-                    $filesProcessed = 0;
-                    for ($i = 0; $i < $totalFiles && $filesProcessed < 4; $i++) { // Limit to 4 files as per design
+                    for ($i = 0; $i < $totalFiles && $filesProcessed < 4; $i++) {
                         if ($_FILES['midia_zun']['error'][$i] === UPLOAD_ERR_OK) {
                             $fileTmpPath = $_FILES['midia_zun']['tmp_name'][$i];
-                            $fileType = $_FILES['midia_zun']['type'][$i]; // e.g., image/jpeg, image/png, video/mp4
+                            $fileType = $_FILES['midia_zun']['type'][$i];
 
-                            $mimeGroup = explode('/', $fileType)[0]; // 'image' or 'video'
-                            $mediaType = 'imagem'; // Default
+                            $mimeGroup = explode('/', $fileType)[0];
+                            $mediaType = 'imagem'; 
 
                             if ($mimeGroup === 'image') {
                                 if (strpos($fileType, 'gif') !== false) {
@@ -176,57 +217,111 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             } elseif ($mimeGroup === 'video') {
                                 $mediaType = 'video';
                             } else {
-                                error_log("Tipo de mídia não suportado ou inválido: " . $fileType);
-                                continue; // Skip unsupported file types
+                                error_log("Tipo de mídia local não suportado ou inválido: " . $fileType);
+                                continue; 
                             }
 
                             $rawMediaContent = file_get_contents($fileTmpPath);
-                            // Criptografa o conteúdo da mídia antes de armazenar
                             $encryptedMediaContent = encryptData($rawMediaContent);
 
-                            error_log("Inserindo mídia para ZunID: " . $zunId . ", Tipo: " . $mediaType . ", Ordem: " . $filesProcessed);
                             $stmtMedia = $conn->prepare("INSERT INTO Midias (ZunID, URL, TipoMidia, Ordem, AltText) VALUES (:zunId, :url, :tipoMidia, :ordem, :altText)");
                             $stmtMedia->bindParam(':zunId', $zunId, PDO::PARAM_INT);
-                            // Usa o conteúdo criptografado
-                            $stmtMedia->bindParam(':url', $encryptedMediaContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY); // Use PARAM_LOB for VARBINARY(MAX)
+                            $stmtMedia->bindParam(':url', $encryptedMediaContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY); 
                             $stmtMedia->bindParam(':tipoMidia', $mediaType, PDO::PARAM_STR);
-                            $stmtMedia->bindParam(':ordem', $filesProcessed, PDO::PARAM_INT); // Use $filesProcessed for sequential order
-                            $altText = 'Mídia anexada ao Zun'; // Placeholder alt text
+                            $stmtMedia->bindParam(':ordem', $filesProcessed, PDO::PARAM_INT);
+                            $altText = 'Mídia anexada ao Zun'; 
                             $stmtMedia->bindParam(':altText', $altText, PDO::PARAM_STR);
                             $stmtMedia->execute();
-                            error_log("Mídia inserida com sucesso.");
                             $filesProcessed++;
                         } else {
-                            error_log("Erro no upload do arquivo " . $i . ": " . $_FILES['midia_zun']['error'][$i]);
+                            error_log("Erro no upload do arquivo local " . $i . ": " . $_FILES['midia_zun']['error'][$i]);
                         }
                     }
                 }
+
+                // --- Handle GIF URLs from API ---
+                foreach ($selectedGifUrls as $gifUrl) {
+                    if ($filesProcessed >= 4) { // Respeitar o limite de 4 mídias
+                        break;
+                    }
+
+                    $gifContent = false; // Inicializa para garantir que a variável exista
+                    $encryptedGifContent = null; // Inicializa para garantir que a variável exista
+                    $mediaType = 'gif'; // Define o tipo de mídia explicitamente para o GIF
+
+                    // Tenta buscar o conteúdo binário do GIF a partir da URL
+                    $ch = curl_init();
+                    curl_setopt($ch, CURLOPT_URL, $gifUrl);
+                    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+                    // Apenas para DEV - Remova/configure em PROD
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); 
+                    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+                    curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
+                    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+                    
+                    $gifContent = curl_exec($ch);
+                    $curl_error = curl_error($ch);
+                    $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+                    curl_close($ch);
+                    
+                    if ($gifContent !== false && $http_code >= 200 && $http_code < 300) {
+                        error_log("DEBUG: Conteúdo do GIF da URL " . $gifUrl . " buscado com sucesso via cURL. HTTP Code: " . $http_code);
+                        $encryptedGifContent = encryptData($gifContent);
+                        
+                        // Verifica se a criptografia foi bem-sucedida E se o conteúdo não está vazio
+                        if ($encryptedGifContent !== false && $encryptedGifContent !== null && $encryptedGifContent !== '') { 
+                            $stmtGif = $conn->prepare("INSERT INTO Midias (ZunID, URL, TipoMidia, Ordem, AltText) VALUES (:zunId, :url, :tipoMidia, :ordem, :altText)");
+                            $stmtGif->bindParam(':zunId', $zunId, PDO::PARAM_INT);
+                            $stmtGif->bindParam(':url', $encryptedGifContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY); 
+                            $stmtGif->bindParam(':tipoMidia', $mediaType, PDO::PARAM_STR); 
+                            $stmtGif->bindParam(':ordem', $filesProcessed, PDO::PARAM_INT);
+                            $altText = 'GIF anexado ao Zun';
+                            $stmtGif->bindParam(':altText', $altText, PDO::PARAM_STR);
+                            
+                            if ($stmtGif->execute()) {
+                                error_log("DEBUG: GIF da URL " . $gifUrl . " inserido no DB com sucesso. Ordem: " . $filesProcessed);
+                                $filesProcessed++;
+                            } else {
+                                error_log("ERRO SQL: Falha ao inserir GIF da URL " . $gifUrl . ": " . var_export($stmtGif->errorInfo(), true));
+                                $_SESSION['toast_message'] = 'Erro ao salvar um GIF no banco de dados.';
+                                $_SESSION['toast_type'] = 'error';
+                            }
+                        } else {
+                             error_log("ERRO: Falha na criptografia ou conteúdo vazio do GIF da URL: " . $gifUrl);
+                             $_SESSION['toast_message'] = 'Erro ao criptografar conteúdo do GIF. Tente outro GIF.';
+                             $_SESSION['toast_type'] = 'error';
+                        }
+                    } else {
+                        error_log("ERRO: Falha ao buscar conteúdo do GIF da URL: " . $gifUrl . " via cURL. Erro cURL: " . $curl_error . " HTTP Code: " . $http_code);
+                        $_SESSION['toast_message'] = 'Não foi possível baixar um dos GIFs selecionados. Tente outro GIF ou um upload de imagem.';
+                        $_SESSION['toast_type'] = 'error';
+                    }
+                }
+
                 $_SESSION['toast_message'] = 'Zun postado com sucesso!';
-                $_SESSION['toast_type'] = 'success'; // Novo tipo 'success' 
+                $_SESSION['toast_type'] = 'success';
             } else {
                 error_log("ZunID não foi retornado ou é inválido (<= 0). Possível falha na SP ou retorno.");
                 $_SESSION['toast_message'] = 'Erro ao postar Zun. Tente novamente.';
-                $_SESSION['toast_type'] = 'error'; // Novo tipo 'success' 
+                $_SESSION['toast_type'] = 'error';
             }
 
         } catch (PDOException $e) {
             $_SESSION['toast_message'] = 'Erro no banco de dados ao postar Zun: ' . $e->getMessage();
-            $_SESSION['toast_type'] = 'error'; // Novo tipo 'error'
+            $_SESSION['toast_type'] = 'error';
             error_log("Erro PDO ao postar Zun: " . $e->getMessage());
         }
     } else {
-        $_SESSION['toast_message'] = 'Zun não pode ser vazio (texto ou mídia).';
-        $_SESSION['toast_type'] = 'error'; // Novo tipo 'error'
-        error_log("Tentativa de postar Zun vazio (sem texto e sem mídia).");
+        $_SESSION['toast_message'] = 'Zun não pode ser vazio (texto, imagem ou GIF).';
+        $_SESSION['toast_type'] = 'error';
+        error_log("Tentativa de postar Zun vazio (sem texto, sem mídia local e sem GIFs).");
     }
-    // Redirecionar para a própria página para limpar o formulário e atualizar o feed
     header("Location: Radar.php?status=zun_posted");
     exit();
 }
 
 // Lógica para buscar Zuns para a timeline
-// Esta seção é executada no carregamento normal da página ou após o redirecionamento.
-// Ela buscará os Zuns mais recentes, incluindo os recém-postados pelo usuário.
 $zuns = [];
 try {
     $pagina = 1;
@@ -245,12 +340,11 @@ try {
         for ($i = 0; $i < $zun->MidiaCount; $i++) {
             if (isset($zun->{"MidiaURL_" . $i}) && !empty($zun->{"MidiaURL_" . $i})) {
                 $decryptedContent = decryptData($zun->{"MidiaURL_" . $i});
-                // Verifica se a descriptografia foi bem-sucedida antes de atribuir
                 if ($decryptedContent !== false) {
                     $zun->{"MidiaURL_" . $i} = $decryptedContent;
                 } else {
                     error_log("Falha ao descriptografar mídia para ZunID: " . $zun->ZunID . ", Ordem: " . $i);
-                    $zun->{"MidiaURL_" . $i} = null; // Define como nulo para não exibir conteúdo inválido
+                    $zun->{"MidiaURL_" . $i} = null;
                 }
             }
         }
@@ -317,7 +411,6 @@ try {
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.75);
-            /* Fundo preto transparente */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -365,16 +458,67 @@ try {
             color: #ccc;
         }
 
+        /* Estilo para o Modal de GIF */
+        .gif-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .gif-modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .gif-modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90%;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .gif-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gif-grid img {
+            width: 100%;
+            height: 100px;
+            /* Altura fixa para os previews na grade */
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .gif-grid img:hover {
+            transform: scale(1.05);
+        }
+
         /* Classes para layout de imagens no Zun */
         .media-grid {
             display: grid;
             gap: 4px;
-            /* gap-2 */
             border-radius: 8px;
-            /* rounded-lg */
             overflow: hidden;
             border: 1px solid #e5e7eb;
-            /* border border-gray-200 */
         }
 
         .grid-1-image {
@@ -390,13 +534,16 @@ try {
             grid-template-rows: auto auto;
         }
 
-        .grid-3-images>img:first-child {
+        .grid-3-images>img:first-child,
+        .grid-3-images>video:first-child {
             grid-column: span 2;
             height: 250px;
         }
 
         .grid-3-images>img:nth-child(2),
-        .grid-3-images>img:nth-child(3) {
+        .grid-3-images>img:nth-child(3),
+        .grid-3-images>video:nth-child(2),
+        .grid-3-images>video:nth-child(3) {
             height: 150px;
         }
 
@@ -406,27 +553,28 @@ try {
         }
 
         /* Ajustes para todas as imagens de grid */
-        .media-grid img {
+        .media-grid img,
+        .media-grid video {
             width: 100%;
             height: 200px;
-            /* Default height, can be overridden */
             object-fit: cover;
             border-radius: 8px;
         }
 
-        /* Adicionar bordas entre as imagens no grid */
-        .media-grid.grid-cols-2>img:nth-child(odd):not(:last-child) {
+        /* Adicionar bordas entre as mídias no grid */
+        .media-grid.grid-cols-2>img:nth-child(odd):not(:last-child),
+        .media-grid.grid-cols-2>video:nth-child(odd):not(:last-child) {
             border-right: 1px solid #e5e7eb;
         }
 
-        .media-grid.grid-rows-2>img:nth-child(-n+2) {
-            /* For top row in 3/4 images */
+        .media-grid.grid-rows-2>img:nth-child(-n+2),
+        .media-grid.grid-rows-2>video:nth-child(-n+2) {
             border-bottom: 1px solid #e5e7eb;
         }
 
-        .media-grid.grid-cols-1>img {
+        .media-grid.grid-cols-1>img,
+        .media-grid.grid-cols-1>video {
             border: none;
-            /* No internal borders for single image */
         }
 
         .custom-select {
@@ -729,6 +877,8 @@ try {
                             alt="Sua Foto de Perfil" class="w-12 h-12 rounded-full object-cover">
                         <form action="Radar.php" method="POST" enctype="multipart/form-data" class="flex-1">
                             <input type="hidden" name="action" value="post_zun">
+                            <input type="hidden" name="selected_gif_urls[]" id="selected_gif_urls_input">
+
                             <textarea name="conteudo_zun" id="zunTextarea" rows="3"
                                 placeholder="O que está acontecendo, <?php echo htmlspecialchars($userData->NomeExibicao ?? ''); ?>?"
                                 class="w-full text-lg p-2 border-none focus:ring-0 focus:outline-none resize-none"
@@ -752,7 +902,7 @@ try {
                                             <circle cx="16" cy="9" r="1.5" fill="currentColor" />
                                         </svg>
                                     </label>
-                                    <button type="button"
+                                    <button type="button" id="gif_button"
                                         class="p-2 rounded-full cursor-pointer transition-colors duration-200 hover:bg-blue-500/10 flex items-center justify-center">
                                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
                                             xmlns="http://www.w3.org/2000/svg">
@@ -839,40 +989,60 @@ try {
 
                                     <?php if ($zun->MidiaCount > 0):
                                         $mediaUrls = [];
+                                        $mediaTypes = [];
                                         for ($i = 0; $i < $zun->MidiaCount; $i++) {
                                             if (isset($zun->{"MidiaURL_" . $i}) && $zun->{"MidiaURL_" . $i} !== null) {
                                                 $mediaUrls[] = 'data:image/jpeg;base64,' . base64_encode($zun->{"MidiaURL_" . $i});
+                                                $mediaTypes[] = $zun->{"MidiaTipo_" . $i};
                                             }
                                         }
                                         $mediaCount = count($mediaUrls);
                                         ?>
 
                                         <?php if ($mediaCount === 1): ?>
-                                            <div class="w-full max-w-[590px] rounded-xl overflow-hidden border border-gray-200 mt-3 mb-4">
-                                                <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
-                                                    class="w-full h-auto max-h-[600px] object-contain" style="cursor: pointer;"
-                                                    onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                            <div
+                                                class="w-full max-w-[590px] rounded-xl overflow-hidden border border-gray-200 mt-3 mb-4">
+                                                <?php if ($mediaTypes[0] === 'gif'): ?>
+                                                    <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="GIF do Zun"
+                                                        class="w-full h-auto max-h-[600px] object-contain" style="cursor: pointer;"
+                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                <?php else: ?>
+                                                    <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
+                                                        class="w-full h-auto max-h-[600px] object-contain" style="cursor: pointer;"
+                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                <?php endif; ?>
                                             </div>
                                         <?php else: ?>
                                             <div class="media-grid mt-2 mb-4 mr-24 rounded-lg overflow-hidden border border-gray-200
-                                        <?php if ($mediaCount === 2)
+                                                <?php if ($mediaCount === 2)
                                                     echo 'grid-2-images';
                                                 else if ($mediaCount === 3)
                                                     echo 'grid-3-images';
                                                 else if ($mediaCount >= 4)
                                                     echo 'grid-4-images'; ?>">
                                                 <?php foreach ($mediaUrls as $index => $url): ?>
-                                                    <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun" class="<?php
-                                                       if ($mediaCount === 3 && $index === 0)
-                                                           echo 'col-span-2 h-64';
-                                                       else
-                                                           echo 'w-full h-40';
-                                                       ?> object-cover <?php
-                                                        if ($mediaCount > 1 && $index % 2 === 0 && $index < $mediaCount - 1 && ($mediaCount !== 3 || $index !== 0))
-                                                            echo 'border-r border-gray-200';
-                                                        if ($mediaCount > 2 && $index < $mediaCount - 2)
-                                                            echo 'border-b border-gray-200';
-                                                        ?>" onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                    <?php if ($mediaTypes[$index] === 'gif'): ?>
+                                                        <img src="<?php echo htmlspecialchars($url); ?>" alt="GIF do Zun" class="<?php
+                                                           if ($mediaCount === 3 && $index === 0)
+                                                               echo 'col-span-2 h-64';
+                                                           else
+                                                               echo 'w-full h-40';
+                                                           ?> object-cover"
+                                                            onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                    <?php else: ?>
+                                                        <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun" class="<?php
+                                                           if ($mediaCount === 3 && $index === 0)
+                                                               echo 'col-span-2 h-64';
+                                                           else
+                                                               echo 'w-full h-40';
+                                                           ?> object-cover <?php
+                                                            if ($mediaCount > 1 && $index % 2 === 0 && $index < $mediaCount - 1 && ($mediaCount !== 3 || $index !== 0))
+                                                                echo 'border-r border-gray-200';
+                                                            if ($mediaCount > 2 && $index < $mediaCount - 2)
+                                                                echo 'border-b border-gray-200';
+                                                            ?>"
+                                                            onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                    <?php endif; ?>
                                                 <?php endforeach; ?>
                                             </div>
                                         <?php endif; ?>
@@ -952,7 +1122,23 @@ try {
     <div id="imageModal" class="modal-overlay">
         <div class="modal-content">
             <button id="closeModal" class="modal-close-button"><i class="fas fa-times"></i></button>
-            <img src="" alt="Foto de Perfil Expandida" class="modal-image" id="expandedImage">
+            <img src="" alt="Mídia Expandida" class="modal-image" id="expandedImage">
+        </div>
+    </div>
+
+    <div id="gifModal" class="gif-modal-overlay">
+        <div class="gif-modal-content">
+            <h3 class="text-xl font-bold mb-4">Escolher GIF</h3>
+            <div class="flex gap-2 mb-4">
+                <input type="text" id="gif_search_input" placeholder="Buscar GIFs..."
+                    class="flex-1 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#21fa90]">
+                <button id="gif_search_button"
+                    class="bg-[#21fa90] text-white px-4 py-2 rounded-lg hover:bg-[#83ecb9]">Buscar</button>
+            </div>
+            <div id="gif_results_container" class="gif-grid">
+                <p class="text-gray-500 text-center col-span-full">Carregando GIFs em alta...</p>
+            </div>
+            <button id="closeGifModal" class="modal-close-button"><i class="fas fa-times"></i></button>
         </div>
     </div>
 
@@ -963,16 +1149,26 @@ try {
             const charCount = document.getElementById('charCount');
             const zunButton = document.getElementById('zunButton');
             const midiaInput = document.getElementById('midia_zun_input');
+            const selectedGifUrlsInput = document.getElementById('selected_gif_urls_input');
             const imagePreviewContainer = document.getElementById('image-preview-container');
-            const maxLength = 280; // Changed to 280 to match Zuns table
-            const warningThreshold = 20;
+            const gifButton = document.getElementById('gif_button');
+            const gifModal = document.getElementById('gifModal');
+            const closeGifModalBtn = document.getElementById('closeGifModal');
+            const gifSearchInput = document.getElementById('gif_search_input');
+            const gifSearchButton = document.getElementById('gif_search_button');
+            const gifResultsContainer = document.getElementById('gif_results_container');
 
-            let selectedFiles = [];
+            const maxLength = 280;
+            const warningThreshold = 20;
+            const MAX_MEDIA_COUNT = 4; // Limite total de imagens/GIFs
+
+            // selectedFiles agora pode conter File objetos (para uploads) ou URLs de string (para GIFs)
+            let selectedFiles = []; // Armazena File objetos ou {type: 'gif', url: '...'}
 
             function updateCharCounter() {
                 const currentLength = textarea.value.length;
                 charCount.textContent = currentLength;
-                // Enable button if there's text or selected files
+                // Habilitar botão se houver texto ou mídias selecionadas
                 zunButton.disabled = currentLength === 0 && selectedFiles.length === 0;
 
                 if (currentLength > maxLength - warningThreshold) {
@@ -994,108 +1190,222 @@ try {
             }
 
             function updateImagePreviews() {
-                imagePreviewContainer.innerHTML = ''; // Clear existing previews
+                imagePreviewContainer.innerHTML = ''; // Limpa previews existentes
+                const currentGifUrls = []; // Para atualizar o hidden input de GIFs
+
                 if (selectedFiles.length === 0) {
                     imagePreviewContainer.style.display = 'none';
+                    selectedGifUrlsInput.value = ''; // Limpa o hidden input
                     return;
                 }
 
                 imagePreviewContainer.style.display = 'grid';
                 imagePreviewContainer.className = 'mt-2 gap-2 rounded-lg overflow-hidden border border-gray-200';
 
-                // Set grid classes based on number of images
+                // Define classes de grade com base no número de mídias
                 if (selectedFiles.length === 1) {
                     imagePreviewContainer.classList.add('grid-1-image');
                 } else if (selectedFiles.length === 2) {
                     imagePreviewContainer.classList.add('grid-2-images');
                 } else if (selectedFiles.length === 3) {
-                    imagePreviewContainer.classList.add('grid-3-images'); // 2 cols, 2 rows for 3 images
+                    imagePreviewContainer.classList.add('grid-3-images');
                 } else if (selectedFiles.length >= 4) {
                     imagePreviewContainer.classList.add('grid-4-images');
                 }
 
-                selectedFiles.forEach((file, index) => {
-                    const reader = new FileReader();
-                    reader.onload = function (e) {
-                        const imgDiv = document.createElement('div');
-                        imgDiv.className = 'relative group';
+                // Cria um novo FileList para o input de upload local, excluindo GIFs de URL
+                const newFileList = new DataTransfer();
 
-                        // Close button for image preview
-                        const closeButton = document.createElement('button');
-                        closeButton.className = 'absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity';
-                        closeButton.innerHTML = '<i class="fas fa-times"></i>';
-                        closeButton.onclick = (event) => {
-                            event.preventDefault(); // Prevent form submission
-                            // Remove the file from the selectedFiles array
-                            selectedFiles = selectedFiles.filter((f, i) => i !== index);
+                selectedFiles.forEach((mediaItem, index) => {
+                    const imgDiv = document.createElement('div');
+                    imgDiv.className = 'relative group';
 
-                            // Create a new FileList to update the input element
-                            const dataTransfer = new DataTransfer();
-                            selectedFiles.forEach(file => dataTransfer.items.add(file));
-                            midiaInput.files = dataTransfer.files;
-
-                            updateImagePreviews(); // Re-render previews
-                            updateCharCounter(); // Re-evaluate button state
-                        };
-                        imgDiv.appendChild(closeButton);
-
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        img.alt = 'Preview';
-                        img.classList.add('w-full', 'object-cover'); // Always apply w-full and object-cover
-
-                        // Apply specific heights/widths based on selectedFiles.length
-                        if (selectedFiles.length === 1) {
-                            img.classList.add('h-auto', 'max-h-96');
-                        } else if (selectedFiles.length === 3 && index === 0) {
-                            img.classList.add('col-span-2', 'h-64'); // First image takes full width, taller
-                        } else {
-                            // For 2, 4 images, and remaining 2 in 3-image layout
-                            img.classList.add('h-40');
-                        }
-
-                        imgDiv.appendChild(img);
-                        imagePreviewContainer.appendChild(imgDiv);
+                    const closeButton = document.createElement('button');
+                    closeButton.className = 'absolute top-1 right-1 bg-black bg-opacity-50 text-white rounded-full p-1 text-xs opacity-0 group-hover:opacity-100 transition-opacity';
+                    closeButton.innerHTML = '<i class="fas fa-times"></i>';
+                    closeButton.onclick = (event) => {
+                        event.preventDefault();
+                        selectedFiles = selectedFiles.filter((f, i) => i !== index);
+                        updateImagePreviews();
+                        updateCharCounter();
                     };
-                    reader.readAsDataURL(file);
+                    imgDiv.appendChild(closeButton);
+
+                    let mediaElement;
+                    if (mediaItem.type === 'gif') { // É um GIF de URL
+                        mediaElement = document.createElement('img'); // Usar <img> para GIFs
+                        mediaElement.src = mediaItem.url;
+                        mediaElement.alt = 'GIF Preview';
+                        currentGifUrls.push(mediaItem.url); // Adiciona a URL ao array de GIFs para o hidden input
+                    } else { // É um File (imagem local)
+                        mediaElement = document.createElement('img'); // Ou <video> se você tiver suporte a vídeo
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            mediaElement.src = e.target.result;
+                        };
+                        reader.readAsDataURL(mediaItem);
+                        newFileList.items.add(mediaItem); // Adiciona o arquivo local ao novo FileList
+                    }
+
+                    mediaElement.className = 'w-full object-cover';
+
+                    // Aplica alturas específicas com base no número total de mídias
+                    if (selectedFiles.length === 1) {
+                        mediaElement.classList.add('h-auto', 'max-h-96');
+                        mediaElement.style.cursor = 'pointer'; // Adicionar cursor pointer para indicar que é clicável
+                    } else if (selectedFiles.length === 3 && index === 0) {
+                        mediaElement.classList.add('col-span-2', 'h-64');
+                        mediaElement.style.cursor = 'pointer';
+                    } else {
+                        mediaElement.classList.add('h-40');
+                        mediaElement.style.cursor = 'pointer';
+                    }
+                    mediaElement.onclick = () => openModal(mediaElement.src); // Adiciona o onclick para o modal de expandir
+
+                    imgDiv.appendChild(mediaElement);
+                    imagePreviewContainer.appendChild(imgDiv);
                 });
+
+                midiaInput.files = newFileList.files; // Atualiza o input de arquivos locais
+                selectedGifUrlsInput.value = JSON.stringify(currentGifUrls); // Atualiza o hidden input de GIFs
             }
 
             textarea.addEventListener('input', updateCharCounter);
+
+            // Listener para upload de arquivos locais
             midiaInput.addEventListener('change', function () {
-                const newFiles = Array.from(midiaInput.files);
-                const combinedFiles = [...selectedFiles, ...newFiles].slice(0, 4); // Accumulate and limit to 4
+                const newLocalFiles = Array.from(midiaInput.files);
 
-                // Create a new FileList from the combined files
-                const dataTransfer = new DataTransfer();
-                combinedFiles.forEach(file => dataTransfer.items.add(file));
-                midiaInput.files = dataTransfer.files; // Update the input's files
+                // Filtra para garantir que não excedemos o limite com novos arquivos locais
+                const remainingSlots = MAX_MEDIA_COUNT - selectedFiles.length;
+                const filesToAdd = newLocalFiles.slice(0, remainingSlots);
 
-                selectedFiles = combinedFiles; // Update the internal tracking array
+                // Adiciona os novos arquivos locais ao array
+                selectedFiles.push(...filesToAdd);
+
+                // Limpa o input de arquivos para permitir novas seleções
+                midiaInput.value = '';
 
                 updateImagePreviews();
-                updateCharCounter(); // Update button state based on files
+                updateCharCounter();
             });
+
+            // --- Lógica do Modal de GIF ---
+            gifButton.addEventListener('click', function () {
+                if (selectedFiles.length < MAX_MEDIA_COUNT) {
+                    gifModal.classList.add('active');
+                    if (gifResultsContainer.children.length <= 1) { // Só carrega trending se não houver resultados
+                        searchGifs(''); // Carrega GIFs em alta na abertura
+                    }
+                } else {
+                    Toastify({
+                        text: "Você pode adicionar no máximo " + MAX_MEDIA_COUNT + " mídias (imagens/GIFs) por Zun.",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#ef4444",
+                            borderRadius: "8px",
+                            fontFamily: "'Urbanist', sans-serif"
+                        },
+                    }).showToast();
+                }
+            });
+
+            closeGifModalBtn.addEventListener('click', function () {
+                gifModal.classList.remove('active');
+                gifSearchInput.value = ''; // Limpa a busca ao fechar
+                gifResultsContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full">Carregando GIFs em alta...</p>'; // Reseta a mensagem
+            });
+
+            gifSearchButton.addEventListener('click', function () {
+                searchGifs(gifSearchInput.value);
+            });
+
+            gifSearchInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    searchGifs(gifSearchInput.value);
+                }
+            });
+
+            function searchGifs(query) {
+                gifResultsContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full">Buscando GIFs...</p>';
+                fetch(`fetch_gifs.php?q=${encodeURIComponent(query)}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro ao buscar GIFs: ' + response.statusText);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        gifResultsContainer.innerHTML = ''; // Limpa resultados anteriores
+                        if (data.data && data.data.length > 0) {
+                            data.data.forEach(gif => {
+                                const img = document.createElement('img');
+                                img.src = gif.url;
+                                img.alt = 'GIF';
+                                img.title = gif.source; // Mostra a fonte (Giphy/Tenor) no tooltip
+                                img.classList.add('gif-item');
+                                img.addEventListener('click', () => selectGif(gif.url));
+                                gifResultsContainer.appendChild(img);
+                            });
+                        } else {
+                            gifResultsContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full">Nenhum GIF encontrado.</p>';
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar GIFs:', error);
+                        gifResultsContainer.innerHTML = `<p class="text-red-500 text-center col-span-full">Erro ao carregar GIFs: ${error.message}</p>`;
+                    });
+            }
+
+            function selectGif(gifUrl) {
+                if (selectedFiles.length < MAX_MEDIA_COUNT) {
+                    selectedFiles.push({ type: 'gif', url: gifUrl });
+                    updateImagePreviews();
+                    updateCharCounter();
+                    gifModal.classList.remove('active'); // Fecha o modal após selecionar
+                    gifSearchInput.value = ''; // Limpa a busca
+                    gifResultsContainer.innerHTML = '<p class="text-gray-500 text-center col-span-full">Carregando GIFs em alta...</p>'; // Reseta a mensagem
+                } else {
+                    Toastify({
+                        text: "Você pode adicionar no máximo " + MAX_MEDIA_COUNT + " mídias (imagens/GIFs) por Zun.",
+                        duration: 3000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom",
+                        position: "center",
+                        stopOnFocus: true,
+                        style: {
+                            background: "#ef4444",
+                            borderRadius: "8px",
+                            fontFamily: "'Urbanist', sans-serif"
+                        },
+                    }).showToast();
+                }
+            }
 
             // Initial setup
             updateCharCounter();
+            // Mostrar toasts (mensagens de sucesso/erro)
             const toastMessage = "<?php echo isset($_SESSION['toast_message']) ? htmlspecialchars($_SESSION['toast_message']) : ''; ?>";
             const toastType = "<?php echo isset($_SESSION['toast_type']) ? htmlspecialchars($_SESSION['toast_type']) : ''; ?>";
 
             if (toastMessage) {
-                let backgroundColor = 'rgb(26, 189, 110)'; // Cor padrão Zuno Green para sucesso
+                let backgroundColor = 'rgb(26, 189, 110)';
                 if (toastType === 'error') {
-                    backgroundColor = '#ef4444'; // Vermelho do Tailwind para erro (red-500)
+                    backgroundColor = '#ef4444';
                 }
-
-                // Localize este trecho no seu Radar.php dentro do <script>
                 Toastify({
                     text: toastMessage,
                     duration: 3000,
                     newWindow: true,
                     close: true,
-                    gravity: "bottom", // Alterado de "top" para "bottom"
-                    position: "center", // Alterado de "right" para "center"
+                    gravity: "bottom",
+                    position: "center",
                     stopOnFocus: true,
                     style: {
                         background: backgroundColor,
@@ -1104,8 +1414,6 @@ try {
                     },
                     onClick: function () { }
                 }).showToast();
-
-                // Limpa as variáveis de sessão para que o toast não apareça novamente em futuros recarregamentos
                 <?php
                 unset($_SESSION['toast_message']);
                 unset($_SESSION['toast_type']);

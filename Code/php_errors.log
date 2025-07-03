@@ -699,3 +699,187 @@
 [03-Jul-2025 01:52:06 America/Sao_Paulo] PostarZun executado. ZunID retornado: 18
 [03-Jul-2025 01:52:06 America/Sao_Paulo] ZunID válido retornado: 18. Processando mídias...
 [03-Jul-2025 01:52:06 America/Sao_Paulo] Erro no upload do arquivo 0: 4
+[03-Jul-2025 02:28:28 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Teste de Gif anexado!', ComunidadeID: NULL
+[03-Jul-2025 02:28:28 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 02:28:28 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 02:28:28 America/Sao_Paulo] PostarZun executado. ZunID retornado: 19
+[03-Jul-2025 02:28:28 America/Sao_Paulo] ZunID válido retornado: 19. Processando mídias...
+[03-Jul-2025 02:28:28 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 02:28:28 America/Sao_Paulo] Falha ao buscar conteúdo do GIF da URL: ["https://media3.giphy.com/media/RPrv177apU6D8sxkR8/giphy.gif?cid=ac7ff352ith5mpvoakzu1en48hdl6ppx2uc27l6m65aodxgq&ep=v1_gifs_search&rid=giphy.gif&ct=g"]
+[03-Jul-2025 02:28:42 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 02:28:42 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 02:28:42 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 02:28:42 America/Sao_Paulo] PostarZun executado. ZunID retornado: 20
+[03-Jul-2025 02:28:42 America/Sao_Paulo] ZunID válido retornado: 20. Processando mídias...
+[03-Jul-2025 02:28:42 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 02:28:42 America/Sao_Paulo] Falha ao buscar conteúdo do GIF da URL: ["https://media4.giphy.com/media/q0tpcy22DqhTnCNUgU/giphy.gif?cid=ac7ff3526qhzoja54orb7hi0s1mvu982hr8bv9ei3aqi2dkm&ep=v1_gifs_trending&rid=giphy.gif&ct=g"]
+[03-Jul-2025 02:35:37 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'soninho...', ComunidadeID: NULL
+[03-Jul-2025 02:35:37 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 02:35:37 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 02:35:37 America/Sao_Paulo] PostarZun executado. ZunID retornado: 21
+[03-Jul-2025 02:35:37 America/Sao_Paulo] ZunID válido retornado: 21. Processando mídias...
+[03-Jul-2025 02:35:37 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 02:35:39 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in C:\xampp\htdocs\Zuno\Code\Radar.php:225
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 225
+[03-Jul-2025 02:39:45 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Teste', ComunidadeID: NULL
+[03-Jul-2025 02:39:45 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 02:39:45 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 02:39:45 America/Sao_Paulo] PostarZun executado. ZunID retornado: 22
+[03-Jul-2025 02:39:45 America/Sao_Paulo] ZunID válido retornado: 22. Processando mídias...
+[03-Jul-2025 02:39:45 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 02:39:47 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in C:\xampp\htdocs\Zuno\Code\Radar.php:225
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 225
+[03-Jul-2025 02:46:48 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 02:46:48 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 02:46:48 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 02:46:48 America/Sao_Paulo] PostarZun executado. ZunID retornado: 23
+[03-Jul-2025 02:46:48 America/Sao_Paulo] ZunID válido retornado: 23. Processando mídias...
+[03-Jul-2025 02:46:48 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 02:46:48 America/Sao_Paulo] DEBUG: zunId antes de bindParam: 23, Tipo: integer
+[03-Jul-2025 02:46:48 America/Sao_Paulo] DEBUG: zunPaiId: NULL, Tipo: NULL
+[03-Jul-2025 02:46:48 America/Sao_Paulo] DEBUG: zunOriginalId: NULL, Tipo: NULL
+[03-Jul-2025 02:46:48 America/Sao_Paulo] Falha ao buscar conteúdo do GIF da URL: ["https://media4.giphy.com/media/EZICHGrSD5QEFCxMiC/giphy.gif?cid=ac7ff3526z0wxanx4u69wiajj73fs1lhbu4ysq97ofsixe4l&ep=v1_gifs_search&rid=giphy.gif&ct=g"]
+[03-Jul-2025 03:12:06 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 03:12:06 America/Sao_Paulo] PHP Fatal error:  Uncaught TypeError: json_decode(): Argument #1 ($json) must be of type string, array given in C:\xampp\htdocs\Zuno\Code\Radar.php:118
+Stack trace:
+#0 C:\xampp\htdocs\Zuno\Code\Radar.php(118): json_decode(Array, true)
+#1 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 118
+[03-Jul-2025 11:53:32 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 11:53:32 America/Sao_Paulo] PHP Fatal error:  Uncaught TypeError: json_decode(): Argument #1 ($json) must be of type string, array given in C:\xampp\htdocs\Zuno\Code\Radar.php:118
+Stack trace:
+#0 C:\xampp\htdocs\Zuno\Code\Radar.php(118): json_decode(Array, true)
+#1 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 118
+[03-Jul-2025 13:19:45 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Teste', ComunidadeID: NULL
+[03-Jul-2025 13:19:45 America/Sao_Paulo] PHP Fatal error:  Uncaught TypeError: json_decode(): Argument #1 ($json) must be of type string, array given in C:\xampp\htdocs\Zuno\Code\Radar.php:118
+Stack trace:
+#0 C:\xampp\htdocs\Zuno\Code\Radar.php(118): json_decode(Array, true)
+#1 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 118
+[03-Jul-2025 13:21:03 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Teste', ComunidadeID: NULL
+[03-Jul-2025 13:21:03 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media4.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352d9ughypcxvkvo6fcyn02ls5xd8wyyjzkylgsux45&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 13:21:03 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 13:21:03 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 13:21:03 America/Sao_Paulo] PostarZun executado. ZunID retornado: 10019
+[03-Jul-2025 13:21:03 America/Sao_Paulo] ZunID válido retornado: 10019. Processando mídias...
+[03-Jul-2025 13:21:03 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 13:21:05 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media4.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352d9ughypcxvkvo6fcyn02ls5xd8wyyjzkylgsux45&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+[03-Jul-2025 13:21:05 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in C:\xampp\htdocs\Zuno\Code\Radar.php:254
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 254
+[03-Jul-2025 13:30:42 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 13:30:42 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media4.giphy.com/media/JucApR3kaFe1RlTgl8/giphy.gif?cid=ac7ff352d9ughypcxvkvo6fcyn02ls5xd8wyyjzkylgsux45&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 13:30:42 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 13:30:42 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 13:30:42 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10020'
+[03-Jul-2025 13:30:42 America/Sao_Paulo] ZunID válido retornado: 10020. Processando mídias...
+[03-Jul-2025 13:30:42 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 13:30:44 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media4.giphy.com/media/JucApR3kaFe1RlTgl8/giphy.gif?cid=ac7ff352d9ughypcxvkvo6fcyn02ls5xd8wyyjzkylgsux45&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+[03-Jul-2025 13:30:44 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in C:\xampp\htdocs\Zuno\Code\Radar.php:266
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 266
+[03-Jul-2025 15:16:11 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 15:16:11 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media3.giphy.com/media/hxERQNWQudqSF1iDnr/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 15:16:11 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 15:16:11 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 15:16:11 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10022'
+[03-Jul-2025 15:16:11 America/Sao_Paulo] ZunID válido retornado: 10022. Processando mídias...
+[03-Jul-2025 15:16:11 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 15:16:13 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media3.giphy.com/media/hxERQNWQudqSF1iDnr/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+[03-Jul-2025 15:16:13 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in C:\xampp\htdocs\Zuno\Code\Radar.php:266
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 266
+[03-Jul-2025 15:16:25 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 15:16:25 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media0.giphy.com/media/e5dG5V5ZYfByrTSxxJ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 15:16:25 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 15:16:25 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 15:16:25 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10024'
+[03-Jul-2025 15:16:25 America/Sao_Paulo] ZunID válido retornado: 10024. Processando mídias...
+[03-Jul-2025 15:16:25 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 15:16:33 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media0.giphy.com/media/e5dG5V5ZYfByrTSxxJ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+[03-Jul-2025 15:16:33 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in C:\xampp\htdocs\Zuno\Code\Radar.php:266
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 266
+[03-Jul-2025 15:38:30 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 15:38:30 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 15:38:30 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 15:38:30 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 15:38:30 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10026'
+[03-Jul-2025 15:38:30 America/Sao_Paulo] ZunID válido retornado: 10026. Processando mídias...
+[03-Jul-2025 15:38:30 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 15:38:36 America/Sao_Paulo] PHP Warning:  file_get_contents(): SSL: Foi forçado o cancelamento de uma conexão existente pelo host remoto in C:\xampp\htdocs\Zuno\Code\Radar.php on line 256
+[03-Jul-2025 15:38:36 America/Sao_Paulo] PHP Warning:  file_get_contents(): SSL: Foi forçado o cancelamento de uma conexão existente pelo host remoto in C:\xampp\htdocs\Zuno\Code\Radar.php on line 256
+[03-Jul-2025 15:38:36 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+[03-Jul-2025 15:38:37 America/Sao_Paulo] DEBUG: GIF da URL https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+[03-Jul-2025 16:36:20 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Teste!', ComunidadeID: NULL
+[03-Jul-2025 16:36:20 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media1.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 16:36:20 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 16:36:20 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 16:36:20 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10028'
+[03-Jul-2025 16:36:20 America/Sao_Paulo] ZunID válido retornado: 10028. Processando mídias...
+[03-Jul-2025 16:36:20 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 16:36:20 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media1.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 16:36:20 America/Sao_Paulo] Processando GIF URL: https://media1.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g
+[03-Jul-2025 16:36:23 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media1.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+[03-Jul-2025 16:36:23 America/Sao_Paulo] DEBUG: GIF da URL https://media1.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+[03-Jul-2025 16:36:36 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 16:36:36 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media2.giphy.com/media/c1AfqKTvATepFDTpnY/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 16:36:36 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 16:36:36 America/Sao_Paulo] Executando PostarZun...
+[03-Jul-2025 16:36:36 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10030'
+[03-Jul-2025 16:36:36 America/Sao_Paulo] ZunID válido retornado: 10030. Processando mídias...
+[03-Jul-2025 16:36:36 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 16:36:36 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media2.giphy.com/media/c1AfqKTvATepFDTpnY/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 16:36:36 America/Sao_Paulo] Processando GIF URL: https://media2.giphy.com/media/c1AfqKTvATepFDTpnY/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g
+[03-Jul-2025 16:36:38 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media2.giphy.com/media/c1AfqKTvATepFDTpnY/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+[03-Jul-2025 16:36:38 America/Sao_Paulo] DEBUG: GIF da URL https://media2.giphy.com/media/c1AfqKTvATepFDTpnY/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+[03-Jul-2025 17:03:32 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 17:03:32 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media3.giphy.com/media/l8XYZYdlOHSrS/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 17:03:32 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 17:03:32 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10032'
+[03-Jul-2025 17:03:32 America/Sao_Paulo] ZunID válido retornado: 10032. Processando mídias...
+[03-Jul-2025 17:03:32 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 17:03:33 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media3.giphy.com/media/l8XYZYdlOHSrS/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[03-Jul-2025 17:03:33 America/Sao_Paulo] DEBUG: GIF da URL https://media3.giphy.com/media/l8XYZYdlOHSrS/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+[03-Jul-2025 17:07:39 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[03-Jul-2025 17:07:39 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media2.giphy.com/media/xIJLgO6rizUJi/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+  1 => 'https://media2.giphy.com/media/QMkPpxPDYY0fu/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[03-Jul-2025 17:07:39 America/Sao_Paulo] Preparando chamada para PostarZun...
+[03-Jul-2025 17:07:39 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10033'
+[03-Jul-2025 17:07:39 America/Sao_Paulo] ZunID válido retornado: 10033. Processando mídias...
+[03-Jul-2025 17:07:39 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[03-Jul-2025 17:07:41 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media2.giphy.com/media/xIJLgO6rizUJi/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[03-Jul-2025 17:07:41 America/Sao_Paulo] DEBUG: GIF da URL https://media2.giphy.com/media/xIJLgO6rizUJi/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+[03-Jul-2025 17:07:42 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media2.giphy.com/media/QMkPpxPDYY0fu/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[03-Jul-2025 17:07:42 America/Sao_Paulo] DEBUG: GIF da URL https://media2.giphy.com/media/QMkPpxPDYY0fu/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 1
