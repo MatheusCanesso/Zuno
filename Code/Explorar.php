@@ -58,6 +58,17 @@ try {
     // Logar erro em produção
 }
 
+// Buscar comunidades que o usuário faz parte (para o menu lateral e para a seleção de postagem)
+$userCommunities = [];
+try {
+    $stmt = $conn->prepare("SELECT c.ComunidadeID, c.Nome AS NomeComunidade, c.FotoPerfil AS FotoComunidade FROM Comunidades c JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID WHERE mc.UsuarioID = :userId ORDER BY c.Nome");
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+    $stmt->execute();
+    $userCommunities = $stmt->fetchAll(PDO::FETCH_OBJ);
+} catch (PDOException $e) {
+    error_log("Erro ao carregar comunidades do usuário: " . $e->getMessage());
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -216,7 +227,7 @@ try {
     </style>
 </head>
 
-<body class="flex min-h-screen ml-96 mr-96 bg-gray-100 text-gray-900">
+<body class="flex min-h-screen ml-96 mr-96 bg-white text-gray-900">
     <nav class="w-64 fixed h-full bg-white border-r border-gray-200 p-4 flex flex-col justify-between">
         <div>
             <div class="mb-8 pl-2">
@@ -348,30 +359,13 @@ try {
                     </svg> Suas Comunidades
                 </h2>
                 <div class="p-4">
-                    <?php
-                    // Lógica para buscar comunidades do usuário (mantida do Comunidades.php)
-                    $userCommunities = [];
-                    try {
-                        // Requer as tabelas 'Comunidades' e 'MembrosComunidade'
-                        $stmt = $conn->prepare("SELECT c.ComunidadeID, c.NomeComunidade, c.Descricao, c.FotoComunidade, COUNT(mc.UsuarioID) AS Membros
-                                                FROM Comunidades c
-                                                JOIN MembrosComunidade mc ON c.ComunidadeID = mc.ComunidadeID
-                                                WHERE mc.UsuarioID = :userId
-                                                GROUP BY c.ComunidadeID, c.NomeComunidade, c.Descricao, c.FotoComunidade");
-                        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
-                        $stmt->execute();
-                        $userCommunities = $stmt->fetchAll(PDO::FETCH_OBJ);
-                    } catch (PDOException $e) {
-                        // Logar erro em produção
-                    }
-                    ?>
                     <?php if (!empty($userCommunities)): ?>
                         <ul>
                             <?php foreach ($userCommunities as $community): ?>
                                 <li class="mb-2 last:mb-0">
-                                    <a href="#"
+                                    <a href="ComunidadePage.php?id=<?php echo htmlspecialchars($community->ComunidadeID); ?>"
                                         class="flex items-center p-2 rounded-lg hover:bg-gray-200 transition-colors duration-200">
-                                        <img src="<?php echo htmlspecialchars($community->FotoComunidade); ?>"
+                                        <img src="<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>"
                                             alt="Foto da Comunidade" class="w-8 h-8 rounded-full object-cover mr-3">
                                         <span
                                             class="text-gray-700"><?php echo htmlspecialchars($community->NomeComunidade); ?></span>
