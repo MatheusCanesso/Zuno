@@ -821,15 +821,15 @@ Stack trace:
 [03-Jul-2025 15:38:30 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
   0 => 'https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
 )
-[03-Jul-2025 15:38:30 America/Sao_Paulo] Preparando chamada para PostarZun...
-[03-Jul-2025 15:38:30 America/Sao_Paulo] Executando PostarZun...
-[03-Jul-2025 15:38:30 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10026'
-[03-Jul-2025 15:38:30 America/Sao_Paulo] ZunID válido retornado: 10026. Processando mídias...
-[03-Jul-2025 15:38:30 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
-[03-Jul-2025 15:38:36 America/Sao_Paulo] PHP Warning:  file_get_contents(): SSL: Foi forçado o cancelamento de uma conexão existente pelo host remoto in C:\xampp\htdocs\Zuno\Code\Radar.php on line 256
-[03-Jul-2025 15:38:36 America/Sao_Paulo] PHP Warning:  file_get_contents(): SSL: Foi forçado o cancelamento de uma conexão existente pelo host remoto in C:\xampp\htdocs\Zuno\Code\Radar.php on line 256
-[03-Jul-2025 15:38:36 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
-[03-Jul-2025 15:38:37 America/Sao_Paulo] DEBUG: GIF da URL https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+  [03-Jul-2025 15:38:30 America/Sao_Paulo] Preparando chamada para PostarZun...
+  [03-Jul-2025 15:38:30 America/Sao_Paulo] Executando PostarZun...
+  [03-Jul-2025 15:38:30 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10026'
+  [03-Jul-2025 15:38:30 America/Sao_Paulo] ZunID válido retornado: 10026. Processando mídias...
+  [03-Jul-2025 15:38:30 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+  [03-Jul-2025 15:38:36 America/Sao_Paulo] PHP Warning:  file_get_contents(): SSL: Foi forçado o cancelamento de uma conexão existente pelo host remoto in C:\xampp\htdocs\Zuno\Code\Radar.php on line 256
+  [03-Jul-2025 15:38:36 America/Sao_Paulo] PHP Warning:  file_get_contents(): SSL: Foi forçado o cancelamento de uma conexão existente pelo host remoto in C:\xampp\htdocs\Zuno\Code\Radar.php on line 256
+  [03-Jul-2025 15:38:36 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso.
+  [03-Jul-2025 15:38:37 America/Sao_Paulo] DEBUG: GIF da URL https://media0.giphy.com/media/0cKxd1qKx5Tx15tVdZ/giphy.gif?cid=ac7ff3525j5qiclx79km5zz3ng37o8euopobs9h4lv4ynkzz&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
 [03-Jul-2025 16:36:20 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Teste!', ComunidadeID: NULL
 [03-Jul-2025 16:36:20 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
   0 => 'https://media1.giphy.com/media/Lv2VhwHrt6ljhvZ6LF/giphy.gif?cid=ac7ff352gtxnn8dqw43z7xw22b2eyodpk4dbxf0o9oaqx0dd&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
@@ -883,3 +883,364 @@ Stack trace:
 [03-Jul-2025 17:07:41 America/Sao_Paulo] DEBUG: GIF da URL https://media2.giphy.com/media/xIJLgO6rizUJi/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
 [03-Jul-2025 17:07:42 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media2.giphy.com/media/QMkPpxPDYY0fu/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
 [03-Jul-2025 17:07:42 America/Sao_Paulo] DEBUG: GIF da URL https://media2.giphy.com/media/QMkPpxPDYY0fu/giphy.gif?cid=ac7ff352pt6z1z0vei73lofqnu1dbhhhlliwr8rfcmhr4k3d&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 1
+[04-Jul-2025 13:43:30 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: '', ComunidadeID: NULL
+[04-Jul-2025 13:43:30 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media1.giphy.com/media/sH5P7fo4RKXNzoTN2z/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  1 => 'https://media2.giphy.com/media/CwDCkPARfc3E0J1eCx/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  2 => 'https://media0.giphy.com/media/4ETmQrDALG1oJ95G57/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+  3 => 'https://media2.giphy.com/media/ARjDDia9rGgIDxhJrP/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g',
+)
+[04-Jul-2025 13:43:30 America/Sao_Paulo] Preparando chamada para PostarZun...
+[04-Jul-2025 13:43:30 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10034'
+[04-Jul-2025 13:43:30 America/Sao_Paulo] ZunID válido retornado: 10034. Processando mídias...
+[04-Jul-2025 13:43:30 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[04-Jul-2025 13:43:31 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media1.giphy.com/media/sH5P7fo4RKXNzoTN2z/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[04-Jul-2025 13:43:31 America/Sao_Paulo] DEBUG: GIF da URL https://media1.giphy.com/media/sH5P7fo4RKXNzoTN2z/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+[04-Jul-2025 13:43:33 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media2.giphy.com/media/CwDCkPARfc3E0J1eCx/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[04-Jul-2025 13:43:33 America/Sao_Paulo] DEBUG: GIF da URL https://media2.giphy.com/media/CwDCkPARfc3E0J1eCx/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 1
+[04-Jul-2025 13:43:34 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media0.giphy.com/media/4ETmQrDALG1oJ95G57/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[04-Jul-2025 13:43:34 America/Sao_Paulo] DEBUG: GIF da URL https://media0.giphy.com/media/4ETmQrDALG1oJ95G57/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 2
+[04-Jul-2025 13:43:36 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media2.giphy.com/media/ARjDDia9rGgIDxhJrP/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[04-Jul-2025 13:43:36 America/Sao_Paulo] DEBUG: GIF da URL https://media2.giphy.com/media/ARjDDia9rGgIDxhJrP/giphy.gif?cid=ac7ff3522g89gqayo7cd426h0i5or4qos9aaqgp8tj3kset7&ep=v1_gifs_search&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 3
+[04-Jul-2025 18:20:12 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Esse é um teste!', ComunidadeID: NULL
+[04-Jul-2025 18:20:12 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+  0 => 'https://media0.giphy.com/media/2YgHpqhISa7Za9xCr2/giphy.gif?cid=ac7ff352fk0nhk9yydunose65reo1fugr4aaovvvzf1cmpds&ep=v1_gifs_trending&rid=giphy.gif&ct=g',
+)
+[04-Jul-2025 18:20:12 America/Sao_Paulo] Preparando chamada para PostarZun...
+[04-Jul-2025 18:20:12 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10035'
+[04-Jul-2025 18:20:12 America/Sao_Paulo] ZunID válido retornado: 10035. Processando mídias...
+[04-Jul-2025 18:20:12 America/Sao_Paulo] Erro no upload do arquivo local 0: 4
+[04-Jul-2025 18:20:14 America/Sao_Paulo] DEBUG: Conteúdo do GIF da URL https://media0.giphy.com/media/2YgHpqhISa7Za9xCr2/giphy.gif?cid=ac7ff352fk0nhk9yydunose65reo1fugr4aaovvvzf1cmpds&ep=v1_gifs_trending&rid=giphy.gif&ct=g buscado com sucesso via cURL. HTTP Code: 200
+[04-Jul-2025 18:20:14 America/Sao_Paulo] DEBUG: GIF da URL https://media0.giphy.com/media/2YgHpqhISa7Za9xCr2/giphy.gif?cid=ac7ff352fk0nhk9yydunose65reo1fugr4aaovvvzf1cmpds&ep=v1_gifs_trending&rid=giphy.gif&ct=g inserido no DB com sucesso. Ordem: 0
+[04-Jul-2025 18:35:54 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Teste!', ComunidadeID: NULL
+[04-Jul-2025 18:35:54 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+)
+[04-Jul-2025 18:35:54 America/Sao_Paulo] Preparando chamada para PostarZun...
+[04-Jul-2025 18:35:54 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10036'
+[04-Jul-2025 18:35:54 America/Sao_Paulo] ZunID válido retornado: 10036. Processando mídias...
+[04-Jul-2025 19:07:03 America/Sao_Paulo] Tentativa de postar Zun. UserID: 2, Conteúdo: 'Blogueirinha acaba de revelar que Sônia Abrão será a primeira convidada da nova temporada do “De Frente com Blogueirinha”.', ComunidadeID: NULL
+[04-Jul-2025 19:07:03 America/Sao_Paulo] DEBUG: GIF URLs recebidas no backend: array (
+)
+[04-Jul-2025 19:07:03 America/Sao_Paulo] Preparando chamada para PostarZun...
+[04-Jul-2025 19:07:03 America/Sao_Paulo] PostarZun executado. ZunID retornado: '10037'
+[04-Jul-2025 19:07:03 America/Sao_Paulo] ZunID válido retornado: 10037. Processando mídias...
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:18:43 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:40 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:41 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:44 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:26:49 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:25 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:26 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:28 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991

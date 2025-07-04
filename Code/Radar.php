@@ -126,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $jsonString = $_POST['selected_gif_urls'];
         }
 
-        $decodedGifs = json_decode($jsonString, true); 
+        $decodedGifs = json_decode($jsonString, true);
 
         // Verifique explicitamente por erros de decodificação JSON
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -194,9 +194,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             if ($zunId > 0) {
                 $postSuccessful = true;
                 error_log("ZunID válido retornado: " . $zunId . ". Processando mídias...");
-                
+
                 $filesProcessed = 0; // Para controlar a ordem das mídias
-                
+
                 // --- Handle Local Media Uploads ---
                 if (isset($_FILES['midia_zun']) && is_array($_FILES['midia_zun']['name'])) {
                     $totalFiles = count($_FILES['midia_zun']['name']);
@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                             $fileType = $_FILES['midia_zun']['type'][$i];
 
                             $mimeGroup = explode('/', $fileType)[0];
-                            $mediaType = 'imagem'; 
+                            $mediaType = 'imagem';
 
                             if ($mimeGroup === 'image') {
                                 if (strpos($fileType, 'gif') !== false) {
@@ -218,7 +218,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 $mediaType = 'video';
                             } else {
                                 error_log("Tipo de mídia local não suportado ou inválido: " . $fileType);
-                                continue; 
+                                continue;
                             }
 
                             $rawMediaContent = file_get_contents($fileTmpPath);
@@ -226,10 +226,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                             $stmtMedia = $conn->prepare("INSERT INTO Midias (ZunID, URL, TipoMidia, Ordem, AltText) VALUES (:zunId, :url, :tipoMidia, :ordem, :altText)");
                             $stmtMedia->bindParam(':zunId', $zunId, PDO::PARAM_INT);
-                            $stmtMedia->bindParam(':url', $encryptedMediaContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY); 
+                            $stmtMedia->bindParam(':url', $encryptedMediaContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY);
                             $stmtMedia->bindParam(':tipoMidia', $mediaType, PDO::PARAM_STR);
                             $stmtMedia->bindParam(':ordem', $filesProcessed, PDO::PARAM_INT);
-                            $altText = 'Mídia anexada ao Zun'; 
+                            $altText = 'Mídia anexada ao Zun';
                             $stmtMedia->bindParam(':altText', $altText, PDO::PARAM_STR);
                             $stmtMedia->execute();
                             $filesProcessed++;
@@ -254,31 +254,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     curl_setopt($ch, CURLOPT_URL, $gifUrl);
                     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
                     // Apenas para DEV - Remova/configure em PROD
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
-                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); 
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+                    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
                     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
                     curl_setopt($ch, CURLOPT_MAXREDIRS, 5);
                     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-                    
+
                     $gifContent = curl_exec($ch);
                     $curl_error = curl_error($ch);
                     $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
                     curl_close($ch);
-                    
+
                     if ($gifContent !== false && $http_code >= 200 && $http_code < 300) {
                         error_log("DEBUG: Conteúdo do GIF da URL " . $gifUrl . " buscado com sucesso via cURL. HTTP Code: " . $http_code);
                         $encryptedGifContent = encryptData($gifContent);
-                        
+
                         // Verifica se a criptografia foi bem-sucedida E se o conteúdo não está vazio
-                        if ($encryptedGifContent !== false && $encryptedGifContent !== null && $encryptedGifContent !== '') { 
+                        if ($encryptedGifContent !== false && $encryptedGifContent !== null && $encryptedGifContent !== '') {
                             $stmtGif = $conn->prepare("INSERT INTO Midias (ZunID, URL, TipoMidia, Ordem, AltText) VALUES (:zunId, :url, :tipoMidia, :ordem, :altText)");
                             $stmtGif->bindParam(':zunId', $zunId, PDO::PARAM_INT);
-                            $stmtGif->bindParam(':url', $encryptedGifContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY); 
-                            $stmtGif->bindParam(':tipoMidia', $mediaType, PDO::PARAM_STR); 
+                            $stmtGif->bindParam(':url', $encryptedGifContent, PDO::PARAM_LOB, 0, PDO::SQLSRV_ENCODING_BINARY);
+                            $stmtGif->bindParam(':tipoMidia', $mediaType, PDO::PARAM_STR);
                             $stmtGif->bindParam(':ordem', $filesProcessed, PDO::PARAM_INT);
                             $altText = 'GIF anexado ao Zun';
                             $stmtGif->bindParam(':altText', $altText, PDO::PARAM_STR);
-                            
+
                             if ($stmtGif->execute()) {
                                 error_log("DEBUG: GIF da URL " . $gifUrl . " inserido no DB com sucesso. Ordem: " . $filesProcessed);
                                 $filesProcessed++;
@@ -288,9 +288,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                 $_SESSION['toast_type'] = 'error';
                             }
                         } else {
-                             error_log("ERRO: Falha na criptografia ou conteúdo vazio do GIF da URL: " . $gifUrl);
-                             $_SESSION['toast_message'] = 'Erro ao criptografar conteúdo do GIF. Tente outro GIF.';
-                             $_SESSION['toast_type'] = 'error';
+                            error_log("ERRO: Falha na criptografia ou conteúdo vazio do GIF da URL: " . $gifUrl);
+                            $_SESSION['toast_message'] = 'Erro ao criptografar conteúdo do GIF. Tente outro GIF.';
+                            $_SESSION['toast_type'] = 'error';
                         }
                     } else {
                         error_log("ERRO: Falha ao buscar conteúdo do GIF da URL: " . $gifUrl . " via cURL. Erro cURL: " . $curl_error . " HTTP Code: " . $http_code);
@@ -957,7 +957,9 @@ try {
 
                 <?php if (!empty($zuns)): ?>
                     <?php foreach ($zuns as $zun): ?>
-                        <div class="p-4 border-b border-gray-200 relative">
+                        <div class="p-4 border-b border-gray-200 relative zun-container"
+                            onclick="window.location.href='Status.php?id=<?php echo $zun->ZunID; ?>'" style="cursor: pointer;"
+                            data-zun-id="<?php echo $zun->ZunID; ?>">
                             <?php if ($zun->EhRepost): // Se for um repost, mostrar quem repostou ?>
                                 <div class="flex items-center text-gray-500 text-sm mb-1 ml-9">
                                     <i class="fas fa-retweet mr-2"></i>
@@ -987,65 +989,125 @@ try {
                                         <?php echo htmlspecialchars($zun->Conteudo ?? ''); ?>
                                     </p>
 
-                                    <?php if ($zun->MidiaCount > 0):
+                                    <?php if ($zun->MidiaCount > 0): ?>
+                                        <?php
                                         $mediaUrls = [];
                                         $mediaTypes = [];
                                         for ($i = 0; $i < $zun->MidiaCount; $i++) {
+                                            // Since MidiaURL_ is already decrypted in the PHP logic block above (lines 142-153),
+                                            // we just need to use the already decrypted content.
                                             if (isset($zun->{"MidiaURL_" . $i}) && $zun->{"MidiaURL_" . $i} !== null) {
-                                                $mediaUrls[] = 'data:image/jpeg;base64,' . base64_encode($zun->{"MidiaURL_" . $i});
+                                                // Determine MIME type based on the stored media type
+                                                $mimeType = $zun->{"MidiaTipo_" . $i} === 'gif' ? 'image/gif' : 'image/jpeg';
+                                                $mediaUrls[] = 'data:' . $mimeType . ';base64,' . base64_encode($zun->{"MidiaURL_" . $i});
                                                 $mediaTypes[] = $zun->{"MidiaTipo_" . $i};
                                             }
                                         }
                                         $mediaCount = count($mediaUrls);
                                         ?>
 
-                                        <?php if ($mediaCount === 1): ?>
-                                            <div
-                                                class="w-full max-w-[590px] rounded-xl overflow-hidden border border-gray-200 mt-3 mb-4">
-                                                <?php if ($mediaTypes[0] === 'gif'): ?>
-                                                    <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="GIF do Zun"
-                                                        class="w-full h-auto max-h-[600px] object-contain" style="cursor: pointer;"
-                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
-                                                <?php else: ?>
-                                                    <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
-                                                        class="w-full h-auto max-h-[600px] object-contain" style="cursor: pointer;"
-                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
-                                                <?php endif; ?>
-                                            </div>
-                                        <?php else: ?>
-                                            <div class="media-grid mt-2 mb-4 mr-24 rounded-lg overflow-hidden border border-gray-200
-                                                <?php if ($mediaCount === 2)
-                                                    echo 'grid-2-images';
-                                                else if ($mediaCount === 3)
-                                                    echo 'grid-3-images';
-                                                else if ($mediaCount >= 4)
-                                                    echo 'grid-4-images'; ?>">
-                                                <?php foreach ($mediaUrls as $index => $url): ?>
-                                                    <?php if ($mediaTypes[$index] === 'gif'): ?>
-                                                        <img src="<?php echo htmlspecialchars($url); ?>" alt="GIF do Zun" class="<?php
-                                                           if ($mediaCount === 3 && $index === 0)
-                                                               echo 'col-span-2 h-64';
-                                                           else
-                                                               echo 'w-full h-40';
-                                                           ?> object-cover"
-                                                            onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                        <div class="media-container mt-3 mb-4 mr-24 rounded-2xl overflow-hidden border border-gray-200">
+                                            <?php if ($mediaCount === 1): ?>
+                                                <!-- Apenas uma mídia -->
+                                                <div class="w-full">
+                                                    <?php if ($mediaTypes[0] === 'gif'): ?>
+                                                        <div class="relative">
+                                                            <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="GIF do Zun"
+                                                                class="w-full max-h-[80vh] object-contain" loading="lazy"
+                                                                onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                            <div
+                                                                class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                                                GIF
+                                                            </div>
+                                                        </div>
                                                     <?php else: ?>
-                                                        <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun" class="<?php
-                                                           if ($mediaCount === 3 && $index === 0)
-                                                               echo 'col-span-2 h-64';
-                                                           else
-                                                               echo 'w-full h-40';
-                                                           ?> object-cover <?php
-                                                            if ($mediaCount > 1 && $index % 2 === 0 && $index < $mediaCount - 1 && ($mediaCount !== 3 || $index !== 0))
-                                                                echo 'border-r border-gray-200';
-                                                            if ($mediaCount > 2 && $index < $mediaCount - 2)
-                                                                echo 'border-b border-gray-200';
-                                                            ?>"
-                                                            onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                        <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
+                                                            class="w-full max-h-[80vh] object-contain" loading="lazy"
+                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
                                                     <?php endif; ?>
-                                                <?php endforeach; ?>
-                                            </div>
-                                        <?php endif; ?>
+                                                </div>
+
+                                            <?php elseif ($mediaCount === 2): ?>
+                                                <!-- Duas mídias -->
+                                                <div class="grid grid-cols-2 gap-1">
+                                                    <?php foreach ($mediaUrls as $index => $url): ?>
+                                                        <div class="relative aspect-square">
+                                                            <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun"
+                                                                class="w-full h-full object-cover" loading="lazy"
+                                                                onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                            <?php if ($mediaTypes[$index] === 'gif'): ?>
+                                                                <div
+                                                                    class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                                                    GIF
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                </div>
+
+                                            <?php elseif ($mediaCount === 3): ?>
+                                                <!-- Três mídias -->
+                                                <div class="grid grid-cols-2 gap-1">
+                                                    <div class="row-span-2">
+                                                        <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
+                                                            class="w-full h-full object-cover" loading="lazy"
+                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                        <?php if ($mediaTypes[0] === 'gif'): ?>
+                                                            <div
+                                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                                                GIF
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div>
+                                                        <img src="<?php echo htmlspecialchars($mediaUrls[1]); ?>" alt="Mídia do Zun"
+                                                            class="w-full h-full object-cover" loading="lazy"
+                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[1]); ?>')">
+                                                        <?php if ($mediaTypes[1] === 'gif'): ?>
+                                                            <div
+                                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                                                GIF
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                    <div>
+                                                        <img src="<?php echo htmlspecialchars($mediaUrls[2]); ?>" alt="Mídia do Zun"
+                                                            class="w-full h-full object-cover" loading="lazy"
+                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[2]); ?>')">
+                                                        <?php if ($mediaTypes[2] === 'gif'): ?>
+                                                            <div
+                                                                class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                                                GIF
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+
+                                            <?php elseif ($mediaCount >= 4): ?>
+                                                <!-- Quatro ou mais mídias -->
+                                                <div class="grid grid-cols-2 gap-1">
+                                                    <?php for ($i = 0; $i < min($mediaCount, 4); $i++): ?>
+                                                        <div class="relative aspect-square">
+                                                            <img src="<?php echo htmlspecialchars($mediaUrls[$i]); ?>" alt="Mídia do Zun"
+                                                                class="w-full h-full object-cover" loading="lazy"
+                                                                onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[$i]); ?>')">
+                                                            <?php if ($mediaTypes[$i] === 'gif'): ?>
+                                                                <div
+                                                                    class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                                                                    GIF
+                                                                </div>
+                                                            <?php endif; ?>
+                                                            <?php if ($i === 3 && $mediaCount > 4): ?>
+                                                                <div
+                                                                    class="absolute inset-0 bg-black/50 flex items-center justify-center text-white font-bold text-xl">
+                                                                    +<?php echo ($mediaCount - 4); ?>
+                                                                </div>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                    <?php endfor; ?>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
                                     <?php endif; ?>
 
                                     <div class="flex justify-between mr-1 items-center text-gray-500 text-sm">
@@ -1488,6 +1550,19 @@ try {
 
             // Atualiza o ícone no carregamento inicial
             updateCommunityIcon();
+
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('.zun-container').forEach(container => {
+                    container.addEventListener('click', function (e) {
+                        // Verifica se o clique foi em um elemento interativo
+                        if (e.target.closest('.interactive')) {
+                            return;
+                        }
+
+                        window.location.href = 'Status.php?id=' + this.getAttribute('data-zun-id');
+                    });
+                });
+            });
         });
     </script>
 </body>
