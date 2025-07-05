@@ -1306,11 +1306,11 @@ try {
 
             <div class="flex flex-col space-y-3">
                 <button id="repostOptionButton"
-                    class="w-full bg-lime-500 text-white py-3 rounded-full font-semibold hover:bg-lime-600 transition-colors duration-200">
-                    <i class="fas fa-retweet mr-2"></i> Repostar
+                    class="w-full text-black bg-gray-100 py-3 rounded-full font-semibold hover:bg-[#21fa90] transition-colors duration-200">
+                    <i class="fas fa-sync-alt mr-2"></i> Repostar
                 </button>
                 <button id="quoteZunOptionButton"
-                    class="w-full bg-blue-500 text-white py-3 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
+                    class="w-full text-black bg-gray-100 py-3 rounded-full font-semibold hover:bg-[#21fa90] transition-colors duration-200">
                     <i class="fas fa-quote-left mr-2"></i> Citar Zun
                 </button>
             </div>
