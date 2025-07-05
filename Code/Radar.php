@@ -1183,7 +1183,12 @@ try {
                                         <button class="flex items-center space-x-1 hover:text-blue-500">
                                             <i class="far fa-comment"></i> <span><?php echo $zun->Respostas; ?></span>
                                         </button>
-                                        <button class="flex items-center space-x-1 hover:text-lime-500">
+                                        <button class="repost-button flex items-center space-x-1 hover:text-lime-500"
+                                            data-zun-id="<?php echo $zun->ZunID; ?>"
+                                            data-author-name="<?php echo htmlspecialchars($zun->AutorNomeExibicao); ?>"
+                                            data-author-username="<?php echo htmlspecialchars($zun->AutorNomeUsuario); ?>"
+                                            data-content="<?php echo htmlspecialchars($zun->Conteudo); ?>"
+                                            data-photo="<?php echo ($zun->AutorFotoPerfil ? 'data:image/jpeg;base64,' . base64_encode($zun->AutorFotoPerfil) : '../Design/Assets/default_profile.png'); ?>">
                                             <i class="fas fa-sync-alt"></i> <span><?php echo $zun->Reposts; ?></span>
                                         </button>
                                         <button class="flex items-center space-x-1 hover:text-gray-700">
@@ -1274,6 +1279,41 @@ try {
                 <p class="text-gray-500 text-center col-span-full">Carregando GIFs em alta...</p>
             </div>
             <button id="closeGifModal" class="modal-close-button"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
+
+    <!-- Modal de Repost -->
+    <div id="repostModal"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 opacity-0 invisible transition-opacity duration-300">
+        <div class="bg-white rounded-xl p-6 w-full max-w-md transform scale-95 transition-all duration-300">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Repostar Zun</h3>
+                <button id="closeRepostModal" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <div class="flex items-start space-x-3 border p-3 rounded-lg bg-gray-50 mb-4">
+                <img id="repostZunAuthorPhoto" src="" alt="Foto de Perfil" class="w-10 h-10 rounded-full object-cover">
+                <div class="flex-1">
+                    <div class="flex items-baseline space-x-1">
+                        <span id="repostZunAuthorName" class="font-bold text-gray-900"></span>
+                        <span id="repostZunAuthorUsername" class="text-gray-500 text-sm"></span>
+                    </div>
+                    <p id="repostZunContent" class="text-gray-800 text-sm mt-1"></p>
+                </div>
+            </div>
+
+            <div class="flex flex-col space-y-3">
+                <button id="repostOptionButton"
+                    class="w-full bg-lime-500 text-white py-3 rounded-full font-semibold hover:bg-lime-600 transition-colors duration-200">
+                    <i class="fas fa-retweet mr-2"></i> Repostar
+                </button>
+                <button id="quoteZunOptionButton"
+                    class="w-full bg-blue-500 text-white py-3 rounded-full font-semibold hover:bg-blue-600 transition-colors duration-200">
+                    <i class="fas fa-quote-left mr-2"></i> Citar Zun
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1772,6 +1812,161 @@ try {
                         }).showToast();
                     }
                 });
+            });
+        });
+        // Variáveis do modal de repost
+        const repostModal = document.getElementById('repostModal');
+        const closeRepostModalButton = document.getElementById('closeRepostModal');
+        const repostOptionButton = document.getElementById('repostOptionButton');
+        const quoteZunOptionButton = document.getElementById('quoteZunOptionButton');
+        const repostZunAuthorPhoto = document.getElementById('repostZunAuthorPhoto');
+        const repostZunAuthorName = document.getElementById('repostZunAuthorName');
+        const repostZunAuthorUsername = document.getElementById('repostZunAuthorUsername');
+        const repostZunContent = document.getElementById('repostZunContent');
+
+        let currentRepostZunId = null; // Para armazenar o ZunID do Zun que será repostado/citado
+
+        // Função para abrir o modal de repost
+        function openRepostModal(zunId, authorName, authorUsername, content, photo) {
+            currentRepostZunId = zunId;
+
+            // Preencher os dados do modal
+            repostZunAuthorPhoto.src = photo;
+            repostZunAuthorName.textContent = authorName;
+            repostZunAuthorUsername.textContent = `@${authorUsername}`;
+            repostZunContent.textContent = content;
+
+            // Mostrar o modal com animação
+            repostModal.classList.remove('invisible', 'opacity-0');
+            repostModal.classList.add('opacity-100');
+            document.querySelector('#repostModal > div').classList.remove('scale-95');
+            document.querySelector('#repostModal > div').classList.add('scale-100');
+
+            // Bloquear scroll da página
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Função para fechar o modal de repost
+        function closeRepostModal() {
+            repostModal.classList.remove('opacity-100');
+            repostModal.classList.add('opacity-0');
+            document.querySelector('#repostModal > div').classList.remove('scale-100');
+            document.querySelector('#repostModal > div').classList.add('scale-95');
+
+            setTimeout(() => {
+                repostModal.classList.add('invisible');
+                document.body.style.overflow = '';
+            }, 300);
+
+            currentRepostZunId = null;
+        }
+
+        // Event listeners para o modal de repost
+        closeRepostModalButton.addEventListener('click', closeRepostModal);
+
+        repostModal.addEventListener('click', function (event) {
+            if (event.target === repostModal) {
+                closeRepostModal();
+            }
+        });
+
+        // Lógica para o botão "Repostar"
+        repostOptionButton.addEventListener('click', function () {
+            if (currentRepostZunId) {
+                // Aqui você faria uma requisição AJAX para registrar o repost
+                fetch('Rezun-Repost.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `zun_id=${currentRepostZunId}&action=repost`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Toastify({
+                                text: "Zun repostado com sucesso!",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "center",
+                                stopOnFocus: true,
+                                style: {
+                                    background: "rgb(26, 189, 110)",
+                                    borderRadius: "8px",
+                                    fontFamily: "'Urbanist', sans-serif"
+                                },
+                            }).showToast();
+
+                            // Atualizar contador de reposts no botão
+                            const repostButton = document.querySelector(`.repost-button[data-zun-id="${currentRepostZunId}"]`);
+                            if (repostButton) {
+                                const countSpan = repostButton.querySelector('span');
+                                if (countSpan) {
+                                    const currentCount = parseInt(countSpan.textContent);
+                                    countSpan.textContent = currentCount + 1;
+                                }
+                            }
+                        } else {
+                            Toastify({
+                                text: data.message || "Erro ao repostar o Zun",
+                                duration: 3000,
+                                newWindow: true,
+                                close: true,
+                                gravity: "bottom",
+                                position: "center",
+                                stopOnFocus: true,
+                                style: {
+                                    background: "#ef4444",
+                                    borderRadius: "8px",
+                                    fontFamily: "'Urbanist', sans-serif"
+                                },
+                            }).showToast();
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro:', error);
+                        Toastify({
+                            text: "Erro de conexão ao repostar",
+                            duration: 3000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom",
+                            position: "center",
+                            stopOnFocus: true,
+                            style: {
+                                background: "#ef4444",
+                                borderRadius: "8px",
+                                fontFamily: "'Urbanist', sans-serif"
+                            },
+                        }).showToast();
+                    });
+
+                closeRepostModal();
+            }
+        });
+
+        // Lógica para o botão "Citar Zun"
+        quoteZunOptionButton.addEventListener('click', function () {
+            if (currentRepostZunId) {
+                // Redirecionar para a página de postagem com o Zun citado
+                window.location.href = `Postagem.php?quote_zun_id=${currentRepostZunId}`;
+            }
+        });
+
+        // Modificar os botões de repost existentes para abrir o modal
+        document.querySelectorAll('.repost-button').forEach(button => {
+            button.addEventListener('click', function (event) {
+                event.stopPropagation();
+
+                const zunId = this.dataset.zunId;
+                const authorName = this.dataset.authorName;
+                const authorUsername = this.dataset.authorUsername;
+                const content = this.dataset.content;
+                const photo = this.dataset.photo;
+
+                openRepostModal(zunId, authorName, authorUsername, content, photo);
             });
         });
     </script>
