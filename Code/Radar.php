@@ -1068,7 +1068,7 @@ try {
                                         for ($i = 0; $i < $zun->MidiaCount; $i++) {
                                             // Since MidiaURL_ is already decrypted in the PHP logic block above (lines 142-153),
                                             // we just need to use the already decrypted content.
-                                            if (isset($zun->{"MidiaURL_" . $i}) && $zun->{"MidiaURL_" . $i} !== null) {
+                                            if (isset($zun->{"MidiaURL_" . $i}) && !empty($zun->{"MidiaURL_" . $i})) {
                                                 // Determine MIME type based on the stored media type
                                                 $mimeType = $zun->{"MidiaTipo_" . $i} === 'gif' ? 'image/gif' : 'image/jpeg';
                                                 $mediaUrls[] = 'data:' . $mimeType . ';base64,' . base64_encode($zun->{"MidiaURL_" . $i});
@@ -1195,10 +1195,12 @@ try {
                                     </div>
                                 </div>
                                 <button
-                                    class="absolute right-16 text-gray-500 hover:text-red-500 flex flex-col items-center top-1/2 -translate-y-1/2">
+                                    class="like-button absolute right-16 text-gray-500 hover:text-red-500 flex flex-col items-center top-1/2 -translate-y-1/2"
+                                    data-zun-id="<?php echo $zun->ZunID; ?>"
+                                    data-liked="<?php echo $zun->ZunLikadoPorMim ? 'true' : 'false'; ?>">
                                     <i
                                         class="<?php echo ($zun->ZunLikadoPorMim ? 'fas fa-heart text-red-500' : 'far fa-heart'); ?> text-xl"></i>
-                                    <span class="text-sm"><?php echo $zun->ZunLikes; ?></span>
+                                    <span class="like-count text-sm"><?php echo $zun->ZunLikes; ?></span>
                                 </button>
                             </div>
                         </div>
@@ -1687,6 +1689,88 @@ try {
                             window.location.href = 'Status.php?id=' + this.getAttribute('data-zun-id');
                         }
                     });
+                });
+            });
+
+            // Lógica para Curtir/Descurtir Zun
+            document.querySelectorAll('.like-button').forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.stopPropagation();
+
+                    const zunId = this.dataset.zunId;
+                    const isLiked = this.dataset.liked === 'true';
+                    const icon = this.querySelector('i');
+                    const likeCountSpan = this.querySelector('.like-count');
+                    let currentLikes = parseInt(likeCountSpan.textContent);
+
+                    // Otimização de UI - atualiza visualmente primeiro
+                    if (isLiked) {
+                        icon.classList.remove('fas', 'text-red-500');
+                        icon.classList.add('far');
+                        currentLikes--;
+                    } else {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas', 'text-red-500');
+                        currentLikes++;
+                    }
+                    likeCountSpan.textContent = currentLikes;
+
+                    // Envia a requisição AJAX
+                    fetch('Ponto-Like.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `zun_id=${zunId}&action=${isLiked ? 'unlike' : 'like'}`
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Erro na resposta do servidor');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                // Atualiza com os valores do servidor
+                                likeCountSpan.textContent = data.newLikes;
+                                this.dataset.liked = data.liked;
+                            } else {
+                                // Reverte a UI se falhou
+                                revertLikeUI();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                            // Reverte a UI em caso de erro
+                            revertLikeUI();
+                            showErrorToast("Erro de conexão. Verifique sua internet.");
+                        });
+
+                    function revertLikeUI() {
+                        if (isLiked) {
+                            icon.classList.remove('far');
+                            icon.classList.add('fas', 'text-red-500');
+                            likeCountSpan.textContent = currentLikes + 1;
+                        } else {
+                            icon.classList.remove('fas', 'text-red-500');
+                            icon.classList.add('far');
+                            likeCountSpan.textContent = currentLikes - 1;
+                        }
+                    }
+
+                    function showErrorToast(message) {
+                        Toastify({
+                            text: message,
+                            duration: 3000,
+                            gravity: "bottom",
+                            position: "center",
+                            style: {
+                                background: "#ef4444",
+                                borderRadius: "8px",
+                                fontFamily: "'Urbanist', sans-serif"
+                            },
+                        }).showToast();
+                    }
                 });
             });
         });

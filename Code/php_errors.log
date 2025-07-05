@@ -1244,3 +1244,18 @@ Stack trace:
 [04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
 [04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Undefined variable $zunData in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
 [04-Jul-2025 19:37:34 America/Sao_Paulo] PHP Warning:  Attempt to read property "MidiaCount" on null in C:\xampp\htdocs\Zuno\Code\Radar.php on line 991
+[04-Jul-2025 23:13:48 America/Sao_Paulo] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in C:\xampp\htdocs\Zuno\Code\Radar.php:373
+Stack trace:
+#0 {main}
+  thrown in C:\xampp\htdocs\Zuno\Code\Radar.php on line 373
+[04-Jul-2025 23:20:09 America/Sao_Paulo] Erro ao gerenciar like do Zun (handle_like.php): SQLSTATE[IMSSP]: Invalid direction specified for parameter 4.  Input/output parameters must have a length.
+[04-Jul-2025 23:21:14 America/Sao_Paulo] Erro ao gerenciar like do Zun (handle_like.php): SQLSTATE[42000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Não foi possível encontrar o procedimento armazenado 'GerenciarZunLike'.
+[04-Jul-2025 23:24:19 America/Sao_Paulo] Erro ao gerenciar like do Zun (handle_like.php): SQLSTATE[42000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Não foi possível encontrar o procedimento armazenado 'GerenciarZunLike'.
+[04-Jul-2025 23:30:51 America/Sao_Paulo] Erro ao gerenciar like do Zun (handle_like.php): SQLSTATE[42000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Não foi possível encontrar o procedimento armazenado 'GerenciarZunLike'.
+[04-Jul-2025 23:31:04 America/Sao_Paulo] Erro ao gerenciar like do Zun (handle_like.php): SQLSTATE[42000]: [Microsoft][ODBC Driver 17 for SQL Server][SQL Server]Não foi possível encontrar o procedimento armazenado 'GerenciarZunLike'.
+[04-Jul-2025 23:39:34 America/Sao_Paulo] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\Zuno\Code\Ponto-Like.php on line 49
+[04-Jul-2025 23:39:34 America/Sao_Paulo] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\Zuno\Code\Ponto-Like.php on line 50
+[04-Jul-2025 23:41:16 America/Sao_Paulo] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\Zuno\Code\Ponto-Like.php on line 49
+[04-Jul-2025 23:41:16 America/Sao_Paulo] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\Zuno\Code\Ponto-Like.php on line 50
+[04-Jul-2025 23:41:23 America/Sao_Paulo] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\Zuno\Code\Ponto-Like.php on line 49
+[04-Jul-2025 23:41:23 America/Sao_Paulo] PHP Warning:  Trying to access array offset on value of type bool in C:\xampp\htdocs\Zuno\Code\Ponto-Like.php on line 50
