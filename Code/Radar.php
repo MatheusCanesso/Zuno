@@ -427,8 +427,10 @@ try {
 
         .modal-content {
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 95%;
+            /* Increased from 90% */
+            max-height: 95%;
+            /* Increased from 90% */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -456,6 +458,59 @@ try {
 
         .modal-close-button:hover {
             color: #ccc;
+        }
+
+        .modal-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            /* Fundo transparente por padrão */
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            font-size: 2.5rem;
+            /* Ícone um pouco maior */
+            width: 3.5rem;
+            /* Área clicável um pouco maior */
+            height: 3.5rem;
+            /* Área clicável um pouco maior, para formar um quadrado */
+            border-radius: 50%;
+            /* Torna o botão redondo */
+            display: flex;
+            /* Para centralizar o ícone */
+            justify-content: center;
+            /* Para centralizar o ícone */
+            align-items: center;
+            /* Para centralizar o ícone */
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+            opacity: 0.9;
+            /* Pouco menos opaco por padrão, mas ainda visível */
+        }
+
+        .modal-arrow:hover {
+            background: rgba(0, 0, 0, 0.5);
+            /* Fundo aparece no hover */
+            opacity: 1;
+        }
+
+        .modal-arrow.left-0 {
+            left: -3rem;
+            /* Move a seta 3rem para a esquerda, para fora da imagem */
+        }
+
+        .modal-arrow.right-0 {
+            right: -3rem;
+            /* Move a seta 3rem para a direita, para fora da imagem */
+        }
+
+        .modal-arrow:disabled {
+            opacity: 0.1;
+            /* Ainda menos visível quando desabilitado */
+            cursor: not-allowed;
+            background: none;
+            /* Garante que não há fundo quando desabilitado */
         }
 
         /* Estilo para o Modal de GIF */
@@ -534,31 +589,48 @@ try {
             grid-template-rows: auto auto;
         }
 
+        /* Ajustes para todas as imagens de grid */
+        .media-grid img,
+        .media-grid video {
+            width: 100%;
+            height: auto;
+            /* Permite que a altura se ajuste naturalmente */
+            max-height: 400px;
+            /* Altura máxima razoável para imagens no feed */
+            object-fit: contain;
+            /* Garante que a imagem inteira seja visível sem cortar */
+            border-radius: 8px;
+        }
+
+        /* Ajustes para layouts de várias imagens para evitar corte e permitir maior tamanho */
         .grid-3-images>img:first-child,
         .grid-3-images>video:first-child {
             grid-column: span 2;
-            height: 250px;
+            height: auto;
+            max-height: 350px;
+            /* Aumenta a altura máxima para a imagem maior no grid de 3 */
+            object-fit: contain;
         }
 
         .grid-3-images>img:nth-child(2),
         .grid-3-images>img:nth-child(3),
         .grid-3-images>video:nth-child(2),
         .grid-3-images>video:nth-child(3) {
-            height: 150px;
+            height: auto;
+            max-height: 200px;
+            /* Aumenta a altura máxima para as imagens menores no grid de 3 */
+            object-fit: contain;
         }
 
-        .grid-4-images {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-        }
-
-        /* Ajustes para todas as imagens de grid */
-        .media-grid img,
-        .media-grid video {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
+        .grid-2-images img,
+        .grid-2-images video,
+        .grid-4-images img,
+        .grid-4-images video {
+            height: auto;
+            /* Permite que a altura se ajuste para outros layouts de grid */
+            max-height: 300px;
+            /* Aumenta a altura máxima para itens de grid */
+            object-fit: contain;
         }
 
         /* Adicionar bordas entre as mídias no grid */
@@ -985,7 +1057,7 @@ try {
                                         </button>
                                     </div>
 
-                                    <p class="text-gray-800 mt-5 mb-5 max-w-xl" style="word-break: break-all;">
+                                    <p class="text-gray-800 mb-5 max-w-2xl" style="word-break: break-all;">
                                         <?php echo htmlspecialchars($zun->Conteudo ?? ''); ?>
                                     </p>
 
@@ -1006,15 +1078,15 @@ try {
                                         $mediaCount = count($mediaUrls);
                                         ?>
 
-                                        <div class="media-container mt-3 mb-4 mr-24 rounded-2xl overflow-hidden border border-gray-200">
+                                        <div
+                                            class="media-container mt-3 mb-4 mr-24 rounded-2xl overflow-hidden border border-gray-200">
                                             <?php if ($mediaCount === 1): ?>
-                                                <!-- Apenas uma mídia -->
                                                 <div class="w-full">
                                                     <?php if ($mediaTypes[0] === 'gif'): ?>
                                                         <div class="relative">
                                                             <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="GIF do Zun"
                                                                 class="w-full max-h-[80vh] object-contain" loading="lazy"
-                                                                onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                                onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 0)">
                                                             <div
                                                                 class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
                                                                 GIF
@@ -1023,18 +1095,17 @@ try {
                                                     <?php else: ?>
                                                         <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
                                                             class="w-full max-h-[80vh] object-contain" loading="lazy"
-                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                            onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 0)">
                                                     <?php endif; ?>
                                                 </div>
 
                                             <?php elseif ($mediaCount === 2): ?>
-                                                <!-- Duas mídias -->
                                                 <div class="grid grid-cols-2 gap-1">
                                                     <?php foreach ($mediaUrls as $index => $url): ?>
                                                         <div class="relative aspect-square">
                                                             <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun"
                                                                 class="w-full h-full object-cover" loading="lazy"
-                                                                onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                                onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, <?php echo $index; ?>)">
                                                             <?php if ($mediaTypes[$index] === 'gif'): ?>
                                                                 <div
                                                                     class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -1046,12 +1117,11 @@ try {
                                                 </div>
 
                                             <?php elseif ($mediaCount === 3): ?>
-                                                <!-- Três mídias -->
                                                 <div class="grid grid-cols-2 gap-1">
                                                     <div class="row-span-2">
                                                         <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
                                                             class="w-full h-full object-cover" loading="lazy"
-                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                            onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 0)">
                                                         <?php if ($mediaTypes[0] === 'gif'): ?>
                                                             <div
                                                                 class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -1062,7 +1132,7 @@ try {
                                                     <div>
                                                         <img src="<?php echo htmlspecialchars($mediaUrls[1]); ?>" alt="Mídia do Zun"
                                                             class="w-full h-full object-cover" loading="lazy"
-                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[1]); ?>')">
+                                                            onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 1)">
                                                         <?php if ($mediaTypes[1] === 'gif'): ?>
                                                             <div
                                                                 class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -1073,7 +1143,7 @@ try {
                                                     <div>
                                                         <img src="<?php echo htmlspecialchars($mediaUrls[2]); ?>" alt="Mídia do Zun"
                                                             class="w-full h-full object-cover" loading="lazy"
-                                                            onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[2]); ?>')">
+                                                            onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 2)">
                                                         <?php if ($mediaTypes[2] === 'gif'): ?>
                                                             <div
                                                                 class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -1084,13 +1154,12 @@ try {
                                                 </div>
 
                                             <?php elseif ($mediaCount >= 4): ?>
-                                                <!-- Quatro ou mais mídias -->
                                                 <div class="grid grid-cols-2 gap-1">
                                                     <?php for ($i = 0; $i < min($mediaCount, 4); $i++): ?>
                                                         <div class="relative aspect-square">
                                                             <img src="<?php echo htmlspecialchars($mediaUrls[$i]); ?>" alt="Mídia do Zun"
                                                                 class="w-full h-full object-cover" loading="lazy"
-                                                                onclick="event.stopPropagation(); openModal('<?php echo htmlspecialchars($mediaUrls[$i]); ?>')">
+                                                                onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, <?php echo $i; ?>)">
                                                             <?php if ($mediaTypes[$i] === 'gif'): ?>
                                                                 <div
                                                                     class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -1184,7 +1253,9 @@ try {
     <div id="imageModal" class="modal-overlay">
         <div class="modal-content">
             <button id="closeModal" class="modal-close-button"><i class="fas fa-times"></i></button>
+            <button id="prevArrow" class="modal-arrow left-0"><i class="fas fa-chevron-left"></i></button>
             <img src="" alt="Mídia Expandida" class="modal-image" id="expandedImage">
+            <button id="nextArrow" class="modal-arrow right-0"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
@@ -1489,6 +1560,12 @@ try {
             const imageModal = document.getElementById('imageModal');
             const expandedImage = document.getElementById('expandedImage');
             const closeModalBtn = document.getElementById('closeModal');
+            const prevArrow = document.getElementById('prevArrow');
+            const nextArrow = document.getElementById('nextArrow');
+
+            // Variáveis para armazenar as URLs e o índice atual das mídias no modal
+            let currentModalMediaUrls = [];
+            let currentModalMediaIndex = 0;
 
             // Armazena as fotos das comunidades em um objeto para acesso rápido
             const communityPhotos = {};
@@ -1496,9 +1573,32 @@ try {
                 communityPhotos['<?php echo $community->ComunidadeID; ?>'] = '<?php echo ($community->FotoComunidade ? 'data:image/jpeg;base64,' . base64_encode($community->FotoComunidade) : '../Design/Assets/default_community.png'); ?>';
             <?php endforeach; ?>
 
+            // Função para exibir uma mídia específica no modal
+            function showMediaInModal(index) {
+                if (currentModalMediaUrls.length === 0) {
+                    expandedImage.src = '';
+                    prevArrow.style.display = 'none';
+                    nextArrow.style.display = 'none';
+                    return;
+                }
+
+                expandedImage.src = currentModalMediaUrls[index];
+                currentModalMediaIndex = index;
+
+                // Mostra/esconde as setas de acordo com o índice atual
+                prevArrow.style.display = (index > 0) ? 'flex' : 'none';
+                nextArrow.style.display = (index < currentModalMediaUrls.length - 1) ? 'flex' : 'none';
+
+                // Desabilita os botões se estiver nos limites
+                prevArrow.disabled = (index === 0);
+                nextArrow.disabled = (index === currentModalMediaUrls.length - 1);
+            }
+
             // Função para abrir o modal com a imagem expandida
-            window.openModal = function (imageSrc) {
-                expandedImage.src = imageSrc;
+            // Agora recebe o array de URLs e o índice da imagem clicada
+            window.openModal = function (mediaUrlsArray, initialIndex) {
+                currentModalMediaUrls = mediaUrlsArray;
+                showMediaInModal(initialIndex);
                 imageModal.classList.add('active');
             };
 
@@ -1506,13 +1606,31 @@ try {
             closeModalBtn.addEventListener('click', function () {
                 imageModal.classList.remove('active');
                 expandedImage.src = ''; // Limpa a imagem para otimizar memória
+                currentModalMediaUrls = []; // Limpa as URLs armazenadas
+                currentModalMediaIndex = 0; // Reseta o índice
             });
 
-            // Fechar modal clicando fora da imagem
+            // Lógica de navegação: Anterior
+            prevArrow.addEventListener('click', function (event) {
+                event.stopPropagation(); // Evita que o clique feche o modal (devido ao event listener do overlay)
+                if (currentModalMediaIndex > 0) {
+                    showMediaInModal(currentModalMediaIndex - 1);
+                }
+            });
+
+            // Lógica de navegação: Próximo
+            nextArrow.addEventListener('click', function (event) {
+                event.stopPropagation(); // Evita que o clique feche o modal
+                if (currentModalMediaIndex < currentModalMediaUrls.length - 1) {
+                    showMediaInModal(currentModalMediaIndex + 1);
+                }
+            });
+
+            // Fechar modal clicando fora da imagem (mas não nas setas)
             imageModal.addEventListener('click', function (event) {
+                // Certifica-se de que o clique foi no overlay e não na imagem ou nas setas
                 if (event.target === imageModal) {
-                    imageModal.classList.remove('active');
-                    expandedImage.src = '';
+                    closeModalBtn.click(); // Simula o clique no botão de fechar
                 }
             });
 
@@ -1555,11 +1673,19 @@ try {
                 document.querySelectorAll('.zun-container').forEach(container => {
                     container.addEventListener('click', function (e) {
                         // Verifica se o clique foi em um elemento interativo
+                        // Se for uma imagem ou botão dentro do .zun-container,
+                        // o openModal ou a ação do botão será tratada individualmente
+                        // e não deve disparar o redirecionamento do container.
+                        // O event.stopPropagation() nas imagens já cuida disso.
                         if (e.target.closest('.interactive')) {
                             return;
                         }
 
-                        window.location.href = 'Status.php?id=' + this.getAttribute('data-zun-id');
+                        // Se o clique não foi em uma mídia, redireciona para a página de status do Zun.
+                        // Este listener é um fallback para cliques no texto ou outras áreas.
+                        if (!e.target.closest('img')) { // Não redireciona se o clique foi em uma imagem
+                            window.location.href = 'Status.php?id=' + this.getAttribute('data-zun-id');
+                        }
                     });
                 });
             });

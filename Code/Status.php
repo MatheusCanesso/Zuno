@@ -232,6 +232,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             line-height: 1.6;
         }
 
+        .logo-icon {
+            max-height: 32px;
+            width: auto;
+        }
+
         /* Estilo para o modal de imagem */
         .modal-overlay {
             position: fixed;
@@ -256,8 +261,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
         .modal-content {
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
+            max-width: 95%;
+            max-height: 95%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -287,7 +292,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             color: #ccc;
         }
 
-        /* Classes para layout de imagens */
+        .modal-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            font-size: 2.5rem;
+            width: 3.5rem;
+            height: 3.5rem;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s ease, opacity 0.2s ease;
+            opacity: 0.9;
+        }
+
+        .modal-arrow:hover {
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 1;
+        }
+
+        .modal-arrow.left-0 {
+            left: -3rem;
+        }
+
+        .modal-arrow.right-0 {
+            right: -3rem;
+        }
+
+        .modal-arrow:disabled {
+            opacity: 0.1;
+            cursor: not-allowed;
+            background: none;
+        }
+
+        /* Classes para layout de imagens no Zun */
         .media-grid {
             display: grid;
             gap: 4px;
@@ -309,39 +353,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             grid-template-rows: auto auto;
         }
 
+        .media-grid img,
+        .media-grid video {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
         .grid-3-images>img:first-child,
         .grid-3-images>video:first-child {
             grid-column: span 2;
-            height: 250px;
+            height: auto;
+            max-height: 350px;
+            object-fit: contain;
         }
 
         .grid-3-images>img:nth-child(2),
         .grid-3-images>img:nth-child(3),
         .grid-3-images>video:nth-child(2),
         .grid-3-images>video:nth-child(3) {
-            height: 150px;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
         }
 
-        .grid-4-images {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: 1fr 1fr;
-        }
-
-        .media-grid img,
-        .media-grid video {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-
-        .comment-input-container {
-            transition: all 0.3s ease;
-        }
-
-        .comment-input-container:focus-within {
-            border-color: #21fa90;
-            box-shadow: 0 0 0 2px rgba(33, 250, 144, 0.2);
+        .grid-2-images img,
+        .grid-2-images video,
+        .grid-4-images img,
+        .grid-4-images video {
+            height: auto;
+            max-height: 300px;
+            object-fit: contain;
         }
 
         .zun-container {
@@ -363,8 +408,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     </style>
 </head>
 
-<body class=" bg-white flex min-h-screen ml-96 mr-96 bg-gray-100 text-gray-900">
-    <!-- Barra de navegação vertical -->
+<body class="bg-white flex min-h-screen ml-96 mr-96 bg-gray-100 text-gray-900">
     <nav class="w-64 fixed h-full bg-white border-r border-gray-200 p-4 flex flex-col justify-between">
         <div>
             <div class="mb-8 pl-2">
@@ -375,15 +419,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
             <div class="flex flex-col space-y-2">
                 <a href="Radar.php"
-                    class="flex items-center p-2 text-lg font-semibold text-[#16ac63] rounded-lg hover:bg-gray-200 transition-colors duration-200">
+                    class="flex items-center p-2 text-lg font-semibold text-gray-700 rounded-lg hover:bg-gray-200 transition-colors duration-200">
                     <span class="icon mr-2">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="12" cy="12" r="10" stroke="#16ac63" stroke-width="2" />
-
-                            <path d="M12 12L20 7" stroke="#16ac63" stroke-width="2" stroke-linecap="round" />
-
-                            <circle cx="12" cy="12" r="4" stroke="#16ac63" stroke-width="1" stroke-dasharray="4 2" />
-                            <circle cx="12" cy="12" r="2" fill="#16ac63" />
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                            <path d="M12 12L20 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1" stroke-dasharray="4 2" />
+                            <circle cx="12" cy="12" r="2" fill="currentColor" />
                         </svg>
                     </span> Radar
                 </a>
@@ -467,15 +509,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="group-hover:animate-pulse">
                     <circle cx="12" cy="12" r="11" fill="url(#zuneGradient)" stroke="currentColor" stroke-width="1.5" />
-
                     <path d="M12 7V17M17 12H7" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round" />
-
                     <circle cx="12" cy="12" r="6" stroke="currentColor" stroke-width="1" stroke-opacity="0.5"
                         stroke-dasharray="2 2" />
                     <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="0.8" stroke-opacity="0.3"
                         stroke-dasharray="1 2" />
-
                     <defs>
                         <linearGradient id="zuneGradient" x1="0" y1="0" x2="1" y2="1">
                             <stop offset="0%" stop-color="currentColor" stop-opacity="0.1" />
@@ -557,7 +596,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <?php endif; ?>
 
                 <?php if ($zunData): ?>
-                    <!-- Zun principal -->
                     <div class="p-4 border-b border-gray-200">
                         <div class="flex items-start space-x-3">
                             <a href="Profile.php?id=<?php echo htmlspecialchars($zunData->AutorID); ?>">
@@ -606,13 +644,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                                     <div class="media-container mt-3 mb-4 rounded-2xl overflow-hidden border border-gray-200">
                                         <?php if ($mediaCount === 1): ?>
-                                            <!-- Apenas uma mídia -->
                                             <div class="w-full">
                                                 <?php if ($mediaTypes[0] === 'gif'): ?>
                                                     <div class="relative">
                                                         <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="GIF do Zun"
                                                             class="w-full max-h-[80vh] object-contain" loading="lazy"
-                                                            onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                            onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 0)">
                                                         <div
                                                             class="absolute bottom-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
                                                             GIF
@@ -621,18 +658,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                                 <?php else: ?>
                                                     <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
                                                         class="w-full max-h-[80vh] object-contain" loading="lazy"
-                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                        onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 0)">
                                                 <?php endif; ?>
                                             </div>
 
                                         <?php elseif ($mediaCount === 2): ?>
-                                            <!-- Duas mídias -->
                                             <div class="grid grid-cols-2 gap-1">
                                                 <?php foreach ($mediaUrls as $index => $url): ?>
                                                     <div class="relative aspect-square">
                                                         <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Zun"
                                                             class="w-full h-full object-cover" loading="lazy"
-                                                            onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                            onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, <?php echo $index; ?>)">
                                                         <?php if ($mediaTypes[$index] === 'gif'): ?>
                                                             <div
                                                                 class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -644,12 +680,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                             </div>
 
                                         <?php elseif ($mediaCount === 3): ?>
-                                            <!-- Três mídias -->
                                             <div class="grid grid-cols-2 gap-1">
                                                 <div class="row-span-2">
                                                     <img src="<?php echo htmlspecialchars($mediaUrls[0]); ?>" alt="Mídia do Zun"
                                                         class="w-full h-full object-cover" loading="lazy"
-                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[0]); ?>')">
+                                                        onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 0)">
                                                     <?php if ($mediaTypes[0] === 'gif'): ?>
                                                         <div
                                                             class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -660,7 +695,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                                 <div>
                                                     <img src="<?php echo htmlspecialchars($mediaUrls[1]); ?>" alt="Mídia do Zun"
                                                         class="w-full h-full object-cover" loading="lazy"
-                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[1]); ?>')">
+                                                        onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 1)">
                                                     <?php if ($mediaTypes[1] === 'gif'): ?>
                                                         <div
                                                             class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -671,7 +706,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                                 <div>
                                                     <img src="<?php echo htmlspecialchars($mediaUrls[2]); ?>" alt="Mídia do Zun"
                                                         class="w-full h-full object-cover" loading="lazy"
-                                                        onclick="openModal('<?php echo htmlspecialchars($mediaUrls[2]); ?>')">
+                                                        onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, 2)">
                                                     <?php if ($mediaTypes[2] === 'gif'): ?>
                                                         <div
                                                             class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -682,13 +717,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                             </div>
 
                                         <?php elseif ($mediaCount >= 4): ?>
-                                            <!-- Quatro ou mais mídias -->
                                             <div class="grid grid-cols-2 gap-1">
                                                 <?php for ($i = 0; $i < min($mediaCount, 4); $i++): ?>
                                                     <div class="relative aspect-square">
                                                         <img src="<?php echo htmlspecialchars($mediaUrls[$i]); ?>" alt="Mídia do Zun"
                                                             class="w-full h-full object-cover" loading="lazy"
-                                                            onclick="openModal('<?php echo htmlspecialchars($mediaUrls[$i]); ?>')">
+                                                            onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($mediaUrls)); ?>, <?php echo $i; ?>)">
                                                         <?php if ($mediaTypes[$i] === 'gif'): ?>
                                                             <div
                                                                 class="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
@@ -730,7 +764,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </div>
                     </div>
 
-                    <!-- Formulário de comentário -->
                     <div class="p-4 border-b border-gray-200">
                         <form action="Status.php?id=<?php echo $zunId; ?>" method="POST" enctype="multipart/form-data"
                             class="comment-input-container">
@@ -745,7 +778,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                                     <div class="flex justify-between items-center mt-2">
                                         <div class="flex items-center space-x-2">
-                                            <!-- Ícone de imagem -->
                                             <label
                                                 class="p-2 rounded-full cursor-pointer hover:bg-blue-500/10 text-blue-500">
                                                 <i class="fas fa-image"></i>
@@ -753,7 +785,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                                     class="hidden" multiple>
                                             </label>
 
-                                            <!-- Ícone de GIF -->
                                             <label
                                                 class="p-2 rounded-full cursor-pointer hover:bg-blue-500/10 text-blue-500">
                                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -772,9 +803,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                                 <input type="file" name="gif_comment" accept="image/gif" class="hidden">
                                             </label>
 
-                                            <!-- Ícone de emoji -->
                                             <button type="button"
-                                                class="p-2 rounded-full hover:bg-blue-500/10 text-blue-500 emoji-trigger">
+                                                class="p-2 rounded-full cursor-pointer hover:bg-blue-500/10 text-blue-500 emoji-trigger">
                                                 <i class="far fa-smile"></i>
                                             </button>
                                         </div>
@@ -789,7 +819,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         </form>
                     </div>
 
-                    <!-- Lista de comentários -->
                     <div>
                         <?php if (!empty($comments)): ?>
                             <?php foreach ($comments as $comment): ?>
@@ -850,11 +879,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                                                         <?php if ($commentMediaTypes[$index] === 'gif'): ?>
                                                             <img src="<?php echo htmlspecialchars($url); ?>" alt="GIF do Comentário"
                                                                 class="<?php echo ($commentMediaCount === 3 && $index === 0) ? 'col-span-2 h-64' : 'w-full h-40'; ?> object-cover"
-                                                                onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                                onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($commentMediaUrls)); ?>, <?php echo $index; ?>)">
                                                         <?php else: ?>
                                                             <img src="<?php echo htmlspecialchars($url); ?>" alt="Mídia do Comentário"
                                                                 class="<?php echo ($commentMediaCount === 3 && $index === 0) ? 'col-span-2 h-64' : 'w-full h-40'; ?> object-cover"
-                                                                onclick="openModal('<?php echo htmlspecialchars($url); ?>')">
+                                                                onclick="event.stopPropagation(); openModal(<?php echo htmlspecialchars(json_encode($commentMediaUrls)); ?>, <?php echo $index; ?>)">
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </div>
@@ -889,9 +918,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             </main>
         </div>
     </div>
-    <!-- Conteúdo principal -->
-
-    <!-- Sidebar direita -->
     <aside class="w-80 p-6 hidden lg:block">
         <div class="bg-white rounded-lg shadow-md p-4">
             <h2 class="text-xl font-bold mb-4">Quem seguir</h2>
@@ -910,68 +936,127 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         Seguir
                     </button>
                 </div>
-                <!-- Mais sugestões aqui -->
-            </div>
+                </div>
             <a href="#" class="block text-blue-500 mt-4 text-sm hover:underline">Mostrar mais</a>
         </div>
     </aside>
 
-    <!-- Modal para expandir imagens -->
     <div id="imageModal" class="modal-overlay">
         <div class="modal-content">
             <button id="closeModal" class="modal-close-button"><i class="fas fa-times"></i></button>
+            <button id="prevArrow" class="modal-arrow left-0"><i class="fas fa-chevron-left"></i></button>
             <img src="" alt="Mídia Expandida" class="modal-image" id="expandedImage">
+            <button id="nextArrow" class="modal-arrow right-0"><i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
     <script>
-        // Função para abrir o modal com a imagem expandida
-        function openModal(imageSrc) {
-            const modal = document.getElementById('imageModal');
-            const expandedImg = document.getElementById('expandedImage');
+        document.addEventListener('DOMContentLoaded', function () {
+            // Variáveis globais para o modal de imagem
+            const imageModal = document.getElementById('imageModal');
+            const expandedImage = document.getElementById('expandedImage');
+            const closeModalBtn = document.getElementById('closeModal');
+            const prevArrow = document.getElementById('prevArrow');
+            const nextArrow = document.getElementById('nextArrow');
 
-            expandedImg.src = imageSrc;
-            modal.classList.add('active');
+            let currentModalMediaUrls = [];
+            let currentModalMediaIndex = 0;
 
-            // Bloquear scroll da página quando o modal está aberto
-            document.body.style.overflow = 'hidden';
-        }
+            // Função para exibir uma mídia específica no modal
+            function showMediaInModal(index) {
+                if (currentModalMediaUrls.length === 0) {
+                    expandedImage.src = '';
+                    prevArrow.style.display = 'none';
+                    nextArrow.style.display = 'none';
+                    return;
+                }
 
-        // Fechar modal
-        document.getElementById('closeModal').addEventListener('click', function () {
-            document.getElementById('imageModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
+                expandedImage.src = currentModalMediaUrls[index];
+                currentModalMediaIndex = index;
 
-        // Fechar modal clicando fora da imagem
-        document.getElementById('imageModal').addEventListener('click', function (e) {
-            if (e.target === this) {
-                this.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                // Mostra/esconde as setas de acordo com o índice atual
+                prevArrow.style.display = (index > 0) ? 'flex' : 'none';
+                nextArrow.style.display = (index < currentModalMediaUrls.length - 1) ? 'flex' : 'none';
+
+                // Desabilita os botões se estiver nos limites
+                prevArrow.disabled = (index === 0);
+                nextArrow.disabled = (index === currentModalMediaUrls.length - 1);
             }
-        });
 
-        // Mostrar toasts (mensagens de sucesso/erro)
-        <?php if (isset($_SESSION['toast_message'])): ?>
-            Toastify({
-                text: "<?php echo htmlspecialchars($_SESSION['toast_message']); ?>",
-                duration: 3000,
-                newWindow: true,
-                close: true,
-                gravity: "bottom",
-                position: "center",
-                stopOnFocus: true,
-                style: {
-                    background: "<?php echo ($_SESSION['toast_type'] === 'success' ? '#16ac63' : '#ef4444'); ?>",
-                    borderRadius: "8px",
-                    fontFamily: "'Urbanist', sans-serif"
-                },
-            }).showToast();
-            <?php
-            unset($_SESSION['toast_message']);
-            unset($_SESSION['toast_type']);
-            ?>
-        <?php endif; ?>
+            // Função para abrir o modal com a imagem expandida
+            window.openModal = function (mediaUrlsArray, initialIndex) {
+                currentModalMediaUrls = mediaUrlsArray;
+                showMediaInModal(initialIndex);
+                imageModal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Bloqueia o scroll do body
+            };
+
+            // Função para fechar o modal
+            closeModalBtn.addEventListener('click', function () {
+                imageModal.classList.remove('active');
+                expandedImage.src = ''; // Limpa a imagem para otimizar memória
+                currentModalMediaUrls = []; // Limpa as URLs armazenadas
+                currentModalMediaIndex = 0; // Reseta o índice
+                document.body.style.overflow = 'auto'; // Restaura o scroll do body
+            });
+
+            // Lógica de navegação: Anterior
+            prevArrow.addEventListener('click', function (event) {
+                event.stopPropagation(); // Evita que o clique feche o modal (devido ao event listener do overlay)
+                if (currentModalMediaIndex > 0) {
+                    showMediaInModal(currentModalMediaIndex - 1);
+                }
+            });
+
+            // Lógica de navegação: Próximo
+            nextArrow.addEventListener('click', function (event) {
+                event.stopPropagation(); // Evita que o clique feche o modal
+                if (currentModalMediaIndex < currentModalMediaUrls.length - 1) {
+                    showMediaInModal(currentModalMediaIndex + 1);
+                }
+            });
+
+            // Fechar modal clicando fora da imagem (mas não nas setas ou no botão de fechar)
+            imageModal.addEventListener('click', function (e) {
+                if (e.target === this) {
+                    closeModalBtn.click(); // Simula o clique no botão de fechar
+                }
+            });
+
+            // Listener para o container principal do Zun para evitar redirecionamento ao clicar na imagem
+            document.querySelectorAll('.zun-container').forEach(container => {
+                container.addEventListener('click', function (e) {
+                    if (e.target.closest('.interactive') || e.target.closest('.modal-arrow') || e.target.closest('.modal-close-button')) {
+                        return;
+                    }
+                    if (!e.target.closest('img') && !e.target.closest('button')) {
+                         window.location.href = 'Status.php?id=' + this.getAttribute('data-zun-id');
+                    }
+                });
+            });
+
+            // Mostrar toasts (mensagens de sucesso/erro)
+            <?php if (isset($_SESSION['toast_message'])): ?>
+                Toastify({
+                    text: "<?php echo htmlspecialchars($_SESSION['toast_message']); ?>",
+                    duration: 3000,
+                    newWindow: true,
+                    close: true,
+                    gravity: "bottom",
+                    position: "center",
+                    stopOnFocus: true,
+                    style: {
+                        background: "<?php echo ($_SESSION['toast_type'] === 'success' ? '#16ac63' : '#ef4444'); ?>",
+                        borderRadius: "8px",
+                        fontFamily: "'Urbanist', sans-serif"
+                    },
+                }).showToast();
+                <?php
+                unset($_SESSION['toast_message']);
+                unset($_SESSION['toast_type']);
+                ?>
+            <?php endif; ?>
+        });
     </script>
 </body>
 
